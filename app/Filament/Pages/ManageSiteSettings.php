@@ -7,15 +7,12 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Schema;
 
-class ManageSiteSettings extends Page implements HasForms
+class ManageSiteSettings extends Page
 {
-    use InteractsWithForms;
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-cog-6-tooth';
     protected string $view = 'filament.pages.manage-site-settings';
@@ -48,10 +45,10 @@ class ManageSiteSettings extends Page implements HasForms
         ]);
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $form): Schema
     {
         return $form
-            ->schema([
+            ->components([
                 Tabs::make('Tabs')
                     ->tabs([
                         Tabs\Tab::make('General')
