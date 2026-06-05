@@ -47,6 +47,7 @@ class AppServiceProvider extends ServiceProvider
             static $sections = null;
             if ($sections === null) {
                 $sections = \App\Models\PageSection::where('is_active', true)
+                    ->with('media')
                     ->get()
                     ->keyBy(fn ($s) => $s->page . '.' . $s->section_key);
             }

@@ -1,7 +1,8 @@
 <x-layouts.app title="Home">
 
     {{-- Hero Section --}}
-    <div class="hero parallaxie">
+    @php $heroImg = $sections->get('home.hero')?->getFirstMediaUrl('image'); @endphp
+    <div class="hero parallaxie" @if($heroImg) style="background-image: url('{{ $heroImg }}')" @endif>
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-8">
@@ -44,6 +45,11 @@
     {{-- Hero Section End --}}
 
     {{-- About Us Section --}}
+    @php
+        $aboutSection = $sections->get('home.about');
+        $aboutImg1 = $aboutSection?->getFirstMediaUrl('image') ?: asset('images/about-img-1.jpg');
+        $aboutImg2 = $aboutSection?->getFirstMediaUrl('image_2') ?: asset('images/about-img-2.jpg');
+    @endphp
     <div class="about-us">
         <div class="container">
             <div class="row align-items-center">
@@ -51,12 +57,12 @@
                     <div class="about-us-images">
                         <div class="about-img-1">
                             <figure class="image-anime">
-                                <img src="{{ asset('images/about-img-1.jpg') }}" alt="About Us">
+                                <img src="{{ $aboutImg1 }}" alt="About Us">
                             </figure>
                         </div>
                         <div class="about-img-2">
                             <figure class="image-anime">
-                                <img src="{{ asset('images/about-img-2.jpg') }}" alt="About Us">
+                                <img src="{{ $aboutImg2 }}" alt="About Us">
                             </figure>
                         </div>
                         <div class="need-fund-box">

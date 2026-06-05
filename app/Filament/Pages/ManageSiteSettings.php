@@ -13,7 +13,6 @@ use Filament\Schemas\Schema;
 
 class ManageSiteSettings extends Page
 {
-
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-cog-6-tooth';
     protected string $view = 'filament.pages.manage-site-settings';
     protected static ?string $navigationLabel = 'Site Settings';
@@ -28,20 +27,21 @@ class ManageSiteSettings extends Page
         $settings = app(SiteSettings::class);
 
         $this->form->fill([
-            'site_name'       => $settings->site_name,
-            'site_tagline'    => $settings->site_tagline,
-            'logo_path'       => $settings->logo_path ? [$settings->logo_path] : [],
-            'address'         => $settings->address,
-            'phone'           => $settings->phone,
-            'email'           => $settings->email,
-            'admin_email'     => $settings->admin_email,
-            'twitter_url'     => $settings->twitter_url,
-            'facebook_url'    => $settings->facebook_url,
-            'instagram_url'   => $settings->instagram_url,
-            'pinterest_url'   => $settings->pinterest_url,
-            'maps_embed_url'  => $settings->maps_embed_url,
-            'hero_headline'   => $settings->hero_headline,
-            'hero_subheadline'=> $settings->hero_subheadline,
+            'site_name'        => $settings->site_name,
+            'site_tagline'     => $settings->site_tagline,
+            'logo_path'        => $settings->logo_path ? [$settings->logo_path] : [],
+            'page_header_bg'   => $settings->page_header_bg ? [$settings->page_header_bg] : [],
+            'address'          => $settings->address,
+            'phone'            => $settings->phone,
+            'email'            => $settings->email,
+            'admin_email'      => $settings->admin_email,
+            'twitter_url'      => $settings->twitter_url,
+            'facebook_url'     => $settings->facebook_url,
+            'instagram_url'    => $settings->instagram_url,
+            'pinterest_url'    => $settings->pinterest_url,
+            'maps_embed_url'   => $settings->maps_embed_url,
+            'hero_headline'    => $settings->hero_headline,
+            'hero_subheadline' => $settings->hero_subheadline,
         ]);
     }
 
@@ -72,6 +72,15 @@ class ManageSiteSettings extends Page
                                     ->imagePreviewHeight('80')
                                     ->helperText('Upload PNG, SVG, or JPG. Recommended size: 200×60px')
                                     ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp']),
+
+                                FileUpload::make('page_header_bg')
+                                    ->label('Inner Pages Banner Background')
+                                    ->image()
+                                    ->disk('public')
+                                    ->directory('banners')
+                                    ->visibility('public')
+                                    ->imagePreviewHeight('120')
+                                    ->helperText('Background image shown on About, Services, Blog, Contact and all other inner pages. Recommended: 1920×600px'),
                             ]),
 
                         Tabs\Tab::make('Contact')
@@ -146,25 +155,30 @@ class ManageSiteSettings extends Page
         $data = $this->form->getState();
         $settings = app(SiteSettings::class);
 
-        $settings->site_name       = $data['site_name'];
-        $settings->site_tagline    = $data['site_tagline'];
-        $settings->address         = $data['address'];
-        $settings->phone           = $data['phone'];
-        $settings->email           = $data['email'];
-        $settings->admin_email     = $data['admin_email'];
-        $settings->twitter_url     = $data['twitter_url'];
-        $settings->facebook_url    = $data['facebook_url'];
-        $settings->instagram_url   = $data['instagram_url'];
-        $settings->pinterest_url   = $data['pinterest_url'];
-        $settings->maps_embed_url  = $data['maps_embed_url'];
-        $settings->hero_headline   = $data['hero_headline'];
-        $settings->hero_subheadline= $data['hero_subheadline'];
+        $settings->site_name        = $data['site_name'];
+        $settings->site_tagline     = $data['site_tagline'];
+        $settings->address          = $data['address'];
+        $settings->phone            = $data['phone'];
+        $settings->email            = $data['email'];
+        $settings->admin_email      = $data['admin_email'];
+        $settings->twitter_url      = $data['twitter_url'];
+        $settings->facebook_url     = $data['facebook_url'];
+        $settings->instagram_url    = $data['instagram_url'];
+        $settings->pinterest_url    = $data['pinterest_url'];
+        $settings->maps_embed_url   = $data['maps_embed_url'];
+        $settings->hero_headline    = $data['hero_headline'];
+        $settings->hero_subheadline = $data['hero_subheadline'];
 
-        // Handle logo upload — FileUpload returns array of paths
         if (!empty($data['logo_path'])) {
             $settings->logo_path = is_array($data['logo_path'])
                 ? reset($data['logo_path'])
                 : $data['logo_path'];
+        }
+
+        if (!empty($data['page_header_bg'])) {
+            $settings->page_header_bg = is_array($data['page_header_bg'])
+                ? reset($data['page_header_bg'])
+                : $data['page_header_bg'];
         }
 
         $settings->save();

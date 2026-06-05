@@ -7,6 +7,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\IconSize;
+use Spatie\MediaLibrary\Support\MediaStream;
 
 class PageSectionForm
 {
@@ -39,6 +41,26 @@ class PageSectionForm
                         Textarea::make('body')
                             ->rows(4)
                             ->columnSpanFull(),
+                    ]),
+
+                Section::make('Images')
+                    ->description('Upload background/banner image and a secondary image for this section.')
+                    ->columns(2)
+                    ->schema([
+                        \Filament\Forms\Components\SpatieMediaLibraryFileUpload::make('image')
+                            ->label('Main Image / Banner')
+                            ->collection('image')
+                            ->image()
+                            ->imagePreviewHeight('150')
+                            ->helperText('Hero background, section banner, or primary image.')
+                            ->columnSpanFull(),
+
+                        \Filament\Forms\Components\SpatieMediaLibraryFileUpload::make('image_2')
+                            ->label('Secondary Image')
+                            ->collection('image_2')
+                            ->image()
+                            ->imagePreviewHeight('150')
+                            ->helperText('Second image shown alongside the main image (e.g. about section).'),
                     ]),
 
                 Section::make('Call to Action')

@@ -4,7 +4,7 @@
 ])
 
 <!-- Page Header Start -->
-<div class="page-header parallaxie" style="background-image: url('{{ asset('images/page-header-bg.jpg') }}');">
+<div class="page-header parallaxie" style="background-image: url('{{ !empty($settings->page_header_bg) ? asset('storage/' . $settings->page_header_bg) : asset('images/page-header-bg.jpg') }}');">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-12">
