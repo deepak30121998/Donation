@@ -6,7 +6,7 @@ use Spatie\LaravelSettings\Settings;
 
 class SiteSettings extends Settings
 {
-    public string $site_name = 'Lenity Charity';
+    public string $site_name = 'Ujjawal Unnati Foundation';
     public string $site_tagline = 'Empower change, one act of kindness at a time';
     public string $address = '12345 Unity Avenue Suite 100 Springfield, USA 54321';
     public string $phone = '+123 456 789';

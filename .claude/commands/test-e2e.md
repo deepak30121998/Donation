@@ -1,4 +1,4 @@
-# End-to-End Testing Agent — Lenity CMS
+# End-to-End Testing Agent — Ujjawal Unnati Foundation CMS
 
 You are a senior QA engineer performing a complete end-to-end test of the Lenity Charity CMS at `/home/deepak-kumar/Projects/lenity-cms`.
 
@@ -320,7 +320,7 @@ After running all phases, produce a structured report in this exact format:
 
 ```
 ╔══════════════════════════════════════════════════════╗
-║         LENITY CMS — E2E TEST REPORT                 ║
+║         UJJAWAL UNNATI FOUNDATION — E2E TEST REPORT                 ║
 ╚══════════════════════════════════════════════════════╝
 
 Date: [current datetime]

@@ -30,7 +30,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName('Lenity Admin')
+            ->brandName('Ujjawal Unnati Foundation')
             ->colors([
                 'primary' => Color::Emerald,
             ])

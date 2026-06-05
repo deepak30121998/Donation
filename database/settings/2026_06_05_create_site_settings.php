@@ -6,7 +6,7 @@ return new class extends SettingsMigration
 {
     public function up(): void
     {
-        $this->migrator->add('site.site_name', 'Lenity Charity');
+        $this->migrator->add('site.site_name', 'Ujjawal Unnati Foundation');
         $this->migrator->add('site.site_tagline', 'Empower change, one act of kindness at a time');
         $this->migrator->add('site.address', '12345 Unity Avenue Suite 100, Springfield, USA 54321');
         $this->migrator->add('site.phone', '+123 456 789');

@@ -20,7 +20,7 @@
     <p>This email serves as your official donation receipt. Please retain it for your tax records.</p>
     <div class="footer">
         <p>Thank you for your continued support,</p>
-        <p><strong>The Lenity Charity Team</strong></p>
+        <p><strong>The Ujjawal Unnati Foundation Team</strong></p>
     </div>
 </body>
 </html>

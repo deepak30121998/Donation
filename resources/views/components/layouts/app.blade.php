@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Page Title -->
-    <title>{{ $title ? $title . ' — ' . config('app.name', 'Lenity') : config('app.name', 'Lenity') . ' - Charity & Donation' }}</title>
+    <title>{{ $title ? $title . ' — ' . config('app.name', 'Ujjawal Unnati Foundation') : config('app.name', 'Ujjawal Unnati Foundation') . ' - Charity & Donation' }}</title>
 
     <!-- Favicon Icon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.png') }}">
