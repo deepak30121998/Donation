@@ -36,7 +36,7 @@
                         <div class="section-title">
                             <h3 class="wow fadeInUp">{{ $sections->get('about.facts')?->subtitle ?? 'about us' }}</h3>
                             <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('about.facts')?->title ?? 'United in compassion, changing lives' }}</h2>
-                            <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $sections->get('about.facts')?->body ?? 'Driven by compassion and a shared vision, we work hand-in-hand with communities to create meaningful change.' }}</p>
+                            <p class="wow fadeInUp" data-wow-delay="0.2s">{!! $sections->get('about.facts')?->body ?? 'Driven by compassion and a shared vision, we work hand-in-hand with communities to create meaningful change.' !!}</p>
                         </div>
 
                         <div class="about-us-body">
@@ -85,7 +85,7 @@
                             <div class="section-title">
                                 <h3 class="wow fadeInUp">{{ $sections->get('about.approach')?->subtitle ?? 'our approach' }}</h3>
                                 <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('about.approach')?->title ?? 'Compassionate solutions for lasting impact' }}</h2>
-                                <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $sections->get('about.approach')?->body ?? 'Our approach focuses on creating sustainable change by addressing root causes, empowering communities, and delivering compassionate solutions.' }}</p>
+                                <p class="wow fadeInUp" data-wow-delay="0.2s">{!! $sections->get('about.approach')?->body ?? 'Our approach focuses on creating sustainable change by addressing root causes, empowering communities, and delivering compassionate solutions.' !!}</p>
                             </div>
 
                             <div class="our-approach-btn wow fadeInUp" data-wow-delay="0.4s">
@@ -99,7 +99,7 @@
                                     </div>
                                     <div class="mission-vision-content">
                                         <h3>{{ $sections->get('about.mission')?->title ?? 'our mission' }}</h3>
-                                        <p>{{ $sections->get('about.mission')?->body ?? 'We strive to create positive change, empower communities, and build a better world.' }}</p>
+                                        <p>{!! $sections->get('about.mission')?->body ?? 'We strive to create positive change, empower communities, and build a better world.' !!}</p>
                                     </div>
                                 </div>
 
@@ -109,7 +109,7 @@
                                     </div>
                                     <div class="mission-vision-content">
                                         <h3>{{ $sections->get('about.vision')?->title ?? 'our vision' }}</h3>
-                                        <p>{{ $sections->get('about.vision')?->body ?? 'A world where every individual has access to equal opportunities and resources.' }}</p>
+                                        <p>{!! $sections->get('about.vision')?->body ?? 'A world where every individual has access to equal opportunities and resources.' !!}</p>
                                     </div>
                                 </div>
 
@@ -119,7 +119,7 @@
                                     </div>
                                     <div class="mission-vision-content">
                                         <h3>{{ $sections->get('about.values')?->title ?? 'our value' }}</h3>
-                                        <p>{{ $sections->get('about.values')?->body ?? 'Integrity, compassion, and accountability guide everything we do.' }}</p>
+                                        <p>{!! $sections->get('about.values')?->body ?? 'Integrity, compassion, and accountability guide everything we do.' !!}</p>
                                     </div>
                                 </div>
                             </div>

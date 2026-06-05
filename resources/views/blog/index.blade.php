@@ -16,7 +16,7 @@
                     <div class="section-title">
                         <h3 class="wow fadeInUp">{{ $sections->get('blog.hero')?->subtitle ?? 'latest post' }}</h3>
                         <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('blog.hero')?->title ?? 'Stories of impact and hope' }}</h2>
-                        <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $sections->get('blog.hero')?->body ?? "Explore inspiring stories and updates about our initiatives, successes, and the lives we've touched." }}</p>
+                        <p class="wow fadeInUp" data-wow-delay="0.2s">{!! $sections->get('blog.hero')?->body ?? "Explore inspiring stories and updates about our initiatives, successes, and the lives we've touched." !!}</p>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\PageSections\Schemas;
 
-use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
@@ -38,8 +38,14 @@ class PageSectionForm
                         TextInput::make('subtitle')
                             ->maxLength(255),
 
-                        Textarea::make('body')
-                            ->rows(4)
+                        RichEditor::make('body')
+                            ->toolbarButtons([
+                                'bold', 'italic', 'underline',
+                                'bulletList', 'orderedList',
+                                'link', 'blockquote',
+                                'h2', 'h3',
+                                'undo', 'redo',
+                            ])
                             ->columnSpanFull(),
                     ]),
 

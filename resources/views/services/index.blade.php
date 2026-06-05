@@ -16,7 +16,7 @@
                     <div class="section-title">
                         <h3 class="wow fadeInUp">{{ $sections->get('services.hero')?->subtitle ?? 'services' }}</h3>
                         <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('services.hero')?->title ?? 'Our comprehensive services' }}</h2>
-                        <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $sections->get('services.hero')?->body ?? 'Our services are focused on creating lasting change through community development, healthcare access, educational support, and emergency relief.' }}</p>
+                        <p class="wow fadeInUp" data-wow-delay="0.2s">{!! $sections->get('services.hero')?->body ?? 'Our services are focused on creating lasting change through community development, healthcare access, educational support, and emergency relief.' !!}</p>
                     </div>
                 </div>
             </div>

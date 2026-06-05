@@ -16,7 +16,7 @@
                     <div class="section-title">
                         <h3 class="wow fadeInUp">{{ $sections->get('team.hero')?->subtitle ?? 'our team' }}</h3>
                         <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('team.hero')?->title ?? 'Meet our dedicated team' }}</h2>
-                        <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $sections->get('team.hero')?->body ?? 'Our team of passionate individuals works every day to make a difference in the lives of those who need it most.' }}</p>
+                        <p class="wow fadeInUp" data-wow-delay="0.2s">{!! $sections->get('team.hero')?->body ?? 'Our team of passionate individuals works every day to make a difference in the lives of those who need it most.' !!}</p>
                     </div>
                 </div>
             </div>
