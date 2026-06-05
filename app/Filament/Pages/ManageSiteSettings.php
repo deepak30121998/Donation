@@ -4,11 +4,11 @@ namespace App\Filament\Pages;
 
 use App\Settings\SiteSettings;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Schema;
 
 class ManageSiteSettings extends Page
