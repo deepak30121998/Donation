@@ -38,5 +38,19 @@ class AppServiceProvider extends ServiceProvider
                 $view->with('siteSettings', null);
             }
         });
+
+        // Share all active page sections with every view, keyed by "page.section_key"
+        View::composer('*', function ($view) {
+            if (!\Illuminate\Support\Facades\Schema::hasTable('page_sections')) {
+                return;
+            }
+            static $sections = null;
+            if ($sections === null) {
+                $sections = \App\Models\PageSection::where('is_active', true)
+                    ->get()
+                    ->keyBy(fn ($s) => $s->page . '.' . $s->section_key);
+            }
+            $view->with('sections', $sections);
+        });
     }
 }

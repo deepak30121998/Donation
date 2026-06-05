@@ -14,9 +14,9 @@
             <div class="row section-row">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <h3 class="wow fadeInUp">testimonials</h3>
-                        <h2 class="text-anime-style-2" data-cursor="-opaque">What people say about us</h2>
-                        <p class="wow fadeInUp" data-wow-delay="0.2s">Hear from the people whose lives have been touched by our work and dedication to making a lasting difference.</p>
+                        <h3 class="wow fadeInUp">{{ $sections->get('testimonials.hero')?->subtitle ?? 'testimonials' }}</h3>
+                        <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('testimonials.hero')?->title ?? 'What people say about us' }}</h2>
+                        <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $sections->get('testimonials.hero')?->body ?? 'Hear from the people whose lives have been touched by our work and dedication to making a lasting difference.' }}</p>
                     </div>
                 </div>
             </div>

@@ -32,9 +32,9 @@
 
                     <div class="donate-box">
                         <div class="section-title">
-                            <h3 class="wow fadeInUp">donate now</h3>
-                            <h2 class="text-anime-style-2" data-cursor="-opaque">Make a difference today</h2>
-                            <p class="wow fadeInUp" data-wow-delay="0.2s">Your generous support enables us to continue our mission of spreading love and serving communities in need around the world.</p>
+                            <h3 class="wow fadeInUp">{{ $sections->get('donation.hero')?->subtitle ?? 'donate now' }}</h3>
+                            <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('donation.hero')?->title ?? 'Make a difference today' }}</h2>
+                            <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $sections->get('donation.hero')?->body ?? 'Your generous support enables us to continue our mission of spreading love and serving communities in need around the world.' }}</p>
                         </div>
 
                         <x-donation-form :causes="$causes" />

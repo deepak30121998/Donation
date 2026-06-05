@@ -34,9 +34,9 @@
                 <div class="col-lg-6">
                     <div class="about-us-content">
                         <div class="section-title">
-                            <h3 class="wow fadeInUp">about us</h3>
-                            <h2 class="text-anime-style-2" data-cursor="-opaque">United in compassion, changing lives</h2>
-                            <p class="wow fadeInUp" data-wow-delay="0.2s">Driven by compassion and a shared vision, we work hand-in-hand with communities to create meaningful change.</p>
+                            <h3 class="wow fadeInUp">{{ $sections->get('about.facts')?->subtitle ?? 'about us' }}</h3>
+                            <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('about.facts')?->title ?? 'United in compassion, changing lives' }}</h2>
+                            <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $sections->get('about.facts')?->body ?? 'Driven by compassion and a shared vision, we work hand-in-hand with communities to create meaningful change.' }}</p>
                         </div>
 
                         <div class="about-us-body">
@@ -83,9 +83,9 @@
                     <div class="our-approach-box-content">
                         <div class="our-approach-content">
                             <div class="section-title">
-                                <h3 class="wow fadeInUp">our approach</h3>
-                                <h2 class="text-anime-style-2" data-cursor="-opaque">Compassionate solutions for lasting impact</h2>
-                                <p class="wow fadeInUp" data-wow-delay="0.2s">Our approach focuses on creating sustainable change by addressing root causes, empowering communities, and delivering compassionate solutions.</p>
+                                <h3 class="wow fadeInUp">{{ $sections->get('about.approach')?->subtitle ?? 'our approach' }}</h3>
+                                <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('about.approach')?->title ?? 'Compassionate solutions for lasting impact' }}</h2>
+                                <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $sections->get('about.approach')?->body ?? 'Our approach focuses on creating sustainable change by addressing root causes, empowering communities, and delivering compassionate solutions.' }}</p>
                             </div>
 
                             <div class="our-approach-btn wow fadeInUp" data-wow-delay="0.4s">
@@ -98,8 +98,8 @@
                                         <img src="{{ asset('images/icon-our-mission.svg') }}" alt="">
                                     </div>
                                     <div class="mission-vision-content">
-                                        <h3>our mission</h3>
-                                        <p>We strive to create positive change, empower communities, and build a better world.</p>
+                                        <h3>{{ $sections->get('about.mission')?->title ?? 'our mission' }}</h3>
+                                        <p>{{ $sections->get('about.mission')?->body ?? 'We strive to create positive change, empower communities, and build a better world.' }}</p>
                                     </div>
                                 </div>
 
@@ -108,8 +108,8 @@
                                         <img src="{{ asset('images/icon-our-vision.svg') }}" alt="">
                                     </div>
                                     <div class="mission-vision-content">
-                                        <h3>our vision</h3>
-                                        <p>A world where every individual has access to equal opportunities and resources.</p>
+                                        <h3>{{ $sections->get('about.vision')?->title ?? 'our vision' }}</h3>
+                                        <p>{{ $sections->get('about.vision')?->body ?? 'A world where every individual has access to equal opportunities and resources.' }}</p>
                                     </div>
                                 </div>
 
@@ -118,8 +118,8 @@
                                         <img src="{{ asset('images/icon-our-value.svg') }}" alt="">
                                     </div>
                                     <div class="mission-vision-content">
-                                        <h3>our value</h3>
-                                        <p>Integrity, compassion, and accountability guide everything we do.</p>
+                                        <h3>{{ $sections->get('about.values')?->title ?? 'our value' }}</h3>
+                                        <p>{{ $sections->get('about.values')?->body ?? 'Integrity, compassion, and accountability guide everything we do.' }}</p>
                                     </div>
                                 </div>
                             </div>

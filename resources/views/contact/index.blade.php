@@ -70,8 +70,8 @@
                 <div class="col-lg-6 order-lg-2 order-1">
                     <div class="contact-form-box">
                         <div class="section-title">
-                            <h3 class="wow fadeInUp">contact us</h3>
-                            <h2 class="text-anime-style-2" data-cursor="-opaque">Get in to touch</h2>
+                            <h3 class="wow fadeInUp">{{ $sections->get('contact.hero')?->subtitle ?? 'contact us' }}</h3>
+                            <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('contact.hero')?->title ?? 'Get in to touch' }}</h2>
                         </div>
 
                         @if (session('success'))

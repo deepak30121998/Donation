@@ -7,9 +7,9 @@
                 <div class="col-lg-8">
                     <div class="hero-content">
                         <div class="section-title">
-                            <h3 class="wow fadeInUp">welcome our charity</h3>
-                            <h1 class="text-anime-style-2" data-cursor="-opaque"><span>Empower change</span>, one act of kindness at a time</h1>
-                            <p class="wow fadeInUp" data-wow-delay="0.2s">Join us in creating brighter futures by providing hope, delivering help, and fostering lasting change for communities in need around the world.</p>
+                            <h3 class="wow fadeInUp">{{ $sections->get('home.hero')?->subtitle ?? 'welcome our charity' }}</h3>
+                            <h1 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('home.hero')?->title ?? 'Empower change, one act of kindness at a time' }}</h1>
+                            <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $sections->get('home.hero')?->body ?? 'Join us in creating brighter futures by providing hope, delivering help, and fostering lasting change for communities in need around the world.' }}</p>
                         </div>
 
                         <div class="hero-body wow fadeInUp" data-wow-delay="0.4s">
@@ -69,9 +69,9 @@
                 <div class="col-lg-6">
                     <div class="about-us-content">
                         <div class="section-title">
-                            <h3 class="wow fadeInUp">about us</h3>
-                            <h2 class="text-anime-style-2" data-cursor="-opaque">United in compassion, changing lives</h2>
-                            <p class="wow fadeInUp" data-wow-delay="0.2s">Driven by compassion and a shared vision, we work hand-in-hand with communities to create meaningful change.</p>
+                            <h3 class="wow fadeInUp">{{ $sections->get('home.about')?->subtitle ?? 'about us' }}</h3>
+                            <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('home.about')?->title ?? 'United in compassion, changing lives' }}</h2>
+                            <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $sections->get('home.about')?->body ?? 'Driven by compassion and a shared vision, we work hand-in-hand with communities to create meaningful change.' }}</p>
                         </div>
 
                         <div class="about-us-body">
@@ -116,9 +116,9 @@
             <div class="row section-row align-items-center">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <h3 class="wow fadeInUp">services</h3>
-                        <h2 class="text-anime-style-2" data-cursor="-opaque">Our comprehensive services</h2>
-                        <p class="wow fadeInUp" data-wow-delay="0.2s">Our services are focused on creating lasting change through community development, healthcare access, educational support, and emergency relief.</p>
+                        <h3 class="wow fadeInUp">{{ $sections->get('home.services')?->subtitle ?? 'services' }}</h3>
+                        <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('home.services')?->title ?? 'Our comprehensive services' }}</h2>
+                        <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $sections->get('home.services')?->body ?? 'Our services are focused on creating lasting change through community development, healthcare access, educational support, and emergency relief.' }}</p>
                     </div>
                 </div>
             </div>
@@ -213,9 +213,9 @@
             <div class="row section-row align-items-center">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <h3 class="wow fadeInUp">our causes</h3>
-                        <h2 class="text-anime-style-2" data-cursor="-opaque">Supporting communities causes</h2>
-                        <p class="wow fadeInUp" data-wow-delay="0.2s">We focus on impactful causes that address urgent community needs, from healthcare and education to food security and for lasting change.</p>
+                        <h3 class="wow fadeInUp">{{ $sections->get('home.causes')?->subtitle ?? 'our causes' }}</h3>
+                        <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('home.causes')?->title ?? 'Supporting communities causes' }}</h2>
+                        <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $sections->get('home.causes')?->body ?? 'We focus on impactful causes that address urgent community needs, from healthcare and education to food security and for lasting change.' }}</p>
                     </div>
                 </div>
             </div>
@@ -290,9 +290,9 @@
             <div class="row section-row align-items-center">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <h3 class="wow fadeInUp">our program</h3>
-                        <h2 class="text-anime-style-2" data-cursor="-opaque">Empowering our programs</h2>
-                        <p class="wow fadeInUp" data-wow-delay="0.2s">Our programs are designed to create sustainable change by addressing community needs, empowering individuals, and promoting long-term development through education.</p>
+                        <h3 class="wow fadeInUp">{{ $sections->get('home.programs')?->subtitle ?? 'our program' }}</h3>
+                        <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('home.programs')?->title ?? 'Empowering our programs' }}</h2>
+                        <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $sections->get('home.programs')?->body ?? 'Our programs are designed to create sustainable change by addressing community needs, empowering individuals, and promoting long-term development through education.' }}</p>
                     </div>
                 </div>
             </div>
@@ -452,9 +452,9 @@
                 <div class="col-lg-6">
                     <div class="donate-box">
                         <div class="section-title">
-                            <h3 class="wow fadeInUp">donate now</h3>
-                            <h2 class="text-anime-style-2" data-cursor="-opaque">Donate us</h2>
-                            <p class="wow fadeInUp" data-wow-delay="0.2s">Your generous support enables us to continue our mission of spreading love and serving our community.</p>
+                            <h3 class="wow fadeInUp">{{ $sections->get('home.donate_cta')?->subtitle ?? 'donate now' }}</h3>
+                            <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('home.donate_cta')?->title ?? 'Donate us' }}</h2>
+                            <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $sections->get('home.donate_cta')?->body ?? 'Your generous support enables us to continue our mission of spreading love and serving our community.' }}</p>
                         </div>
 
                         @if (session('success'))
@@ -591,8 +591,8 @@
                 <div class="col-lg-6">
                     <div class="testimonials-content">
                         <div class="section-title">
-                            <h3 class="wow fadeInUp">testimonials</h3>
-                            <h2 class="text-anime-style-2" data-cursor="-opaque">What people say about us</h2>
+                            <h3 class="wow fadeInUp">{{ $sections->get('home.testimonials')?->subtitle ?? 'testimonials' }}</h3>
+                            <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('home.testimonials')?->title ?? 'What people say about us' }}</h2>
                         </div>
 
                         <div class="testimonial-slider">
@@ -620,8 +620,8 @@
             <div class="row section-row no-gutters">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <h3 class="wow fadeInUp">gallery</h3>
-                        <h2 class="text-anime-style-2" data-cursor="-opaque">Our image gallery</h2>
+                        <h3 class="wow fadeInUp">{{ $sections->get('home.gallery')?->subtitle ?? 'gallery' }}</h3>
+                        <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('home.gallery')?->title ?? 'Our image gallery' }}</h2>
                     </div>
                 </div>
             </div>
@@ -661,9 +661,9 @@
             <div class="row section-row">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <h3 class="wow fadeInUp">latest post</h3>
-                        <h2 class="text-anime-style-2" data-cursor="-opaque">Stories of impact and hope</h2>
-                        <p class="wow fadeInUp" data-wow-delay="0.2s">Explore inspiring stories and updates about our initiatives, successes, and the lives we've touched.</p>
+                        <h3 class="wow fadeInUp">{{ $sections->get('home.blog')?->subtitle ?? 'latest post' }}</h3>
+                        <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('home.blog')?->title ?? 'Stories of impact and hope' }}</h2>
+                        <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $sections->get('home.blog')?->body ?? "Explore inspiring stories and updates about our initiatives, successes, and the lives we've touched." }}</p>
                     </div>
                 </div>
             </div>
