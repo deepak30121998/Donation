@@ -4,7 +4,11 @@
             <div class="container">
                 <!-- Logo Start -->
                 <a class="navbar-brand" href="{{ route('home') }}">
-                    <img src="{{ asset('images/logo.svg') }}" alt="Logo">
+                    @if(!empty($settings->logo_path))
+                        <img src="{{ asset('storage/' . $settings->logo_path) }}" alt="{{ $settings->site_name }}">
+                    @else
+                        <img src="{{ asset('images/logo.svg') }}" alt="{{ $settings->site_name ?? 'Logo' }}">
+                    @endif
                 </a>
                 <!-- Logo End -->
 

@@ -8,6 +8,7 @@ class SiteSettings extends Settings
 {
     public string $site_name = 'Ujjawal Unnati Foundation';
     public string $site_tagline = 'Empower change, one act of kindness at a time';
+    public ?string $logo_path = null;
     public string $address = '12345 Unity Avenue Suite 100 Springfield, USA 54321';
     public string $phone = '+123 456 789';
     public string $email = 'info@lenity.org';
