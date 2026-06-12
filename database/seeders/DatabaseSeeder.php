@@ -17,6 +17,13 @@ class DatabaseSeeder extends Seeder
             SiteCounterSeeder::class,
             FaqCategorySeeder::class,
             PageSectionSeeder::class,
+            NavigationItemSeeder::class,
+            ServiceSeeder::class,
+            ProgramSeeder::class,
+            CauseSeeder::class,
+            TeamMemberSeeder::class,
+            TestimonialSeeder::class,
+            GalleryItemSeeder::class,
         ]);
     }
 }

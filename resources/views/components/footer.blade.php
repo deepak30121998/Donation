@@ -1,10 +1,13 @@
 @php
-    $phone        = $siteSettings?->phone        ?? '';
-    $email        = $siteSettings?->email        ?? '';
+    $phone        = $siteSettings?->phone         ?? '';
+    $email        = $siteSettings?->email         ?? '';
     $pinterest    = $siteSettings?->pinterest_url ?? '';
     $twitter      = $siteSettings?->twitter_url   ?? '';
     $facebook     = $siteSettings?->facebook_url  ?? '';
     $instagram    = $siteSettings?->instagram_url ?? '';
+    $youtube      = $siteSettings?->youtube_url   ?? '';
+    $footerAbout  = $siteSettings?->footer_about_text ?? '';
+    $footerCopy   = $siteSettings?->footer_copyright  ?? 'All Rights Reserved.';
     $footerSect   = $sections->get('global.footer') ?? null;
 @endphp
 
@@ -48,14 +51,19 @@
                         </div>
                         <!-- Footer Contact Detail End -->
 
+                        @if($footerAbout)
+                        <p class="footer-about-text">{{ $footerAbout }}</p>
+                        @endif
+
                         <!-- Footer Social Links Start -->
                         <div class="footer-social-links">
-                            <h3>{{ $footerSect?->title ?? 'Follow on' }}</h3>
+                            <h3>{{ $footerSect?->title ?? 'Follow Us' }}</h3>
                             <ul>
-                                        @if($pinterest)<li><a href="{{ $pinterest }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-pinterest-p"></i></a></li>@endif
-                                @if($twitter)<li><a href="{{ $twitter }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a></li>@endif
                                 @if($facebook)<li><a href="{{ $facebook }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a></li>@endif
+                                @if($youtube)<li><a href="{{ $youtube }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a></li>@endif
                                 @if($instagram)<li><a href="{{ $instagram }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a></li>@endif
+                                @if($twitter)<li><a href="{{ $twitter }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a></li>@endif
+                                @if($pinterest)<li><a href="{{ $pinterest }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-pinterest-p"></i></a></li>@endif
                             </ul>
                         </div>
                         <!-- Footer Social Links End -->
@@ -87,14 +95,19 @@
                             $quickLinks  = $sections->get('global.footer_quick_links') ?? null;
                             $serviceHead = $sections->get('global.footer_services') ?? null;
                             $supportSect = $sections->get('global.footer_support') ?? null;
+                            $footerNavItems = ($navItems ?? collect())->filter(fn($i) => $i->children->isEmpty())->take(6);
                         @endphp
                         <div class="footer-links">
-                            <h3>{{ $quickLinks?->title ?? 'Quick link' }}</h3>
+                            <h3>{{ $quickLinks?->title ?? 'Quick Links' }}</h3>
                             <ul>
-                                <li><a href="{{ route('home') }}">home</a></li>
-                                <li><a href="{{ route('about') }}">about us</a></li>
-                                <li><a href="{{ route('services.index') }}">services</a></li>
-                                <li><a href="{{ route('blog.index') }}">blog</a></li>
+                                @forelse($footerNavItems as $navItem)
+                                    <li><a href="{{ $navItem->href }}">{{ $navItem->label }}</a></li>
+                                @empty
+                                    <li><a href="{{ route('home') }}">Home</a></li>
+                                    <li><a href="{{ route('about') }}">About Us</a></li>
+                                    <li><a href="{{ route('services.index') }}">Services</a></li>
+                                    <li><a href="{{ route('contact.index') }}">Contact Us</a></li>
+                                @endforelse
                             </ul>
                         </div>
                         <!-- Quick Links End -->
@@ -139,7 +152,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="copyright-text">
-                        <p>Copyright &copy; {{ date('Y') }} {{ $siteSettings?->site_name ?? config('app.name') }}. All Rights Reserved.</p>
+                        <p>Copyright &copy; {{ date('Y') }} {{ $siteSettings?->site_name ?? config('app.name') }}. {{ $footerCopy }}</p>
                     </div>
                 </div>
             </div>

@@ -10,15 +10,17 @@ class SiteCounterSeeder extends Seeder
     public function run(): void
     {
         $counters = [
-            ['key' => 'years_experience', 'label' => 'Years of Experience', 'value' => 25,    'suffix' => '+', 'prefix' => '',  'order' => 1],
-            ['key' => 'volunteers',       'label' => 'Volunteers',          'value' => 230,   'suffix' => '+', 'prefix' => '',  'order' => 2],
-            ['key' => 'offices',          'label' => 'Offices Worldwide',   'value' => 400,   'suffix' => '+', 'prefix' => '',  'order' => 3],
-            ['key' => 'funded_amount',    'label' => 'Dollars Funded',      'value' => 75000, 'suffix' => 'k', 'prefix' => '$', 'order' => 4],
-            ['key' => 'helped_count',     'label' => 'People Helped',       'value' => 75958, 'suffix' => '',  'prefix' => '',  'order' => 5],
+            ['key' => 'supporters',          'label' => 'Supporters',          'value' => 2500,   'suffix' => '+', 'prefix' => '',  'order' => 1],
+            ['key' => 'cows_served',         'label' => 'Mother Cows Served',  'value' => 22500,  'suffix' => '+', 'prefix' => '',  'order' => 2],
+            ['key' => 'women_entrepreneurs', 'label' => 'Women Entrepreneurs', 'value' => 115000, 'suffix' => '+', 'prefix' => '',  'order' => 3],
+            ['key' => 'lives_transformed',   'label' => 'Lives Transformed',   'value' => 12000,  'suffix' => '+', 'prefix' => '',  'order' => 4],
+            // backward-compat keys used in home view
+            ['key' => 'funded_amount',       'label' => 'Amount Raised',       'value' => 75,     'suffix' => 'k', 'prefix' => '₹', 'order' => 5],
+            ['key' => 'helped_count',        'label' => 'People Helped',       'value' => 12000,  'suffix' => '+', 'prefix' => '',  'order' => 6],
         ];
 
         foreach ($counters as $counter) {
-            SiteCounter::firstOrCreate(['key' => $counter['key']], $counter);
+            SiteCounter::updateOrCreate(['key' => $counter['key']], $counter);
         }
     }
 }

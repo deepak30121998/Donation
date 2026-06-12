@@ -24,24 +24,31 @@ class ManageSiteSettings extends Page
 
     public function mount(): void
     {
-        $settings = app(SiteSettings::class);
+        $s = app(SiteSettings::class);
 
         $this->form->fill([
-            'site_name'        => $settings->site_name,
-            'site_tagline'     => $settings->site_tagline,
-            'logo_path'        => $settings->logo_path ? [$settings->logo_path] : [],
-            'page_header_bg'   => $settings->page_header_bg ? [$settings->page_header_bg] : [],
-            'address'          => $settings->address,
-            'phone'            => $settings->phone,
-            'email'            => $settings->email,
-            'admin_email'      => $settings->admin_email,
-            'twitter_url'      => $settings->twitter_url,
-            'facebook_url'     => $settings->facebook_url,
-            'instagram_url'    => $settings->instagram_url,
-            'pinterest_url'    => $settings->pinterest_url,
-            'maps_embed_url'   => $settings->maps_embed_url,
-            'hero_headline'    => $settings->hero_headline,
-            'hero_subheadline' => $settings->hero_subheadline,
+            'site_name'          => $s->site_name,
+            'site_tagline'       => $s->site_tagline,
+            'logo_path'          => $s->logo_path ? [$s->logo_path] : [],
+            'page_header_bg'     => $s->page_header_bg ? [$s->page_header_bg] : [],
+            'address'            => $s->address,
+            'phone'              => $s->phone,
+            'email'              => $s->email,
+            'admin_email'        => $s->admin_email,
+            'whatsapp_number'    => $s->whatsapp_number,
+            'facebook_url'       => $s->facebook_url,
+            'youtube_url'        => $s->youtube_url,
+            'instagram_url'      => $s->instagram_url,
+            'twitter_url'        => $s->twitter_url,
+            'pinterest_url'      => $s->pinterest_url,
+            'maps_embed_url'     => $s->maps_embed_url,
+            'hero_headline'      => $s->hero_headline,
+            'hero_subheadline'   => $s->hero_subheadline,
+            'hero_video_url'     => $s->hero_video_url,
+            'footer_about_text'  => $s->footer_about_text,
+            'footer_copyright'   => $s->footer_copyright,
+            'donate_button_text' => $s->donate_button_text,
+            'donate_button_url'  => $s->donate_button_url,
         ]);
     }
 
@@ -51,6 +58,7 @@ class ManageSiteSettings extends Page
             ->components([
                 Tabs::make('Tabs')
                     ->tabs([
+
                         Tabs\Tab::make('General')
                             ->icon('heroicon-o-building-office')
                             ->schema([
@@ -70,7 +78,7 @@ class ManageSiteSettings extends Page
                                     ->directory('logos')
                                     ->visibility('public')
                                     ->imagePreviewHeight('80')
-                                    ->helperText('Upload PNG, SVG, or JPG. Recommended size: 200×60px')
+                                    ->helperText('PNG/SVG/JPG — recommended 200×60px')
                                     ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp']),
 
                                 FileUpload::make('page_header_bg')
@@ -80,7 +88,7 @@ class ManageSiteSettings extends Page
                                     ->directory('banners')
                                     ->visibility('public')
                                     ->imagePreviewHeight('120')
-                                    ->helperText('Background image shown on About, Services, Blog, Contact and all other inner pages. Recommended: 1920×600px'),
+                                    ->helperText('Shown on all inner-page banners. Recommended: 1920×600px'),
                             ]),
 
                         Tabs\Tab::make('Contact')
@@ -94,6 +102,11 @@ class ManageSiteSettings extends Page
                                     ->label('Phone Number')
                                     ->tel(),
 
+                                TextInput::make('whatsapp_number')
+                                    ->label('WhatsApp Number')
+                                    ->tel()
+                                    ->placeholder('+91-XXXXXXXXXX'),
+
                                 TextInput::make('email')
                                     ->label('Public Email')
                                     ->email(),
@@ -106,7 +119,7 @@ class ManageSiteSettings extends Page
                                 Textarea::make('maps_embed_url')
                                     ->label('Google Maps Embed URL')
                                     ->rows(3)
-                                    ->helperText('Paste the full iframe src URL from Google Maps → Share → Embed'),
+                                    ->helperText('Paste the full src URL from Google Maps → Share → Embed a map'),
                             ]),
 
                         Tabs\Tab::make('Social Links')
@@ -117,14 +130,19 @@ class ManageSiteSettings extends Page
                                     ->placeholder('https://facebook.com/yourpage')
                                     ->nullable(),
 
-                                TextInput::make('twitter_url')
-                                    ->label('Twitter / X URL')
-                                    ->placeholder('https://twitter.com/yourhandle')
+                                TextInput::make('youtube_url')
+                                    ->label('YouTube Channel URL')
+                                    ->placeholder('https://youtube.com/channel/...')
                                     ->nullable(),
 
                                 TextInput::make('instagram_url')
                                     ->label('Instagram URL')
                                     ->placeholder('https://instagram.com/yourhandle')
+                                    ->nullable(),
+
+                                TextInput::make('twitter_url')
+                                    ->label('Twitter / X URL')
+                                    ->placeholder('https://twitter.com/yourhandle')
                                     ->nullable(),
 
                                 TextInput::make('pinterest_url')
@@ -133,7 +151,7 @@ class ManageSiteSettings extends Page
                                     ->nullable(),
                             ]),
 
-                        Tabs\Tab::make('Homepage Hero')
+                        Tabs\Tab::make('Hero Section')
                             ->icon('heroicon-o-home')
                             ->schema([
                                 TextInput::make('hero_headline')
@@ -143,7 +161,34 @@ class ManageSiteSettings extends Page
                                 Textarea::make('hero_subheadline')
                                     ->label('Hero Sub-headline')
                                     ->rows(2),
+
+                                TextInput::make('hero_video_url')
+                                    ->label('Hero Video URL')
+                                    ->placeholder('https://www.youtube.com/watch?v=...')
+                                    ->helperText('YouTube URL for the play-video button on homepage'),
                             ]),
+
+                        Tabs\Tab::make('Footer & Donate')
+                            ->icon('heroicon-o-document-text')
+                            ->schema([
+                                Textarea::make('footer_about_text')
+                                    ->label('Footer About Text')
+                                    ->rows(3)
+                                    ->helperText('Short description shown in footer below the logo'),
+
+                                TextInput::make('footer_copyright')
+                                    ->label('Copyright Text')
+                                    ->helperText('Shown after "Copyright © Year SiteName." — e.g. All Rights Reserved.'),
+
+                                TextInput::make('donate_button_text')
+                                    ->label('Donate Button Text')
+                                    ->maxLength(50),
+
+                                TextInput::make('donate_button_url')
+                                    ->label('Donate Button URL')
+                                    ->placeholder('/donation'),
+                            ]),
+
                     ])
                     ->columnSpanFull(),
             ])
@@ -153,39 +198,39 @@ class ManageSiteSettings extends Page
     public function save(): void
     {
         $data = $this->form->getState();
-        $settings = app(SiteSettings::class);
+        $s    = app(SiteSettings::class);
 
-        $settings->site_name        = $data['site_name']        ?? '';
-        $settings->site_tagline     = $data['site_tagline']     ?? '';
-        $settings->address          = $data['address']          ?? '';
-        $settings->phone            = $data['phone']            ?? '';
-        $settings->email            = $data['email']            ?? '';
-        $settings->admin_email      = $data['admin_email']      ?? '';
-        $settings->twitter_url      = $data['twitter_url']   ?? '';
-        $settings->facebook_url     = $data['facebook_url']  ?? '';
-        $settings->instagram_url    = $data['instagram_url'] ?? '';
-        $settings->pinterest_url    = $data['pinterest_url'] ?? '';
-        $settings->maps_embed_url   = $data['maps_embed_url'] ?? '';
-        $settings->hero_headline    = $data['hero_headline']    ?? '';
-        $settings->hero_subheadline = $data['hero_subheadline'] ?? '';
+        $s->site_name          = $data['site_name']          ?? '';
+        $s->site_tagline       = $data['site_tagline']       ?? '';
+        $s->address            = $data['address']            ?? '';
+        $s->phone              = $data['phone']              ?? '';
+        $s->whatsapp_number    = $data['whatsapp_number']    ?? '';
+        $s->email              = $data['email']              ?? '';
+        $s->admin_email        = $data['admin_email']        ?? '';
+        $s->facebook_url       = $data['facebook_url']       ?? '';
+        $s->youtube_url        = $data['youtube_url']        ?? '';
+        $s->instagram_url      = $data['instagram_url']      ?? '';
+        $s->twitter_url        = $data['twitter_url']        ?? '';
+        $s->pinterest_url      = $data['pinterest_url']      ?? '';
+        $s->maps_embed_url     = $data['maps_embed_url']     ?? '';
+        $s->hero_headline      = $data['hero_headline']      ?? '';
+        $s->hero_subheadline   = $data['hero_subheadline']   ?? '';
+        $s->hero_video_url     = $data['hero_video_url']     ?? '';
+        $s->footer_about_text  = $data['footer_about_text']  ?? '';
+        $s->footer_copyright   = $data['footer_copyright']   ?? '';
+        $s->donate_button_text = $data['donate_button_text'] ?? '';
+        $s->donate_button_url  = $data['donate_button_url']  ?? '';
 
         if (!empty($data['logo_path'])) {
-            $settings->logo_path = is_array($data['logo_path'])
-                ? reset($data['logo_path'])
-                : $data['logo_path'];
+            $s->logo_path = is_array($data['logo_path']) ? reset($data['logo_path']) : $data['logo_path'];
         }
 
         if (!empty($data['page_header_bg'])) {
-            $settings->page_header_bg = is_array($data['page_header_bg'])
-                ? reset($data['page_header_bg'])
-                : $data['page_header_bg'];
+            $s->page_header_bg = is_array($data['page_header_bg']) ? reset($data['page_header_bg']) : $data['page_header_bg'];
         }
 
-        $settings->save();
+        $s->save();
 
-        Notification::make()
-            ->title('Settings saved successfully!')
-            ->success()
-            ->send();
+        Notification::make()->title('Settings saved!')->success()->send();
     }
 }
