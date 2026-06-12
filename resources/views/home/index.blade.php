@@ -61,8 +61,8 @@
         $aboutFeature  = $sections->get('home.about_feature');
         $aboutImg1     = $aboutSection?->getFirstMediaUrl('image') ?: asset('images/about-img-1.jpg');
         $aboutImg2     = $aboutSection?->getFirstMediaUrl('image_2') ?: asset('images/about-img-2.jpg');
-        $fundedCounter = $counters->firstWhere('key', 'funded_amount');
-        $helpedCounter = $counters->firstWhere('key', 'helped_count');
+        $cowsCounter  = $counters->firstWhere('key', 'cows_served');
+        $womenCounter = $counters->firstWhere('key', 'women_entrepreneurs');
     @endphp
     <div class="about-us">
         <div class="container">
@@ -81,7 +81,7 @@
                         </div>
                         <div class="need-fund-box">
                             <img src="{{ asset('images/icon-funded-dollar.svg') }}" alt="">
-                            <p>We've funded <span class="counter">{{ $fundedCounter?->value ?? 75 }}</span>{{ $fundedCounter?->suffix ?? 'k' }} Dollars</p>
+                            <p>We've served <span class="counter">{{ $cowsCounter?->value ?? 22500 }}</span>{{ $cowsCounter?->suffix ?? '+' }} Cows</p>
                         </div>
                     </div>
                 </div>
@@ -119,9 +119,9 @@
                                     </figure>
                                 </div>
                                 <div class="helped-fund-content">
-                                    <h2><span class="counter">{{ number_format($helpedCounter?->value ?? 75958) }}</span>{{ $helpedCounter?->suffix ?? '' }}</h2>
-                                    <h3>{{ $helpedCounter?->label ?? 'helped fund' }}</h3>
-                                    <p>Supporting growth through community-funding.</p>
+                                    <h2><span class="counter">{{ number_format($womenCounter?->value ?? 115000) }}</span>{{ $womenCounter?->suffix ?? '+' }}</h2>
+                                    <h3>{{ $womenCounter?->label ?? 'Women Entrepreneurs' }}</h3>
+                                    <p>Empowered through skill training &amp; microfinance.</p>
                                 </div>
                             </div>
                         </div>
@@ -633,13 +633,10 @@
                                 <img src="{{ asset('images/healthcare-support-circle.svg') }}" alt="">
                             </a>
                         </div>
-                        @php
-                            $reviewCounter = $counters->firstWhere('key', 'customer_reviews')
-                                ?? $counters->firstWhere('key', 'helped_count');
-                        @endphp
+                        @php $livesCounter = $counters->firstWhere('key', 'lives_transformed'); @endphp
                         <div class="client-review-box">
-                            <h2><span class="counter">{{ $reviewCounter ? number_format($reviewCounter->value / 1000, 0) : '20' }}</span>k</h2>
-                            <p>customer review</p>
+                            <h2><span class="counter">{{ $livesCounter ? number_format($livesCounter->value / 1000, 0) : '12' }}</span>k+</h2>
+                            <p>lives transformed</p>
                         </div>
                     </div>
                 </div>

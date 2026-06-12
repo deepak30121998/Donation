@@ -39,7 +39,7 @@
     {{-- Testimonials Section --}}
     @php
         $testSection = $sections->get('services.testimonials') ?? $sections->get('home.testimonials');
-        $reviewCtr   = $counters->firstWhere('key', 'customer_reviews') ?? $counters->firstWhere('key', 'helped_count');
+        $reviewCtr = $counters->firstWhere('key', 'lives_transformed');
     @endphp
     @if ($testimonials->isNotEmpty())
     <div class="our-testimonials">
@@ -58,8 +58,8 @@
                             </a>
                         </div>
                         <div class="client-review-box">
-                            <h2><span class="counter">{{ $reviewCtr ? number_format($reviewCtr->value / 1000, 0) : '20' }}</span>k</h2>
-                            <p>customer review</p>
+                            <h2><span class="counter">{{ $reviewCtr ? number_format($reviewCtr->value / 1000, 0) : '12' }}</span>k+</h2>
+                            <p>lives transformed</p>
                         </div>
                     </div>
                 </div>

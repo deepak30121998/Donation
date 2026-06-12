@@ -73,7 +73,7 @@
                 </div>
                 @endif
 
-                <div class="col-lg-6 order-lg-2 order-1">
+                <div class="{{ $siteSettings?->maps_embed_url ? 'col-lg-6' : 'col-lg-12' }} order-lg-2 order-1">
                     <div class="contact-form-box">
                         <div class="section-title">
                             <h3 class="wow fadeInUp">{{ $sections->get('contact.hero')?->subtitle ?? 'contact us' }}</h3>

@@ -13,8 +13,8 @@
         $aboutFacts   = $sections->get('about.facts');
         $aboutImg1    = $aboutFacts?->getFirstMediaUrl('image') ?: asset('images/about-img-1.jpg');
         $aboutImg2    = $aboutFacts?->getFirstMediaUrl('image_2') ?: asset('images/about-img-2.jpg');
-        $fundedCtr    = $counters->firstWhere('key', 'funded_amount');
-        $helpedCtr    = $counters->firstWhere('key', 'helped_count');
+        $cowsCtr      = $counters->firstWhere('key', 'cows_served');
+        $womenCtr     = $counters->firstWhere('key', 'women_entrepreneurs');
     @endphp
     <div class="about-us">
         <div class="container">
@@ -33,7 +33,7 @@
                         </div>
                         <div class="need-fund-box">
                             <img src="{{ asset('images/icon-funded-dollar.svg') }}" alt="">
-                            <p>We've funded <span class="counter">{{ $fundedCtr?->value ?? 75 }}</span>{{ $fundedCtr?->suffix ?? 'k' }} Dollars</p>
+                            <p>We've served <span class="counter">{{ $cowsCtr?->value ?? 22500 }}</span>{{ $cowsCtr?->suffix ?? '+' }} Cows</p>
                         </div>
                     </div>
                 </div>
@@ -72,9 +72,9 @@
                                     </figure>
                                 </div>
                                 <div class="helped-fund-content">
-                                    <h2><span class="counter">{{ number_format($helpedCtr?->value ?? 75958) }}</span>{{ $helpedCtr?->suffix ?? '' }}</h2>
-                                    <h3>{{ $helpedCtr?->label ?? 'helped fund' }}</h3>
-                                    <p>Supporting growth through community-funding.</p>
+                                    <h2><span class="counter">{{ number_format($womenCtr?->value ?? 115000) }}</span>{{ $womenCtr?->suffix ?? '+' }}</h2>
+                                    <h3>{{ $womenCtr?->label ?? 'Women Entrepreneurs' }}</h3>
+                                    <p>Empowered through skill training &amp; microfinance.</p>
                                 </div>
                             </div>
                         </div>
@@ -159,9 +159,6 @@
         $whyItems     = $whyChoose?->body
             ? array_values(array_filter(array_map('trim', explode("\n", strip_tags($whyChoose->body)))))
             : ['community-centered approach', 'transparency and accountability', 'empowerment through partnership', 'volunteer and donor engagement'];
-        $yearsCtr     = $counters->firstWhere('key', 'years_experience');
-        $volunteerCtr = $counters->firstWhere('key', 'volunteers');
-        $officesCtr   = $counters->firstWhere('key', 'offices');
     @endphp
     <div class="why-choose-us">
         <div class="container">
@@ -198,7 +195,7 @@
                         </div>
 
                         <div class="why-choose-counters">
-                            @foreach ($counters->whereNotIn('key', ['funded_amount', 'helped_count']) as $counter)
+                            @foreach ($counters as $counter)
                                 <div class="why-choose-counter-item">
                                     <h2>{{ $counter->prefix ?? '' }}<span class="counter">{{ $counter->value }}</span>{{ $counter->suffix }}</h2>
                                     <p>{{ $counter->label }}</p>
@@ -330,7 +327,7 @@
     {{-- Testimonials Section --}}
     @php
         $testimonialsSection = $sections->get('about.testimonials') ?? $sections->get('home.testimonials');
-        $reviewCtr = $counters->firstWhere('key', 'customer_reviews') ?? $counters->firstWhere('key', 'helped_count');
+        $reviewCtr = $counters->firstWhere('key', 'lives_transformed');
     @endphp
     @if ($testimonials->isNotEmpty())
     <div class="our-testimonials">
@@ -350,8 +347,8 @@
                             </a>
                         </div>
                         <div class="client-review-box">
-                            <h2><span class="counter">{{ $reviewCtr ? number_format($reviewCtr->value / 1000, 0) : '20' }}</span>k</h2>
-                            <p>customer review</p>
+                            <h2><span class="counter">{{ $reviewCtr ? number_format($reviewCtr->value / 1000, 0) : '12' }}</span>k+</h2>
+                            <p>lives transformed</p>
                         </div>
                     </div>
                 </div>
