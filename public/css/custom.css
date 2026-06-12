@@ -1898,6 +1898,33 @@ header.main-header .header-sticky.active{
 	margin-right: 30px;
 }
 
+.donate-image-collage {
+    position: relative;
+    padding-right: 20px;
+}
+.donate-collage-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    align-items: center;
+}
+.donate-collage-img-1,
+.donate-collage-img-2 {
+    margin: 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.donate-collage-img-1 img,
+.donate-collage-img-2 img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.donate-collage-img-2 {
+    margin-top: 30px;
+}
+
 .intro-video-box .video-play-button{
 	position: relative;
 	display: inline-block;
@@ -2361,6 +2388,49 @@ header.main-header .header-sticky.active{
 
 .testimonial-slider .testimonial-pagination .swiper-pagination-bullet-active{
 	background: var(--accent-color);
+}
+
+/************************************/
+/***    Service Slider Pagination  ***/
+/************************************/
+
+.service-slider .service-slider-pagination{
+    text-align: center;
+    margin-top: 30px;
+    padding-bottom: 4px;
+}
+
+.service-slider .service-slider-pagination .swiper-pagination-bullet{
+    position: relative;
+    height: 12px;
+    width: 12px;
+    background: var(--divider-color);
+    opacity: 1;
+    margin: 0 8px;
+    transition: all 0.4s ease-in-out;
+}
+
+.service-slider .service-slider-pagination .swiper-pagination-bullet:before{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid transparent;
+    height: 0;
+    width: 0;
+    border-radius: 50%;
+    transition: all 0.4s ease-in-out;
+}
+
+.service-slider .service-slider-pagination .swiper-pagination-bullet-active:before{
+    border-color: var(--accent-color);
+    height: 24px;
+    width: 24px;
+}
+
+.service-slider .service-slider-pagination .swiper-pagination-bullet-active{
+    background: var(--accent-color);
 }
 
 /************************************/

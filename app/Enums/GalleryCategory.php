@@ -12,10 +12,10 @@ enum GalleryCategory: string
     public function label(): string
     {
         return match($this) {
-            self::All       => 'All',
-            self::Health    => 'Health',
+            self::All       => 'All Activities',
+            self::Health    => 'Gau Sewa',
             self::Education => 'Education',
-            self::Food      => 'Food',
+            self::Food      => 'Ration & Food',
         };
     }
 

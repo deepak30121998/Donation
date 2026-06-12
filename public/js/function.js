@@ -77,6 +77,36 @@
 		});
 	}
 
+	/* Service Slider JS */
+	if ($('.service-slider').length) {
+		const service_slider = new Swiper('.service-slider .swiper', {
+			slidesPerView : 1,
+			speed: 800,
+			spaceBetween: 30,
+			loop: true,
+			autoplay: {
+				delay: 4000,
+				pauseOnMouseEnter: true,
+			},
+			pagination: {
+				el: '.service-slider-pagination',
+				clickable: true,
+			},
+			navigation: {
+				nextEl: '.service-button-next',
+				prevEl: '.service-button-prev',
+			},
+			breakpoints: {
+				576: {
+					slidesPerView: 2,
+				},
+				991: {
+					slidesPerView: 3,
+				}
+			}
+		});
+	}
+
 	/* testimonial Slider JS */
 	if ($('.testimonial-slider').length) {
 		const testimonial_slider = new Swiper('.testimonial-slider .swiper', {

@@ -26,7 +26,7 @@ class HomeController extends Controller
     public function index(): View
     {
         $vm = new HomeViewModel(
-            services:     $this->services->activeOrdered()->take(3),
+            services:     $this->services->activeOrdered(),
             programs:     $this->programs->activeOrdered()->take(3),
             causes:       $this->causes->activeOrdered()->take(3),
             posts:        collect($this->posts->recent(3)),

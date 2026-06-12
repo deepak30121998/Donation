@@ -18,7 +18,7 @@
                 <div class="col-lg-4">
                     <div class="page-single-sidebar">
 
-                        {{-- Services List --}}
+                        {{-- Services Category List --}}
                         <div class="page-sidebar-catagery-list wow fadeInUp">
                             <h3>Our Services</h3>
                             <ul>
@@ -33,24 +33,6 @@
                             </ul>
                         </div>
 
-                        {{-- Contact Box --}}
-                        <div class="sidebar-contact-box wow fadeInUp" style="background:#f8f4ef; padding:24px; border-radius:8px; margin-top:24px;">
-                            <h3 style="margin-bottom:12px; font-size:18px;">Need Help?</h3>
-                            <p style="color:#666; margin-bottom:16px;">Get in touch with us for more information about this service.</p>
-                            @if($siteSettings?->phone)
-                            <p style="margin-bottom:8px;">
-                                <strong>📞 </strong>
-                                <a href="tel:{{ preg_replace('/\s+/', '', $siteSettings->phone) }}">{{ $siteSettings->phone }}</a>
-                            </p>
-                            @endif
-                            @if($siteSettings?->email)
-                            <p>
-                                <strong>✉️ </strong>
-                                <a href="mailto:{{ $siteSettings->email }}">{{ $siteSettings->email }}</a>
-                            </p>
-                            @endif
-                        </div>
-
                         <x-sidebar-cta />
                     </div>
                 </div>
@@ -60,36 +42,178 @@
                     <div class="service-single-contemt">
 
                         {{-- Feature Image --}}
-                        @if ($service->getFirstMediaUrl('banner'))
-                            <div class="service-feature-image">
-                                <figure class="image-anime reveal">
-                                    <img src="{{ $service->getFirstMediaUrl('banner') }}" alt="{{ $service->title }}">
-                                </figure>
-                            </div>
-                        @endif
+                        @php
+                            $bannerUrl = $service->getFirstMediaUrl('banner')
+                                ?: $service->getFirstMediaUrl('thumb')
+                                ?: asset('images/placeholder.jpg');
+                            $thumbUrl  = $service->getFirstMediaUrl('thumb')
+                                ?: asset('images/placeholder.jpg');
+                        @endphp
+                        <div class="service-feature-image">
+                            <figure class="image-anime reveal">
+                                <img src="{{ $bannerUrl }}" alt="{{ $service->title }}">
+                            </figure>
+                        </div>
 
-                        {{-- Service Body --}}
+                        {{-- Service Entry --}}
                         <div class="service-entry">
-                            @if($service->short_description)
-                                <p class="lead" style="font-size:1.1rem; font-weight:500; color:#444; margin-bottom:20px;">
-                                    {{ $service->short_description }}
-                                </p>
+
+                            {{-- Opening description --}}
+                            @if ($service->short_description)
+                                <p class="wow fadeInUp">{{ $service->short_description }}</p>
                             @endif
 
-                            {!! $service->body !!}
-                        </div>
+                            @if ($service->body)
+                                <div class="wow fadeInUp" data-wow-delay="0.2s">
+                                    {!! $service->body !!}
+                                </div>
+                            @endif
 
-                        {{-- Get Involved CTA --}}
-                        <div class="service-cta-box wow fadeInUp" style="background:#f8f4ef; padding:32px; border-radius:8px; margin-top:40px; text-align:center;">
-                            <h3 style="margin-bottom:12px;">Support This Cause</h3>
-                            <p style="margin-bottom:20px; color:#666;">Donate or volunteer to help us deliver this service to more people in need.</p>
-                            <a href="{{ route('donation.index') }}" class="btn-default" style="margin-right:12px;">
-                                {{ $siteSettings?->donate_button_text ?? 'Donate Now' }}
-                            </a>
-                            <a href="{{ route('contact.index') }}" class="btn-default btn-outline" style="background:transparent; border:2px solid currentColor;">
-                                Volunteer
-                            </a>
+                            {{-- Bringing Quality Box --}}
+                            @php
+                                $qualitySection = $sections->get('services.quality') ?? null;
+                            @endphp
+                            <div class="bringing-quality-box">
+                                <h2 class="text-anime-style-2" data-cursor="-opaque">
+                                    {{ $qualitySection?->title ?? 'How we make a difference' }}
+                                </h2>
+                                <p class="wow fadeInUp">
+                                    {{ $qualitySection?->subtitle ?? 'Our approach is hands-on, community-driven, and built for lasting impact across Noida and UP.' }}
+                                </p>
+                                @if ($qualitySection?->body)
+                                    <ul class="wow fadeInUp" data-wow-delay="0.2s">
+                                        @foreach (array_filter(array_map('trim', explode("\n", strip_tags($qualitySection->body)))) as $point)
+                                            <li>{{ $point }}</li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <ul class="wow fadeInUp" data-wow-delay="0.2s">
+                                        <li>community awareness drives</li>
+                                        <li>on-ground field support</li>
+                                        <li>legal aid &amp; counselling</li>
+                                        <li>skill training programs</li>
+                                        <li>monthly distribution drives</li>
+                                        <li>volunteer mobilisation</li>
+                                        <li>women self-help groups</li>
+                                        <li>child rehabilitation</li>
+                                        <li>gau sewa &amp; cow care</li>
+                                    </ul>
+                                @endif
+                            </div>
+
+                            {{-- Service Entry Content List --}}
+                            <div class="service-entry-content-list">
+
+                                {{-- Item 1: Main service image --}}
+                                <div class="service-entry-content-item">
+                                    <div class="service-entry-image">
+                                        <figure class="image-anime reveal">
+                                            <img src="{{ $thumbUrl }}" alt="{{ $service->title }}">
+                                        </figure>
+                                    </div>
+                                    <div class="service-entry-content-box wow fadeInUp">
+                                        <div class="icon-box">
+                                            <img src="{{ asset('images/icon-service-entry-content-1.svg') }}" alt="">
+                                        </div>
+                                        <div class="service-entry-content">
+                                            <h3>{{ $service->title }}</h3>
+                                            <p>{{ $service->short_description ?? 'We work directly with communities to deliver this service through trained volunteers and field staff across Noida and UP.' }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Item 2: Our commitment --}}
+                                <div class="service-entry-content-item">
+                                    <div class="service-entry-image">
+                                        <figure class="image-anime reveal">
+                                            <img src="{{ asset('images/about-img-1.jpg') }}" alt="Our Commitment">
+                                        </figure>
+                                    </div>
+                                    <div class="service-entry-content-box wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="icon-box">
+                                            <img src="{{ asset('images/icon-service-entry-content-2.svg') }}" alt="">
+                                        </div>
+                                        <div class="service-entry-content">
+                                            <h3>Our Commitment</h3>
+                                            <p>{{ $sections->get('services.commitment')?->body ?? 'Ujjawal Unnati Foundation is committed to transparency, accountability, and direct community impact — 100% of funds go to the people who need it most.' }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            {{-- Service Entry Content List End --}}
+
+                            {{-- Process Steps --}}
+                            @php
+                                $stepsSection = $sections->get('services.steps') ?? null;
+                                $steps = [
+                                    [
+                                        'no'   => '01',
+                                        'icon' => 'icon-service-entry-content-1.svg',
+                                        'title' => $stepsSection?->title ?? 'Community Outreach',
+                                        'desc'  => 'We identify communities in need through field surveys, local volunteers, and partner organisations across Noida and UP.',
+                                    ],
+                                    [
+                                        'no'   => '02',
+                                        'icon' => 'icon-service-entry-content-2.svg',
+                                        'title' => $stepsSection?->subtitle ?? 'Program Delivery',
+                                        'desc'  => 'Our trained team delivers services directly — at homes, schools, shelters, gaushalas, or community centres.',
+                                    ],
+                                    [
+                                        'no'   => '03',
+                                        'icon' => 'icon-service-entry-content-3.svg',
+                                        'title' => $stepsSection?->button_text ?? 'Follow-up & Impact',
+                                        'desc'  => 'We track progress, gather community feedback, and continuously improve our programs for lasting change.',
+                                    ],
+                                ];
+                            @endphp
+                            <div class="service-entry-steps">
+                                <h2 class="text-anime-style-2" data-cursor="-opaque">
+                                    {{ $sections->get('services.steps_heading')?->title ?? 'How we work with you' }}
+                                </h2>
+                                <p class="wow fadeInUp">
+                                    {{ $sections->get('services.steps_heading')?->subtitle ?? 'A simple, transparent process — from first contact to measurable community impact.' }}
+                                </p>
+                                <div class="service-entry-step-list">
+                                    @foreach ($steps as $i => $step)
+                                        <div class="service-entry-step-item {{ $i === 0 ? 'active' : '' }} wow fadeInUp"
+                                             @if($i > 0) data-wow-delay="{{ $i * 0.2 }}s" @endif>
+                                            <div class="service-entry-step-box">
+                                                <div class="service-entry-step-no">
+                                                    <h2>{{ $step['no'] }}</h2>
+                                                </div>
+                                                <div class="service-entry-step-content">
+                                                    <h3>{{ $step['title'] }}</h3>
+                                                    <p>{{ $step['desc'] }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="icon-box">
+                                                <img src="{{ asset('images/' . $step['icon']) }}" alt="">
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            {{-- Page Single FAQs --}}
+                            @if ($faqCategories->isNotEmpty())
+                                <div class="page-single-faqs">
+                                    <div class="section-title">
+                                        <h2 class="text-anime-style-2" data-cursor="-opaque">
+                                            Frequently asked <span>questions</span>
+                                        </h2>
+                                    </div>
+                                    @foreach ($faqCategories as $cat)
+                                        @if ($cat->faqs->isNotEmpty())
+                                            <x-faq-accordion :faqs="$cat->faqs" :id="'faq-service-' . $cat->id" />
+                                        @endif
+                                    @endforeach
+                                </div>
+                            @endif
+
                         </div>
+                        {{-- Service Entry End --}}
+
                     </div>
                 </div>
 
@@ -99,27 +223,33 @@
     {{-- Service Single End --}}
 
     {{-- Prev / Next Navigation --}}
-    @if($prevService || $nextService)
-    <div class="service-pagination" style="padding:24px 0; background:#f8f4ef; border-top:1px solid #e5e5e5;">
-        <div class="container">
-            <div class="row">
-                <div class="col-6">
-                    @if($prevService)
-                    <a href="{{ route('services.show', $prevService->slug) }}" style="color:#1a7a4a; font-size:14px;">
-                        ← {{ $prevService->title }}
-                    </a>
-                    @endif
-                </div>
-                <div class="col-6 text-end">
-                    @if($nextService)
-                    <a href="{{ route('services.show', $nextService->slug) }}" style="color:#1a7a4a; font-size:14px;">
-                        {{ $nextService->title }} →
-                    </a>
-                    @endif
+    @if ($prevService || $nextService)
+        <div class="related-posts-navigation">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="post-navigation-links">
+                            @if ($prevService)
+                                <div class="prev-post">
+                                    <a href="{{ route('services.show', $prevService->slug) }}">
+                                        <span>← Previous Service</span>
+                                        <h3>{{ $prevService->title }}</h3>
+                                    </a>
+                                </div>
+                            @endif
+                            @if ($nextService)
+                                <div class="next-post">
+                                    <a href="{{ route('services.show', $nextService->slug) }}">
+                                        <span>Next Service →</span>
+                                        <h3>{{ $nextService->title }}</h3>
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     @endif
 
 </x-layouts.app>

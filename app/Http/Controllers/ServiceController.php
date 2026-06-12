@@ -36,9 +36,14 @@ class ServiceController extends Controller
         $allServices = $this->serviceRepo->activeOrdered();
         $vm          = new ServiceViewModel(service: $service, allServices: $allServices);
 
+        $faqCategories = \App\Models\FaqCategory::with([
+            'faqs' => fn ($q) => $q->where('is_active', true)->orderBy('order'),
+        ])->orderBy('order')->get();
+
         return view('services.show', array_merge($vm->toArray(), [
-            'nextService' => $vm->nextService(),
-            'prevService' => $vm->prevService(),
+            'nextService'   => $vm->nextService(),
+            'prevService'   => $vm->prevService(),
+            'faqCategories' => $faqCategories,
         ]));
     }
 }
