@@ -7,6 +7,7 @@ use App\Contracts\Repositories\ServiceRepositoryInterface;
 use App\Contracts\Repositories\TestimonialRepositoryInterface;
 use App\Models\FaqCategory;
 use App\Models\SiteCounter;
+use App\ViewModels\ServiceViewModel;
 use Illuminate\View\View;
 
 class ServiceController extends Controller
@@ -32,9 +33,12 @@ class ServiceController extends Controller
         $service = $this->serviceRepo->findBySlug($slug);
         abort_if(! $service, 404);
 
-        return view('services.show', [
-            'service'  => $service,
-            'services' => $this->serviceRepo->activeOrdered(),
-        ]);
+        $allServices = $this->serviceRepo->activeOrdered();
+        $vm          = new ServiceViewModel(service: $service, allServices: $allServices);
+
+        return view('services.show', array_merge($vm->toArray(), [
+            'nextService' => $vm->nextService(),
+            'prevService' => $vm->prevService(),
+        ]));
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Repositories\PostRepositoryInterface;
 use App\Models\PostCategory;
+use App\ViewModels\PostViewModel;
 use Illuminate\View\View;
 
 class BlogController extends Controller
@@ -25,9 +26,20 @@ class BlogController extends Controller
         $post = $this->postRepo->findBySlug($slug);
         abort_if(! $post || ! $post->is_published, 404);
 
-        return view('blog.show', [
-            'post'        => $post,
-            'recentPosts' => $this->postRepo->recent(3),
-        ]);
+        $vm = new PostViewModel(
+            post:        $post,
+            recentPosts: collect($this->postRepo->recent(3)),
+        );
+
+        return view('blog.show', array_merge($vm->toArray(), [
+            'readingTime'   => $vm->readingTime(),
+            'formattedDate' => $vm->formattedDate(),
+            'authorName'    => $vm->authorName(),
+            'shareUrls'     => [
+                'facebook' => $vm->shareUrl('facebook'),
+                'twitter'  => $vm->shareUrl('twitter'),
+                'linkedin' => $vm->shareUrl('linkedin'),
+            ],
+        ]));
     }
 }

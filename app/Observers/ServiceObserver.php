@@ -3,17 +3,17 @@
 namespace App\Observers;
 
 use App\Models\Service;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 
 class ServiceObserver
 {
     public function saved(Service $service): void
     {
-        Artisan::call('view:clear');
+        Cache::flush();
     }
 
     public function deleted(Service $service): void
     {
-        Artisan::call('view:clear');
+        Cache::flush();
     }
 }

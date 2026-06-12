@@ -9,6 +9,7 @@ use App\Contracts\Repositories\ProgramRepositoryInterface;
 use App\Contracts\Repositories\ServiceRepositoryInterface;
 use App\Contracts\Repositories\TestimonialRepositoryInterface;
 use App\Models\SiteCounter;
+use App\ViewModels\HomeViewModel;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -24,14 +25,20 @@ class HomeController extends Controller
 
     public function index(): View
     {
-        return view('home.index', [
-            'services'     => $this->services->activeOrdered()->take(3),
-            'programs'     => $this->programs->activeOrdered()->take(3),
-            'causes'       => $this->causes->activeOrdered()->take(3),
-            'posts'        => $this->posts->recent(3),
-            'testimonials' => $this->testimonials->activeOrdered(),
-            'galleryItems' => $this->gallery->activeOrdered(),
-            'counters'     => SiteCounter::ordered()->get(),
-        ]);
+        $vm = new HomeViewModel(
+            services:     $this->services->activeOrdered()->take(3),
+            programs:     $this->programs->activeOrdered()->take(3),
+            causes:       $this->causes->activeOrdered()->take(3),
+            posts:        collect($this->posts->recent(3)),
+            testimonials: $this->testimonials->activeOrdered(),
+            galleryItems: $this->gallery->activeOrdered(),
+            counters:     SiteCounter::ordered()->get(),
+        );
+
+        return view('home.index', array_merge($vm->toArray(), [
+            'featuredCause' => $vm->featuredCause(),
+            'totalRaised'   => $vm->totalRaised(),
+            'totalGoal'     => $vm->totalGoal(),
+        ]));
     }
 }

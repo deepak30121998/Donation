@@ -98,4 +98,28 @@
     </div>
     {{-- Service Single End --}}
 
+    {{-- Prev / Next Navigation --}}
+    @if($prevService || $nextService)
+    <div class="service-pagination" style="padding:24px 0; background:#f8f4ef; border-top:1px solid #e5e5e5;">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    @if($prevService)
+                    <a href="{{ route('services.show', $prevService->slug) }}" style="color:#1a7a4a; font-size:14px;">
+                        ← {{ $prevService->title }}
+                    </a>
+                    @endif
+                </div>
+                <div class="col-6 text-end">
+                    @if($nextService)
+                    <a href="{{ route('services.show', $nextService->slug) }}" style="color:#1a7a4a; font-size:14px;">
+                        {{ $nextService->title }} →
+                    </a>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
 </x-layouts.app>
