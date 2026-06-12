@@ -7,7 +7,7 @@
                     @if(!empty($siteSettings?->logo_path))
                         <img src="{{ asset('storage/' . $siteSettings->logo_path) }}" alt="{{ $siteSettings->site_name }}">
                     @else
-                        <img src="{{ asset('images/logo.svg') }}" alt="{{ $siteSettings?->site_name ?? 'Logo' }}">
+                        <img src="{{ asset('images/logo.png') }}" alt="{{ $siteSettings?->site_name ?? 'Ujjawal Unnati Foundation' }}" style="height:50px;width:auto;">
                     @endif
                 </a>
                 <!-- Logo End -->

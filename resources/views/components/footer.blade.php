@@ -28,7 +28,7 @@
                             @elseif($footerSect?->getFirstMediaUrl('image'))
                                 <img src="{{ $footerSect->getFirstMediaUrl('image') }}" alt="{{ $siteSettings?->site_name ?? 'Logo' }}">
                             @else
-                                <img src="{{ asset('images/footer-logo.svg') }}" alt="{{ $siteSettings?->site_name ?? 'Logo' }}">
+                                <img src="{{ asset('images/footer-logo.png') }}" alt="{{ $siteSettings?->site_name ?? 'Ujjawal Unnati Foundation' }}" style="height:45px;width:auto;">
                             @endif
                         </div>
                         <!-- Footer Logo End -->
