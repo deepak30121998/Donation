@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             TeamMemberSeeder::class,
             TestimonialSeeder::class,
             GalleryItemSeeder::class,
+            PostSeeder::class,
         ]);
     }
 }
