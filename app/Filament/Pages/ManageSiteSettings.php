@@ -114,23 +114,23 @@ class ManageSiteSettings extends Page
                             ->schema([
                                 TextInput::make('facebook_url')
                                     ->label('Facebook URL')
-                                    ->url()
-                                    ->prefix('https://'),
+                                    ->placeholder('https://facebook.com/yourpage')
+                                    ->nullable(),
 
                                 TextInput::make('twitter_url')
                                     ->label('Twitter / X URL')
-                                    ->url()
-                                    ->prefix('https://'),
+                                    ->placeholder('https://twitter.com/yourhandle')
+                                    ->nullable(),
 
                                 TextInput::make('instagram_url')
                                     ->label('Instagram URL')
-                                    ->url()
-                                    ->prefix('https://'),
+                                    ->placeholder('https://instagram.com/yourhandle')
+                                    ->nullable(),
 
                                 TextInput::make('pinterest_url')
                                     ->label('Pinterest URL')
-                                    ->url()
-                                    ->prefix('https://'),
+                                    ->placeholder('https://pinterest.com/yourprofile')
+                                    ->nullable(),
                             ]),
 
                         Tabs\Tab::make('Homepage Hero')
@@ -155,19 +155,19 @@ class ManageSiteSettings extends Page
         $data = $this->form->getState();
         $settings = app(SiteSettings::class);
 
-        $settings->site_name        = $data['site_name'];
-        $settings->site_tagline     = $data['site_tagline'];
-        $settings->address          = $data['address'];
-        $settings->phone            = $data['phone'];
-        $settings->email            = $data['email'];
-        $settings->admin_email      = $data['admin_email'];
-        $settings->twitter_url      = $data['twitter_url'];
-        $settings->facebook_url     = $data['facebook_url'];
-        $settings->instagram_url    = $data['instagram_url'];
-        $settings->pinterest_url    = $data['pinterest_url'];
-        $settings->maps_embed_url   = $data['maps_embed_url'];
-        $settings->hero_headline    = $data['hero_headline'];
-        $settings->hero_subheadline = $data['hero_subheadline'];
+        $settings->site_name        = $data['site_name']        ?? '';
+        $settings->site_tagline     = $data['site_tagline']     ?? '';
+        $settings->address          = $data['address']          ?? '';
+        $settings->phone            = $data['phone']            ?? '';
+        $settings->email            = $data['email']            ?? '';
+        $settings->admin_email      = $data['admin_email']      ?? '';
+        $settings->twitter_url      = $data['twitter_url']   ?? '';
+        $settings->facebook_url     = $data['facebook_url']  ?? '';
+        $settings->instagram_url    = $data['instagram_url'] ?? '';
+        $settings->pinterest_url    = $data['pinterest_url'] ?? '';
+        $settings->maps_embed_url   = $data['maps_embed_url'] ?? '';
+        $settings->hero_headline    = $data['hero_headline']    ?? '';
+        $settings->hero_subheadline = $data['hero_subheadline'] ?? '';
 
         if (!empty($data['logo_path'])) {
             $settings->logo_path = is_array($data['logo_path'])

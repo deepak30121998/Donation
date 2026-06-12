@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\GalleryItems\Schemas;
 
 use App\Enums\GalleryCategory;
-use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -40,11 +40,10 @@ class GalleryItemForm
 
                 Section::make('Image')
                     ->schema([
-                        FileUpload::make('gallery_image')
+                        SpatieMediaLibraryFileUpload::make('gallery')
                             ->label('Gallery Image')
+                            ->collection('gallery')
                             ->image()
-                            ->disk('public')
-                            ->directory('gallery')
                             ->imagePreviewHeight('250')
                             ->columnSpanFull(),
                     ]),

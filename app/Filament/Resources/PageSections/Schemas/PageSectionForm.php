@@ -76,7 +76,7 @@ class PageSectionForm
                             ->maxLength(100),
 
                         TextInput::make('button_url')
-                            ->url()
+                            ->placeholder('/donation  or  https://example.com')
                             ->maxLength(500),
                     ]),
 

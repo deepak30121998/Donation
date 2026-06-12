@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\TeamMembers\Schemas;
 
-use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -17,11 +17,10 @@ class TeamMemberForm
             ->components([
                 Section::make('Photo')
                     ->schema([
-                        FileUpload::make('photo')
+                        SpatieMediaLibraryFileUpload::make('photo')
                             ->label('Profile Photo')
+                            ->collection('photo')
                             ->image()
-                            ->disk('public')
-                            ->directory('team')
                             ->imagePreviewHeight('200')
                             ->columnSpanFull(),
                     ]),
@@ -55,17 +54,14 @@ class TeamMemberForm
                     ->schema([
                         TextInput::make('twitter_url')
                             ->label('Twitter URL')
-                            ->url()
                             ->maxLength(500),
 
                         TextInput::make('facebook_url')
                             ->label('Facebook URL')
-                            ->url()
                             ->maxLength(500),
 
                         TextInput::make('instagram_url')
                             ->label('Instagram URL')
-                            ->url()
                             ->maxLength(500),
                     ]),
             ]);

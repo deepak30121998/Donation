@@ -13,6 +13,7 @@ use App\Contracts\Repositories\TeamMemberRepositoryInterface;
 use App\Contracts\Repositories\TestimonialRepositoryInterface;
 use App\Contracts\Services\ContactServiceInterface;
 use App\Contracts\Services\DonationServiceInterface;
+use App\Contracts\Services\NewsletterServiceInterface;
 use App\Repositories\EloquentCauseRepository;
 use App\Repositories\EloquentDonationRepository;
 use App\Repositories\EloquentFaqRepository;
@@ -24,6 +25,7 @@ use App\Repositories\EloquentTeamMemberRepository;
 use App\Repositories\EloquentTestimonialRepository;
 use App\Services\ContactService;
 use App\Services\DonationService;
+use App\Services\NewsletterService;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -47,6 +49,7 @@ class RepositoryServiceProvider extends ServiceProvider
         // Service bindings
         $this->app->bind(DonationServiceInterface::class, DonationService::class);
         $this->app->bind(ContactServiceInterface::class, ContactService::class);
+        $this->app->bind(NewsletterServiceInterface::class, NewsletterService::class);
     }
 
     /**

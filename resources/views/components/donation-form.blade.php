@@ -2,6 +2,14 @@
     'causes' => null,
 ])
 
+@php
+    $amountsSection = $sections->get('global.donation_amounts') ?? null;
+    $rawAmounts = $amountsSection?->body
+        ? array_values(array_filter(array_map('trim', explode("\n", strip_tags($amountsSection->body)))))
+        : ['100', '200', '300', '400', '500', '600'];
+    $defaultAmount = (string) ($rawAmounts[0] ?? '100');
+@endphp
+
 <!-- Campaign Donation Form Start -->
 <div class="donate-form campaign-donate-form">
     <form id="donateForm" action="{{ route('donation.store') }}" method="POST">
@@ -20,35 +28,13 @@
             </div>
 
             <fieldset class="donate-value-box">
-                <div class="donate-value">
-                    <input type="radio" id="value1" name="amount" value="100" {{ old('amount', '100') === '100' ? 'checked' : '' }}>
-                    <label for="value1">$ 100.00</label>
-                </div>
-
-                <div class="donate-value">
-                    <input type="radio" id="value2" name="amount" value="200" {{ old('amount') === '200' ? 'checked' : '' }}>
-                    <label for="value2">$ 200.00</label>
-                </div>
-
-                <div class="donate-value">
-                    <input type="radio" id="value3" name="amount" value="300" {{ old('amount') === '300' ? 'checked' : '' }}>
-                    <label for="value3">$ 300.00</label>
-                </div>
-
-                <div class="donate-value">
-                    <input type="radio" id="value4" name="amount" value="400" {{ old('amount') === '400' ? 'checked' : '' }}>
-                    <label for="value4">$ 400.00</label>
-                </div>
-
-                <div class="donate-value">
-                    <input type="radio" id="value5" name="amount" value="500" {{ old('amount') === '500' ? 'checked' : '' }}>
-                    <label for="value5">$ 500.00</label>
-                </div>
-
-                <div class="donate-value">
-                    <input type="radio" id="value6" name="amount" value="600" {{ old('amount') === '600' ? 'checked' : '' }}>
-                    <label for="value6">$ 600.00</label>
-                </div>
+                @foreach($rawAmounts as $i => $amt)
+                    <div class="donate-value">
+                        <input type="radio" id="value{{ $i + 1 }}" name="amount" value="{{ $amt }}"
+                               {{ old('amount', $defaultAmount) === $amt ? 'checked' : '' }}>
+                        <label for="value{{ $i + 1 }}">$ {{ number_format((float)$amt, 2) }}</label>
+                    </div>
+                @endforeach
             </fieldset>
         </div>
         <!-- Amount Section End -->

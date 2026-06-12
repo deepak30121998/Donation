@@ -5,8 +5,8 @@ namespace App\Filament\Resources\Posts\Schemas;
 use App\Models\PostCategory;
 use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -63,11 +63,10 @@ class PostForm
 
                 Section::make('Featured Image')
                     ->schema([
-                        FileUpload::make('featured_image')
+                        SpatieMediaLibraryFileUpload::make('featured')
                             ->label('Featured Image')
+                            ->collection('featured')
                             ->image()
-                            ->disk('public')
-                            ->directory('posts')
                             ->imagePreviewHeight('200')
                             ->columnSpanFull(),
                     ]),

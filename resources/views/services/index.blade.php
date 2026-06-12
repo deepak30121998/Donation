@@ -37,6 +37,10 @@
     {{-- Services Grid End --}}
 
     {{-- Testimonials Section --}}
+    @php
+        $testSection = $sections->get('services.testimonials') ?? $sections->get('home.testimonials');
+        $reviewCtr   = $counters->firstWhere('key', 'customer_reviews') ?? $counters->firstWhere('key', 'helped_count');
+    @endphp
     @if ($testimonials->isNotEmpty())
     <div class="our-testimonials">
         <div class="container">
@@ -45,7 +49,7 @@
                     <div class="testimonials-image">
                         <div class="testimonials-img">
                             <figure class="image-anime reveal">
-                                <img src="{{ asset('images/testimonials-image.jpg') }}" alt="">
+                                <img src="{{ $testSection?->getFirstMediaUrl('image') ?: asset('images/testimonials-image.jpg') }}" alt="">
                             </figure>
                         </div>
                         <div class="helthcare-support-circle">
@@ -54,7 +58,7 @@
                             </a>
                         </div>
                         <div class="client-review-box">
-                            <h2><span class="counter">20</span>k</h2>
+                            <h2><span class="counter">{{ $reviewCtr ? number_format($reviewCtr->value / 1000, 0) : '20' }}</span>k</h2>
                             <p>customer review</p>
                         </div>
                     </div>
@@ -63,8 +67,8 @@
                 <div class="col-lg-6">
                     <div class="testimonials-content">
                         <div class="section-title">
-                            <h3 class="wow fadeInUp">testimonials</h3>
-                            <h2 class="text-anime-style-2" data-cursor="-opaque">What people say about us</h2>
+                            <h3 class="wow fadeInUp">{{ $testSection?->subtitle ?? 'testimonials' }}</h3>
+                            <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $testSection?->title ?? 'What people say about us' }}</h2>
                         </div>
 
                         <div class="testimonial-slider">
@@ -88,14 +92,15 @@
     {{-- Testimonials Section End --}}
 
     {{-- FAQs Section --}}
+    @php $faqsSect = $sections->get('services.faqs') ?? $sections->get('about.faqs'); @endphp
     @if ($faqCategories->isNotEmpty())
     <div class="page-faqs">
         <div class="container">
             <div class="row section-row">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <h3 class="wow fadeInUp">faqs</h3>
-                        <h2 class="text-anime-style-2" data-cursor="-opaque">Frequently asked questions</h2>
+                        <h3 class="wow fadeInUp">{{ $faqsSect?->subtitle ?? 'faqs' }}</h3>
+                        <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $faqsSect?->title ?? 'Frequently asked questions' }}</h2>
                     </div>
                 </div>
             </div>

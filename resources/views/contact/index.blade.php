@@ -20,8 +20,9 @@
                             </div>
                             <div class="contact-info-content">
                                 <h3>contact us</h3>
-                                <p><a href="tel:+123456789">+123 456 789</a></p>
-                                <p><a href="tel:+123456789">+123 456 789</a></p>
+                                @if($siteSettings?->phone)
+                                    <p><a href="tel:{{ $siteSettings->phone }}">{{ $siteSettings->phone }}</a></p>
+                                @endif
                             </div>
                         </div>
 
@@ -31,8 +32,9 @@
                             </div>
                             <div class="contact-info-content">
                                 <h3>e-mail us</h3>
-                                <p><a href="mailto:example@mail.com">example@mail.com</a></p>
-                                <p><a href="mailto:domainname@gmail.com">domainname@gmail.com</a></p>
+                                @if($siteSettings?->email)
+                                    <p><a href="mailto:{{ $siteSettings->email }}">{{ $siteSettings->email }}</a></p>
+                                @endif
                             </div>
                         </div>
 
@@ -42,7 +44,9 @@
                             </div>
                             <div class="contact-info-content">
                                 <h3>location</h3>
-                                <p>12345 Unity Avenue Suite 100 Springfield, USA 54321</p>
+                                @if($siteSettings?->address)
+                                    <p>{{ $siteSettings->address }}</p>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -56,16 +60,18 @@
     <div class="contact-form-section">
         <div class="container-fluid">
             <div class="row no-gutters">
+                @if($siteSettings?->maps_embed_url)
                 <div class="col-lg-6 order-lg-1 order-2">
                     <div class="google-map-iframe">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96737.10562045308!2d-74.08535042841811!3d40.739265258395164!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1703158537552!5m2!1sen!2sin"
+                            src="{{ $siteSettings->maps_embed_url }}"
                             allowfullscreen=""
                             loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade">
                         </iframe>
                     </div>
                 </div>
+                @endif
 
                 <div class="col-lg-6 order-lg-2 order-1">
                     <div class="contact-form-box">
@@ -164,6 +170,10 @@
 
                                     <div class="col-md-12">
                                         <button type="submit" class="btn-default"><span>send message</span></button>
+                                    </div>
+
+                                    <div class="col-md-12 mt-3">
+                                        <div id="msgSubmit"></div>
                                     </div>
                                 </div>
                             </form>

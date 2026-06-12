@@ -6,6 +6,8 @@ return new class extends SettingsMigration
 {
     public function up(): void
     {
-        $this->migrator->add('site.logo_path', null);
+        if (! $this->migrator->exists('site.logo_path')) {
+            $this->migrator->add('site.logo_path', null);
+        }
     }
 };

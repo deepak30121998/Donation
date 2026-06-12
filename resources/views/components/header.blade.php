@@ -4,10 +4,10 @@
             <div class="container">
                 <!-- Logo Start -->
                 <a class="navbar-brand" href="{{ route('home') }}">
-                    @if(!empty($settings->logo_path))
-                        <img src="{{ asset('storage/' . $settings->logo_path) }}" alt="{{ $settings->site_name }}">
+                    @if(!empty($siteSettings?->logo_path))
+                        <img src="{{ asset('storage/' . $siteSettings->logo_path) }}" alt="{{ $siteSettings->site_name }}">
                     @else
-                        <img src="{{ asset('images/logo.svg') }}" alt="{{ $settings->site_name ?? 'Logo' }}">
+                        <img src="{{ asset('images/logo.svg') }}" alt="{{ $siteSettings?->site_name ?? 'Logo' }}">
                     @endif
                 </a>
                 <!-- Logo End -->
@@ -64,13 +64,14 @@
                     </div>
 
                     <!-- Contact Now Box Start -->
+                    @php $headerSect = $sections->get('global.header') ?? null; @endphp
                     <div class="contact-now-box">
                         <div class="icon-box">
                             <img src="{{ asset('images/icon-phone.svg') }}" alt="">
                         </div>
                         <div class="contact-now-box-content">
-                            <p>need help !</p>
-                            <h3><a href="tel:+01789987645">(+01) 789 987 645</a></h3>
+                            <p>{{ $headerSect?->subtitle ?? 'need help !' }}</p>
+                            <h3><a href="tel:{{ preg_replace('/\s+/', '', $siteSettings?->phone ?? '') }}">{{ $siteSettings?->phone ?? '' }}</a></h3>
                         </div>
                     </div>
                     <!-- Contact Now Box End -->

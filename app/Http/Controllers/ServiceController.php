@@ -6,6 +6,7 @@ use App\Contracts\Repositories\FaqRepositoryInterface;
 use App\Contracts\Repositories\ServiceRepositoryInterface;
 use App\Contracts\Repositories\TestimonialRepositoryInterface;
 use App\Models\FaqCategory;
+use App\Models\SiteCounter;
 use Illuminate\View\View;
 
 class ServiceController extends Controller
@@ -22,6 +23,7 @@ class ServiceController extends Controller
             'services'      => $this->serviceRepo->activeOrdered(),
             'testimonials'  => $this->testimonials->activeOrdered(),
             'faqCategories' => FaqCategory::with(['faqs' => fn ($q) => $q->where('is_active', true)->orderBy('order')])->orderBy('order')->get(),
+            'counters'      => SiteCounter::ordered()->get(),
         ]);
     }
 

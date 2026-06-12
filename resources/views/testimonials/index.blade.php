@@ -37,14 +37,15 @@
     {{-- Testimonials Grid End --}}
 
     {{-- FAQs Section --}}
+    @php $faqsSect = $sections->get('testimonials.faqs') ?? $sections->get('about.faqs'); @endphp
     @if ($faqCategories->isNotEmpty())
     <div class="page-faqs">
         <div class="container">
             <div class="row section-row">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <h3 class="wow fadeInUp">faqs</h3>
-                        <h2 class="text-anime-style-2" data-cursor="-opaque">Frequently asked questions</h2>
+                        <h3 class="wow fadeInUp">{{ $faqsSect?->subtitle ?? 'faqs' }}</h3>
+                        <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $faqsSect?->title ?? 'Frequently asked questions' }}</h2>
                     </div>
                 </div>
             </div>

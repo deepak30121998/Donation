@@ -13,7 +13,7 @@ class PageSection extends Model implements HasMedia
 
     protected $fillable = [
         'page', 'section_key', 'title', 'subtitle',
-        'body', 'button_text', 'button_url', 'is_active',
+        'body', 'button_text', 'button_url', 'is_active', 'order',
     ];
 
     protected function casts(): array

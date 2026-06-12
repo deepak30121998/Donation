@@ -53,5 +53,20 @@ class AppServiceProvider extends ServiceProvider
             }
             $view->with('sections', $sections);
         });
+
+        // Share nav services (footer + header dropdowns)
+        View::composer('*', function ($view) {
+            if (!\Illuminate\Support\Facades\Schema::hasTable('services')) {
+                return;
+            }
+            static $navServices = null;
+            if ($navServices === null) {
+                $navServices = \App\Models\Service::where('is_active', true)
+                    ->orderBy('order')
+                    ->take(4)
+                    ->get(['id', 'title', 'slug']);
+            }
+            $view->with('navServices', $navServices);
+        });
     }
 }

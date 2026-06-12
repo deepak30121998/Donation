@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Services\Schemas;
 
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -51,15 +51,22 @@ class ServiceForm
                             ->columnSpanFull(),
                     ]),
 
-                Section::make('Image')
+                Section::make('Images')
+                    ->columns(2)
                     ->schema([
-                        FileUpload::make('icon_image')
-                            ->label('Service Image')
+                        SpatieMediaLibraryFileUpload::make('thumb')
+                            ->label('Card Thumbnail')
+                            ->collection('thumb')
                             ->image()
-                            ->disk('public')
-                            ->directory('services')
-                            ->imagePreviewHeight('200')
-                            ->columnSpanFull(),
+                            ->imagePreviewHeight('180')
+                            ->helperText('Shown on service cards (listing page).'),
+
+                        SpatieMediaLibraryFileUpload::make('banner')
+                            ->label('Detail Page Banner')
+                            ->collection('banner')
+                            ->image()
+                            ->imagePreviewHeight('180')
+                            ->helperText('Shown on the service detail page.'),
                     ]),
 
                 Section::make('SEO')

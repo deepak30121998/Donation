@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Programs\Schemas;
 
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -51,15 +51,22 @@ class ProgramForm
                             ->columnSpanFull(),
                     ]),
 
-                Section::make('Image')
+                Section::make('Images')
+                    ->columns(2)
                     ->schema([
-                        FileUpload::make('program_image')
-                            ->label('Program Image')
+                        SpatieMediaLibraryFileUpload::make('thumb')
+                            ->label('Card Thumbnail')
+                            ->collection('thumb')
                             ->image()
-                            ->disk('public')
-                            ->directory('programs')
-                            ->imagePreviewHeight('200')
-                            ->columnSpanFull(),
+                            ->imagePreviewHeight('180')
+                            ->helperText('Shown on program cards (listing page).'),
+
+                        SpatieMediaLibraryFileUpload::make('banner')
+                            ->label('Detail Page Banner')
+                            ->collection('banner')
+                            ->image()
+                            ->imagePreviewHeight('180')
+                            ->helperText('Shown on the program detail page.'),
                     ]),
 
                 Section::make('SEO')

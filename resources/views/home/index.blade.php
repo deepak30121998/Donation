@@ -1,7 +1,11 @@
 <x-layouts.app title="Home">
 
     {{-- Hero Section --}}
-    @php $heroImg = $sections->get('home.hero')?->getFirstMediaUrl('image'); @endphp
+    @php
+        $heroSection = $sections->get('home.hero');
+        $heroImg = $heroSection?->getFirstMediaUrl('image');
+        $heroVideoUrl = $heroSection?->button_url ?: 'https://www.youtube.com/watch?v=Y-x0efG1seA';
+    @endphp
     <div class="hero parallaxie" @if($heroImg) style="background-image: url('{{ $heroImg }}')" @endif>
         <div class="container">
             <div class="row align-items-center">
@@ -19,22 +23,29 @@
                             </div>
                             <div class="video-play-button">
                                 <p>play video</p>
-                                <a href="https://www.youtube.com/watch?v=Y-x0efG1seA" class="popup-video" data-cursor-text="Play">
+                                <a href="{{ $heroVideoUrl }}" class="popup-video" data-cursor-text="Play">
                                     <i class="fa-solid fa-play"></i>
                                 </a>
                             </div>
                         </div>
 
+                        @php $heroFeatures = $sections->get('home.hero_features'); @endphp
                         <div class="hero-footer wow fadeInUp" data-wow-delay="0.6s">
                             <div class="hero-list">
                                 <ul>
-                                    <li>Education and Skill Development</li>
-                                    <li>Women and Youth Empowerment</li>
+                                    @if($heroFeatures?->body)
+                                        @foreach(array_filter(explode("\n", strip_tags($heroFeatures->body))) as $item)
+                                            <li>{{ trim($item) }}</li>
+                                        @endforeach
+                                    @else
+                                        <li>Education and Skill Development</li>
+                                        <li>Women and Youth Empowerment</li>
+                                    @endif
                                 </ul>
                             </div>
                             <div class="hero-help-families">
-                                <h3>help lorem families</h3>
-                                <p>Your gift of $235 can feed 40 children</p>
+                                <h3>{{ $heroFeatures?->title ?? 'Help Families In Need' }}</h3>
+                                <p>{{ $heroFeatures?->subtitle ?? 'Your gift of $235 can feed 40 children' }}</p>
                             </div>
                         </div>
                     </div>
@@ -46,9 +57,12 @@
 
     {{-- About Us Section --}}
     @php
-        $aboutSection = $sections->get('home.about');
-        $aboutImg1 = $aboutSection?->getFirstMediaUrl('image') ?: asset('images/about-img-1.jpg');
-        $aboutImg2 = $aboutSection?->getFirstMediaUrl('image_2') ?: asset('images/about-img-2.jpg');
+        $aboutSection  = $sections->get('home.about');
+        $aboutFeature  = $sections->get('home.about_feature');
+        $aboutImg1     = $aboutSection?->getFirstMediaUrl('image') ?: asset('images/about-img-1.jpg');
+        $aboutImg2     = $aboutSection?->getFirstMediaUrl('image_2') ?: asset('images/about-img-2.jpg');
+        $fundedCounter = $counters->firstWhere('key', 'funded_amount');
+        $helpedCounter = $counters->firstWhere('key', 'helped_count');
     @endphp
     <div class="about-us">
         <div class="container">
@@ -67,7 +81,7 @@
                         </div>
                         <div class="need-fund-box">
                             <img src="{{ asset('images/icon-funded-dollar.svg') }}" alt="">
-                            <p>We've funded <span class="counter">75</span>k Dollars</p>
+                            <p>We've funded <span class="counter">{{ $fundedCounter?->value ?? 75 }}</span>{{ $fundedCounter?->suffix ?? 'k' }} Dollars</p>
                         </div>
                     </div>
                 </div>
@@ -87,12 +101,14 @@
                                         <img src="{{ asset('images/icon-about-support.svg') }}" alt="">
                                     </div>
                                     <div class="about-support-content">
-                                        <h3>Healthcare Support</h3>
-                                        <p>Providing essential healthcare services and resources to communities.</p>
+                                        <h3>{{ $aboutFeature?->title ?? 'Healthcare Support' }}</h3>
+                                        <p>{{ $aboutFeature?->subtitle ?? 'Providing essential healthcare services and resources to communities.' }}</p>
                                     </div>
                                 </div>
                                 <div class="about-btn wow fadeInUp" data-wow-delay="0.6s">
-                                    <a href="{{ route('about') }}" class="btn-default">about us</a>
+                                    <a href="{{ $aboutSection?->button_url ?? route('about') }}" class="btn-default">
+                                        {{ $aboutSection?->button_text ?? 'about us' }}
+                                    </a>
                                 </div>
                             </div>
 
@@ -103,8 +119,8 @@
                                     </figure>
                                 </div>
                                 <div class="helped-fund-content">
-                                    <h2><span class="counter">75,958</span></h2>
-                                    <h3>helped fund</h3>
+                                    <h2><span class="counter">{{ number_format($helpedCounter?->value ?? 75958) }}</span>{{ $helpedCounter?->suffix ?? '' }}</h2>
+                                    <h3>{{ $helpedCounter?->label ?? 'helped fund' }}</h3>
                                     <p>Supporting growth through community-funding.</p>
                                 </div>
                             </div>
@@ -147,14 +163,24 @@
     {{-- Our Services Section End --}}
 
     {{-- What We Do Section --}}
+    @php
+        $whatWeDo   = $sections->get('home.what_we_do');
+        $whatWeDo1  = $sections->get('home.what_we_do_1');
+        $whatWeDo2  = $sections->get('home.what_we_do_2');
+        $whatWeDo3  = $sections->get('home.what_we_do_3');
+        $whatWeDoImgs = [
+            $whatWeDo?->getFirstMediaUrl('image') ?: asset('images/what-we-do-image-1.jpg'),
+            $whatWeDo?->getFirstMediaUrl('image_2') ?: asset('images/what-we-do-image-2.jpg'),
+        ];
+    @endphp
     <div class="what-we-do">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="what-we-do-content">
                         <div class="section-title">
-                            <h3 class="wow fadeInUp">what we do</h3>
-                            <h2 class="text-anime-style-2" data-cursor="-opaque">Building hope creating lasting change</h2>
+                            <h3 class="wow fadeInUp">{{ $whatWeDo?->subtitle ?? 'what we do' }}</h3>
+                            <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $whatWeDo?->title ?? 'Building hope creating lasting change' }}</h2>
                         </div>
 
                         <div class="what-we-list">
@@ -163,8 +189,8 @@
                                     <img src="{{ asset('images/icon-what-we-1.svg') }}" alt="">
                                 </div>
                                 <div class="what-we-item-content">
-                                    <h3>economic empowerment</h3>
-                                    <p>Empowering individuals through job training, financial literacy, and small business support to create sustainable livelihoods.</p>
+                                    <h3>{{ $whatWeDo1?->title ?? 'economic empowerment' }}</h3>
+                                    <p>{{ $whatWeDo1?->subtitle ?? 'Empowering individuals through job training, financial literacy, and small business support.' }}</p>
                                 </div>
                             </div>
 
@@ -173,8 +199,8 @@
                                     <img src="{{ asset('images/icon-what-we-2.svg') }}" alt="">
                                 </div>
                                 <div class="what-we-item-content">
-                                    <h3>clean water and sanitation</h3>
-                                    <p>Empowering individuals through job training, financial literacy, and small business support to create sustainable livelihoods.</p>
+                                    <h3>{{ $whatWeDo2?->title ?? 'clean water and sanitation' }}</h3>
+                                    <p>{{ $whatWeDo2?->subtitle ?? 'Empowering individuals through job training, financial literacy, and small business support.' }}</p>
                                 </div>
                             </div>
 
@@ -183,8 +209,8 @@
                                     <img src="{{ asset('images/icon-what-we-3.svg') }}" alt="">
                                 </div>
                                 <div class="what-we-item-content">
-                                    <h3>community development</h3>
-                                    <p>Empowering individuals through job training, financial literacy, and small business support to create sustainable livelihoods.</p>
+                                    <h3>{{ $whatWeDo3?->title ?? 'community development' }}</h3>
+                                    <p>{{ $whatWeDo3?->subtitle ?? 'Empowering individuals through job training, financial literacy, and small business support.' }}</p>
                                 </div>
                             </div>
                         </div>
@@ -195,12 +221,12 @@
                     <div class="what-we-do-images">
                         <div class="what-we-do-img-1">
                             <figure class="image-anime reveal">
-                                <img src="{{ asset('images/what-we-do-image-1.jpg') }}" alt="">
+                                <img src="{{ $whatWeDoImgs[0] }}" alt="">
                             </figure>
                         </div>
                         <div class="what-we-do-img-2">
                             <figure class="image-anime">
-                                <img src="{{ asset('images/what-we-do-image-2.jpg') }}" alt="">
+                                <img src="{{ $whatWeDoImgs[1] }}" alt="">
                             </figure>
                         </div>
                         <div class="donate-now-box">
@@ -238,6 +264,14 @@
     {{-- Our Causes Section End --}}
 
     {{-- Why Choose Us Section --}}
+    @php
+        $whyChoose     = $sections->get('home.why_choose_us');
+        $whyChooseImg1 = $whyChoose?->getFirstMediaUrl('image') ?: asset('images/why-choose-img-1.jpg');
+        $whyChooseImg2 = $whyChoose?->getFirstMediaUrl('image_2') ?: asset('images/why-choose-img-2.jpg');
+        $whyChooseItems = $whyChoose?->body
+            ? array_values(array_filter(array_map('trim', explode("\n", strip_tags($whyChoose->body)))))
+            : ['community-centered approach', 'transparency and accountability', 'empowerment through partnership', 'volunteer and donor engagement'];
+    @endphp
     <div class="why-choose-us">
         <div class="container">
             <div class="row align-items-center">
@@ -245,12 +279,12 @@
                     <div class="why-choose-images">
                         <div class="why-choose-image-1">
                             <figure class="image-anime">
-                                <img src="{{ asset('images/why-choose-img-1.jpg') }}" alt="">
+                                <img src="{{ $whyChooseImg1 }}" alt="">
                             </figure>
                         </div>
                         <div class="why-choose-image-2">
                             <figure class="image-anime">
-                                <img src="{{ asset('images/why-choose-img-2.jpg') }}" alt="">
+                                <img src="{{ $whyChooseImg2 }}" alt="">
                             </figure>
                         </div>
                     </div>
@@ -259,17 +293,16 @@
                 <div class="col-lg-6">
                     <div class="why-choose-content">
                         <div class="section-title">
-                            <h3 class="wow fadeInUp">why choose us</h3>
-                            <h2 class="text-anime-style-2" data-cursor="-opaque">Why we stand out together</h2>
-                            <p class="wow fadeInUp" data-wow-delay="0.2s">Our dedication, transparency, and community-driven approach set us apart. Partnering with us means supporting programs that create meaningful change.</p>
+                            <h3 class="wow fadeInUp">{{ $whyChoose?->subtitle ?? 'why choose us' }}</h3>
+                            <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $whyChoose?->title ?? 'Why we stand out together' }}</h2>
+                            <p class="wow fadeInUp" data-wow-delay="0.2s">{{ $whyChoose?->subtitle ?? 'Our dedication, transparency, and community-driven approach set us apart.' }}</p>
                         </div>
 
                         <div class="why-choose-list wow fadeInUp" data-wow-delay="0.4s">
                             <ul>
-                                <li>community-centered approach</li>
-                                <li>transparency and accountability</li>
-                                <li>empowerment through partnership</li>
-                                <li>volunteer and donor engagement</li>
+                                @foreach($whyChooseItems as $item)
+                                    <li>{{ $item }}</li>
+                                @endforeach
                             </ul>
                         </div>
 
@@ -310,9 +343,14 @@
                     </div>
                 @endforeach
 
+                @php $programsFooter = $sections->get('home.programs_footer'); @endphp
                 <div class="col-lg-12">
                     <div class="section-footer-text wow fadeInUp" data-wow-delay="0.6s">
-                        <p>Your monthly <a href="{{ route('donation.index') }}">gift of $36</a> ensures that kids living in poverty have access to life-changing benefits</p>
+                        @if($programsFooter?->body)
+                            <p>{!! $programsFooter->body !!}</p>
+                        @else
+                            <p>Your monthly <a href="{{ route('donation.index') }}">gift of $36</a> ensures that kids living in poverty have access to life-changing benefits</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -321,23 +359,25 @@
     {{-- Our Programs Section End --}}
 
     {{-- Scrolling Ticker --}}
+    @php
+        $tickerSection = $sections->get('home.ticker');
+        $tickerItems = $tickerSection?->body
+            ? array_values(array_filter(array_map('trim', explode("\n", strip_tags($tickerSection->body)))))
+            : ['Health Support', 'Education Support', 'Food Support'];
+        // Duplicate to fill the ticker (need at least 6 items for smooth scroll)
+        while (count($tickerItems) < 6) { $tickerItems = array_merge($tickerItems, $tickerItems); }
+    @endphp
     <div class="scrolling-ticker">
         <div class="scrolling-ticker-box">
             <div class="scrolling-content">
-                <span><img src="{{ asset('images/icon-asterisk.svg') }}" alt="">Health Support</span>
-                <span><img src="{{ asset('images/icon-asterisk.svg') }}" alt="">Education Support</span>
-                <span><img src="{{ asset('images/icon-asterisk.svg') }}" alt="">Food Support</span>
-                <span><img src="{{ asset('images/icon-asterisk.svg') }}" alt="">Health Support</span>
-                <span><img src="{{ asset('images/icon-asterisk.svg') }}" alt="">Education Support</span>
-                <span><img src="{{ asset('images/icon-asterisk.svg') }}" alt="">Food Support</span>
+                @foreach($tickerItems as $item)
+                    <span><img src="{{ asset('images/icon-asterisk.svg') }}" alt="">{{ $item }}</span>
+                @endforeach
             </div>
-            <div class="scrolling-content">
-                <span><img src="{{ asset('images/icon-asterisk.svg') }}" alt="">Health Support</span>
-                <span><img src="{{ asset('images/icon-asterisk.svg') }}" alt="">Education Support</span>
-                <span><img src="{{ asset('images/icon-asterisk.svg') }}" alt="">Food Support</span>
-                <span><img src="{{ asset('images/icon-asterisk.svg') }}" alt="">Health Support</span>
-                <span><img src="{{ asset('images/icon-asterisk.svg') }}" alt="">Education Support</span>
-                <span><img src="{{ asset('images/icon-asterisk.svg') }}" alt="">Food Support</span>
+            <div class="scrolling-content" aria-hidden="true">
+                @foreach($tickerItems as $item)
+                    <span><img src="{{ asset('images/icon-asterisk.svg') }}" alt="">{{ $item }}</span>
+                @endforeach
             </div>
         </div>
     </div>
@@ -426,7 +466,7 @@
                 <div class="col-lg-6">
                     <div class="intro-video-box">
                         <div class="video-play-button">
-                            <a href="https://www.youtube.com/watch?v=Y-x0efG1seA" class="popup-video" data-cursor-text="Play">
+                            <a href="{{ $sections->get('home.donate_cta')?->button_url ?: $heroVideoUrl }}" class="popup-video" data-cursor-text="Play">
                                 <i class="fa-solid fa-play"></i>
                             </a>
                         </div>
@@ -476,14 +516,15 @@
     {{-- Donate Now Section End --}}
 
     {{-- How It Works Section --}}
+    @php $howItWorks = $sections->get('home.how_it_works'); @endphp
     <div class="how-it-work">
         <div class="container">
             <div class="row section-row">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <h3 class="wow fadeInUp">How it work</h3>
-                        <h2 class="text-anime-style-2" data-cursor="-opaque">Step by step working process</h2>
-                        <p class="wow fadeInUp" data-wow-delay="0.2s">Our step-by-step process ensures meaningful change: identifying community needs, designing tailored programs, implementing sustainable solutions.</p>
+                        <h3 class="wow fadeInUp">{{ $howItWorks?->subtitle ?? 'How it work' }}</h3>
+                        <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $howItWorks?->title ?? 'Step by step working process' }}</h2>
+                        <p class="wow fadeInUp" data-wow-delay="0.2s">{!! $howItWorks?->body ?? 'Our step-by-step process ensures meaningful change: identifying community needs, designing tailored programs, implementing sustainable solutions.' !!}</p>
                     </div>
                 </div>
             </div>
@@ -561,9 +602,14 @@
                     </div>
                 </div>
 
+                @php $howItWorksFooter = $sections->get('home.how_it_works'); @endphp
                 <div class="col-lg-12">
                     <div class="section-footer-text how-work-footer-text wow fadeInUp" data-wow-delay="0.8s">
-                        <p><span>$250</span> Help Our Kids with Education, Food, Health Support. <a href="{{ route('donation.index') }}">Donate now</a></p>
+                        @if($howItWorksFooter?->button_text)
+                            <p>{{ $howItWorksFooter->button_text }}. <a href="{{ $howItWorksFooter->button_url ?: route('donation.index') }}">Donate now</a></p>
+                        @else
+                            <p><span>$250</span> Help Our Kids with Education, Food, Health Support. <a href="{{ route('donation.index') }}">Donate now</a></p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -587,8 +633,12 @@
                                 <img src="{{ asset('images/healthcare-support-circle.svg') }}" alt="">
                             </a>
                         </div>
+                        @php
+                            $reviewCounter = $counters->firstWhere('key', 'customer_reviews')
+                                ?? $counters->firstWhere('key', 'helped_count');
+                        @endphp
                         <div class="client-review-box">
-                            <h2><span class="counter">20</span>k</h2>
+                            <h2><span class="counter">{{ $reviewCounter ? number_format($reviewCounter->value / 1000, 0) : '20' }}</span>k</h2>
                             <p>customer review</p>
                         </div>
                     </div>

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Testimonials\Schemas;
 
-use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -19,11 +19,10 @@ class TestimonialForm
                 Section::make('Author')
                     ->columns(2)
                     ->schema([
-                        FileUpload::make('photo')
+                        SpatieMediaLibraryFileUpload::make('photo')
                             ->label('Author Photo')
+                            ->collection('photo')
                             ->image()
-                            ->disk('public')
-                            ->directory('testimonials')
                             ->imagePreviewHeight('150')
                             ->columnSpanFull(),
 

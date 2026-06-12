@@ -276,17 +276,19 @@
 	});
 
 	function submitForm(){
-		/* Ajax call to submit form */
+		var formAction = $contactform.attr("action");
 		$.ajax({
 			type: "POST",
-			url: "form-process.php",
+			url: formAction,
 			data: $contactform.serialize(),
-			success : function(text){
-				if (text === "success"){
-					formSuccess();
-				} else {
-					submitMSG(false,text);
-				}
+			success: function(){
+				formSuccess();
+			},
+			error: function(xhr){
+				var msg = xhr.responseJSON && xhr.responseJSON.message
+					? xhr.responseJSON.message
+					: "Something went wrong. Please try again.";
+				submitMSG(false, msg);
 			}
 		});
 	}

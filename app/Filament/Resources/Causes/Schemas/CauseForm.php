@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Causes\Schemas;
 
-use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -62,11 +62,10 @@ class CauseForm
 
                 Section::make('Image')
                     ->schema([
-                        FileUpload::make('cause_image')
+                        SpatieMediaLibraryFileUpload::make('thumb')
                             ->label('Cause Image')
+                            ->collection('thumb')
                             ->image()
-                            ->disk('public')
-                            ->directory('causes')
                             ->imagePreviewHeight('200')
                             ->columnSpanFull(),
                     ]),
