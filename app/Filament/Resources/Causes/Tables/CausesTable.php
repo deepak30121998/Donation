@@ -24,12 +24,12 @@ class CausesTable
 
                 TextColumn::make('goal_amount')
                     ->label('Goal')
-                    ->money('USD')
+                    ->money('INR')
                     ->sortable(),
 
                 TextColumn::make('raised_amount')
                     ->label('Raised')
-                    ->money('USD')
+                    ->money('INR')
                     ->sortable(),
 
                 IconColumn::make('is_active')

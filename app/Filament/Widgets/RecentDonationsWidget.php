@@ -31,7 +31,7 @@ class RecentDonationsWidget extends BaseWidget
 
                 TextColumn::make('amount')
                     ->label('Amount')
-                    ->money('USD'),
+                    ->money('INR'),
 
                 TextColumn::make('cause.title')
                     ->label('Cause'),

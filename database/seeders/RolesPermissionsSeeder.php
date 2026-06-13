@@ -68,7 +68,19 @@ class RolesPermissionsSeeder extends Seeder
             'view page-sections', 'edit page-sections',
         ]);
 
-        // Viewer role
+        // Admin role — full content management plus user & donation access
+        $admin = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+        $admin->syncPermissions(Permission::where('name', 'not like', 'edit settings')
+            ->where('name', 'not like', 'view settings')
+            ->get());
+
+        // Author role — own posts only (enforced in policy/resource)
+        $author = Role::firstOrCreate(['name' => 'author', 'guard_name' => 'web']);
+        $author->syncPermissions([
+            'view posts', 'create posts', 'edit posts',
+        ]);
+
+        // Viewer role — kept for backward compat, read-only access
         $viewer = Role::firstOrCreate(['name' => 'viewer', 'guard_name' => 'web']);
         $viewer->syncPermissions([
             'view posts', 'view causes', 'view programs', 'view services',

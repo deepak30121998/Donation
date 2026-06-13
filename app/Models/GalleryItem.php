@@ -32,4 +32,11 @@ class GalleryItem extends Model implements HasMedia
     public function scopeActive($query) { return $query->where('is_active', true); }
     public function scopeOrdered($query) { return $query->orderBy('order'); }
     public function scopeByCategory($query, string $category) { return $query->where('category', $category); }
+
+    public function getCategoryClassAttribute(): string
+    {
+        return $this->category === GalleryCategory::All
+            ? 'health education food'
+            : ($this->category?->value ?? 'all');
+    }
 }

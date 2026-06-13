@@ -23,7 +23,6 @@
                             <div class="contact-info-content">
                                 <h3>contact us</h3>
                                 <p><a href="tel:{{ $siteSettings?->phone ?? '+91-8130789837' }}">{{ $siteSettings?->phone ?? '+91-8130789837' }}</a></p>
-                                <p><a href="tel:{{ $siteSettings?->phone ?? '+91-8130789837' }}">{{ $siteSettings?->phone ?? '+91-8130789837' }}</a></p>
                             </div>
                         </div>
 

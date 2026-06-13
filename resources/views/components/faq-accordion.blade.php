@@ -5,28 +5,22 @@
 
 <!-- FAQ Accordion Start -->
 <div class="faq-accordion" id="{{ $id }}">
-    @foreach ($faqs as $index => $faq)
-        @php
-            $itemId    = $id . '_item_' . ($index + 1);
-            $headingId = $id . '_heading_' . ($index + 1);
-            $isFirst   = $loop->first;
-        @endphp
-
+    @foreach ($faqs as $faq)
         <!-- FAQ Item Start -->
-        <div class="accordion-item wow fadeInUp" @if(!$isFirst) data-wow-delay="{{ ($index * 0.2) }}s" @endif>
-            <h2 class="accordion-header" id="{{ $headingId }}">
-                <button class="accordion-button {{ $isFirst ? '' : 'collapsed' }}"
+        <div class="accordion-item wow fadeInUp" @if(!$loop->first) data-wow-delay="{{ ($loop->index * 0.2) }}s" @endif>
+            <h2 class="accordion-header" id="{{ $id }}_heading_{{ $loop->iteration }}">
+                <button class="accordion-button {{ $loop->first ? '' : 'collapsed' }}"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#{{ $itemId }}"
-                        aria-expanded="{{ $isFirst ? 'true' : 'false' }}"
-                        aria-controls="{{ $itemId }}">
+                        data-bs-target="#{{ $id }}_item_{{ $loop->iteration }}"
+                        aria-expanded="{{ $loop->first ? 'true' : 'false' }}"
+                        aria-controls="{{ $id }}_item_{{ $loop->iteration }}">
                     {{ $faq->question }}
                 </button>
             </h2>
-            <div id="{{ $itemId }}"
-                 class="accordion-collapse collapse {{ $isFirst ? 'show' : '' }}"
-                 aria-labelledby="{{ $headingId }}"
+            <div id="{{ $id }}_item_{{ $loop->iteration }}"
+                 class="accordion-collapse collapse {{ $loop->first ? 'show' : '' }}"
+                 aria-labelledby="{{ $id }}_heading_{{ $loop->iteration }}"
                  data-bs-parent="#{{ $id }}">
                 <div class="accordion-body">
                     <p>{{ $faq->answer }}</p>

@@ -46,13 +46,12 @@
                     </div>
 
                     <!-- Contact Now Box Start -->
-                    @php $headerSect = $sections->get('global.header') ?? null; @endphp
                     <div class="contact-now-box">
                         <div class="icon-box">
                             <img src="{{ asset('images/icon-phone.svg') }}" alt="">
                         </div>
                         <div class="contact-now-box-content">
-                            <p>{{ $headerSect?->subtitle ?? 'need help !' }}</p>
+                            <p>{{ $sections->get('global.header')?->subtitle ?? 'need help !' }}</p>
                             <h3><a href="tel:{{ preg_replace('/\s+/', '', $siteSettings?->phone ?? '') }}">{{ $siteSettings?->phone ?? '' }}</a></h3>
                         </div>
                     </div>

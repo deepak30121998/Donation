@@ -9,13 +9,6 @@
     />
 
     {{-- About Us Section --}}
-    @php
-        $aboutFacts   = $sections->get('about.facts');
-        $aboutImg1    = $aboutFacts?->getFirstMediaUrl('image') ?: asset('images/about-img-1.jpg');
-        $aboutImg2    = $aboutFacts?->getFirstMediaUrl('image_2') ?: asset('images/about-img-2.jpg');
-        $cowsCtr      = $counters->firstWhere('key', 'cows_served');
-        $womenCtr     = $counters->firstWhere('key', 'women_entrepreneurs');
-    @endphp
     <div class="about-us">
         <div class="container">
             <div class="row align-items-center">
@@ -48,7 +41,6 @@
 
                         <div class="about-us-body">
                             <div class="about-us-body-content">
-                                @php $aboutFeature = $sections->get('about.feature') ?? $sections->get('home.about_feature'); @endphp
                                 <div class="about-support-box wow fadeInUp" data-wow-delay="0.4s">
                                     <div class="icon-box">
                                         <img src="{{ asset('images/icon-about-support.svg') }}" alt="">
@@ -86,7 +78,6 @@
     {{-- About Us Section End --}}
 
     {{-- Our Approach Section --}}
-    @php $approach = $sections->get('about.approach'); @endphp
     <div class="our-approach">
         <div class="container">
             <div class="row">
@@ -139,7 +130,6 @@
                         </div>
 
                         <div class="our-approach-image">
-                            @php $approachImg = $approach?->getFirstMediaUrl('image') ?: asset('images/our-approach-image.jpg'); @endphp
                             <figure class="image-anime">
                                 <img src="{{ $approachImg }}" alt="Our Approach">
                             </figure>
@@ -152,14 +142,6 @@
     {{-- Our Approach Section End --}}
 
     {{-- Why Choose Us Section --}}
-    @php
-        $whyChoose    = $sections->get('about.why_choose_us') ?? $sections->get('home.why_choose_us');
-        $whyImg1      = $whyChoose?->getFirstMediaUrl('image') ?: asset('images/why-choose-img-1.jpg');
-        $whyImg2      = $whyChoose?->getFirstMediaUrl('image_2') ?: asset('images/why-choose-img-2.jpg');
-        $whyItems     = $whyChoose?->body
-            ? array_values(array_filter(array_map('trim', explode("\n", strip_tags($whyChoose->body)))))
-            : ['community-centered approach', 'transparency and accountability', 'empowerment through partnership', 'volunteer and donor engagement'];
-    @endphp
     <div class="why-choose-us">
         <div class="container">
             <div class="row align-items-center">
@@ -210,13 +192,6 @@
     {{-- Why Choose Us Section End --}}
 
     {{-- How We Help Section --}}
-    @php
-        $howWeHelp     = $sections->get('about.how_we_help');
-        $howWeHelpImg  = $howWeHelp?->getFirstMediaUrl('image') ?: null;
-        $howHelpItems  = $howWeHelp?->body
-            ? array_values(array_filter(array_map('trim', explode("\n", strip_tags($howWeHelp->body)))))
-            : ['Community Development Programs', 'Women and Youth Empowerment', 'Advocacy and Awareness Campaigns'];
-    @endphp
     <div class="how-we-help">
         <div class="container">
             <div class="row align-items-center">
@@ -246,13 +221,11 @@
 
                 <div class="col-lg-6">
                     <div class="how-help-list">
-                        @php $howHelpServices = $services ?? collect(); @endphp
-                        @if($howHelpServices->isNotEmpty())
-                            @foreach($howHelpServices->take(4) as $i => $service)
-                                <div class="how-help-item wow fadeInUp" @if($i > 0) data-wow-delay="{{ $i * 0.2 }}s" @endif>
+                        @if(($services ?? collect())->isNotEmpty())
+                            @foreach(($services ?? collect())->take(4) as $service)
+                                <div class="how-help-item wow fadeInUp" @if(!$loop->first) data-wow-delay="{{ $loop->index * 0.2 }}s" @endif>
                                     <div class="icon-box">
-                                        @php $iconNum = ($i % 4) + 1; @endphp
-                                        <img src="{{ asset('images/icon-how-help-' . $iconNum . '.svg') }}" alt="">
+                                        <img src="{{ asset('images/icon-how-help-' . (($loop->index % 4) + 1) . '.svg') }}" alt="">
                                     </div>
                                     <div class="how-help-item-content">
                                         <h3>{{ $service->title }}</h3>
@@ -298,7 +271,6 @@
     {{-- How We Help Section End --}}
 
     {{-- Our Team Section --}}
-    @php $teamSection = $sections->get('about.team'); @endphp
     @if ($teamMembers->isNotEmpty())
     <div class="our-team">
         <div class="container">
@@ -325,10 +297,6 @@
     {{-- Our Team Section End --}}
 
     {{-- Testimonials Section --}}
-    @php
-        $testimonialsSection = $sections->get('about.testimonials') ?? $sections->get('home.testimonials');
-        $reviewCtr = $counters->firstWhere('key', 'lives_transformed');
-    @endphp
     @if ($testimonials->isNotEmpty())
     <div class="our-testimonials">
         <div class="container">
@@ -337,7 +305,6 @@
                     <div class="testimonials-image">
                         <div class="testimonials-img">
                             <figure class="image-anime reveal">
-                                @php $testimImg = $testimonialsSection?->getFirstMediaUrl('image') ?: asset('images/testimonials-image.jpg'); @endphp
                                 <img src="{{ $testimImg }}" alt="">
                             </figure>
                         </div>
@@ -356,8 +323,8 @@
                 <div class="col-lg-6">
                     <div class="testimonials-content">
                         <div class="section-title">
-                            <h3 class="wow fadeInUp">{{ $testimonialsSection?->subtitle ?? 'testimonials' }}</h3>
-                            <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $testimonialsSection?->title ?? 'What people say about us' }}</h2>
+                            <h3 class="wow fadeInUp">{{ $testimSection?->subtitle ?? 'testimonials' }}</h3>
+                            <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $testimSection?->title ?? 'What people say about us' }}</h2>
                         </div>
 
                         <div class="testimonial-slider">
@@ -381,7 +348,6 @@
     {{-- Testimonials Section End --}}
 
     {{-- FAQs Section --}}
-    @php $faqsSection = $sections->get('about.faqs'); @endphp
     @if ($faqCategories->isNotEmpty())
     <div class="page-faqs">
         <div class="container">

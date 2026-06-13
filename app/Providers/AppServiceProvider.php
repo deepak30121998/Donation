@@ -49,6 +49,7 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             if (!Schema::hasTable('navigation_items')) {
                 $view->with('navItems', collect());
+                $view->with('footerNavItems', collect());
                 return;
             }
             static $navItems = null;
@@ -60,6 +61,7 @@ class AppServiceProvider extends ServiceProvider
                     ->get();
             }
             $view->with('navItems', $navItems);
+            $view->with('footerNavItems', $navItems->filter(fn ($i) => $i->children->isEmpty())->take(6)->values());
         });
 
         // Top 4 active services for footer/header nav

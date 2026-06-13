@@ -29,16 +29,10 @@
             {{-- Gallery Items — class names match JS: gallery-item-boxes + gallery-items (popup) --}}
             <div class="gallery-item-boxes gallery-items">
                 @forelse ($items as $item)
-                    @php
-                        $catClass = $item->category->value === 'all'
-                            ? 'health education food'
-                            : $item->category->value;
-                        $imgUrl = $item->getFirstMediaUrl('gallery') ?: asset('images/placeholder.jpg');
-                    @endphp
-                    <div class="gallery-item-box {{ $catClass }}">
-                        <a href="{{ $imgUrl }}" data-cursor-text="View">
+                    <div class="gallery-item-box {{ $item->categoryClass }}">
+                        <a href="{{ $item->getFirstMediaUrl('gallery') ?: asset('images/placeholder.jpg') }}" data-cursor-text="View">
                             <figure class="image-anime">
-                                <img src="{{ $imgUrl }}" alt="{{ $item->title ?? 'Gallery Image' }}">
+                                <img src="{{ $item->getFirstMediaUrl('gallery') ?: asset('images/placeholder.jpg') }}" alt="{{ $item->title ?? 'Gallery Image' }}">
                             </figure>
                         </a>
                     </div>

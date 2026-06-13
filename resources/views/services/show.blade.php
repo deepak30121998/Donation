@@ -42,13 +42,6 @@
                     <div class="service-single-contemt">
 
                         {{-- Feature Image --}}
-                        @php
-                            $bannerUrl = $service->getFirstMediaUrl('banner')
-                                ?: $service->getFirstMediaUrl('thumb')
-                                ?: asset('images/placeholder.jpg');
-                            $thumbUrl  = $service->getFirstMediaUrl('thumb')
-                                ?: asset('images/placeholder.jpg');
-                        @endphp
                         <div class="service-feature-image">
                             <figure class="image-anime reveal">
                                 <img src="{{ $bannerUrl }}" alt="{{ $service->title }}">
@@ -70,9 +63,6 @@
                             @endif
 
                             {{-- Bringing Quality Box --}}
-                            @php
-                                $qualitySection = $sections->get('services.quality') ?? null;
-                            @endphp
                             <div class="bringing-quality-box">
                                 <h2 class="text-anime-style-2" data-cursor="-opaque">
                                     {{ $qualitySection?->title ?? 'How we make a difference' }}
@@ -82,7 +72,7 @@
                                 </p>
                                 @if ($qualitySection?->body)
                                     <ul class="wow fadeInUp" data-wow-delay="0.2s">
-                                        @foreach (array_filter(array_map('trim', explode("\n", strip_tags($qualitySection->body)))) as $point)
+                                        @foreach (array_filter(array_map('trim', explode("\n", strip_tags((string)$qualitySection->body)))) as $point)
                                             <li>{{ $point }}</li>
                                         @endforeach
                                     </ul>
@@ -135,7 +125,7 @@
                                         </div>
                                         <div class="service-entry-content">
                                             <h3>Our Commitment</h3>
-                                            <p>{{ $sections->get('services.commitment')?->body ?? 'Ujjawal Unnati Foundation is committed to transparency, accountability, and direct community impact — 100% of funds go to the people who need it most.' }}</p>
+                                            <p>{{ $commitmentBody ?? 'Ujjawal Unnati Foundation is committed to transparency, accountability, and direct community impact — 100% of funds go to the people who need it most.' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -144,35 +134,12 @@
                             {{-- Service Entry Content List End --}}
 
                             {{-- Process Steps --}}
-                            @php
-                                $stepsSection = $sections->get('services.steps') ?? null;
-                                $steps = [
-                                    [
-                                        'no'   => '01',
-                                        'icon' => 'icon-service-entry-content-1.svg',
-                                        'title' => $stepsSection?->title ?? 'Community Outreach',
-                                        'desc'  => 'We identify communities in need through field surveys, local volunteers, and partner organisations across Noida and UP.',
-                                    ],
-                                    [
-                                        'no'   => '02',
-                                        'icon' => 'icon-service-entry-content-2.svg',
-                                        'title' => $stepsSection?->subtitle ?? 'Program Delivery',
-                                        'desc'  => 'Our trained team delivers services directly — at homes, schools, shelters, gaushalas, or community centres.',
-                                    ],
-                                    [
-                                        'no'   => '03',
-                                        'icon' => 'icon-service-entry-content-3.svg',
-                                        'title' => $stepsSection?->button_text ?? 'Follow-up & Impact',
-                                        'desc'  => 'We track progress, gather community feedback, and continuously improve our programs for lasting change.',
-                                    ],
-                                ];
-                            @endphp
                             <div class="service-entry-steps">
                                 <h2 class="text-anime-style-2" data-cursor="-opaque">
-                                    {{ $sections->get('services.steps_heading')?->title ?? 'How we work with you' }}
+                                    {{ $stepsHeading?->title ?? 'How we work with you' }}
                                 </h2>
                                 <p class="wow fadeInUp">
-                                    {{ $sections->get('services.steps_heading')?->subtitle ?? 'A simple, transparent process — from first contact to measurable community impact.' }}
+                                    {{ $stepsHeading?->subtitle ?? 'A simple, transparent process — from first contact to measurable community impact.' }}
                                 </p>
                                 <div class="service-entry-step-list">
                                     @foreach ($steps as $i => $step)

@@ -37,10 +37,6 @@
     {{-- Services Grid End --}}
 
     {{-- Testimonials Section --}}
-    @php
-        $testSection = $sections->get('services.testimonials') ?? $sections->get('home.testimonials');
-        $reviewCtr = $counters->firstWhere('key', 'lives_transformed');
-    @endphp
     @if ($testimonials->isNotEmpty())
     <div class="our-testimonials">
         <div class="container">
@@ -49,7 +45,7 @@
                     <div class="testimonials-image">
                         <div class="testimonials-img">
                             <figure class="image-anime reveal">
-                                <img src="{{ $testSection?->getFirstMediaUrl('image') ?: asset('images/testimonials-image.jpg') }}" alt="">
+                                <img src="{{ $testSection?->getFirstMediaUrl('image') ?: asset('images/testimonials-image.jpg') }}" alt="" loading="lazy">
                             </figure>
                         </div>
                         <div class="helthcare-support-circle">
@@ -92,7 +88,6 @@
     {{-- Testimonials Section End --}}
 
     {{-- FAQs Section --}}
-    @php $faqsSect = $sections->get('services.faqs') ?? $sections->get('about.faqs'); @endphp
     @if ($faqCategories->isNotEmpty())
     <div class="page-faqs">
         <div class="container">

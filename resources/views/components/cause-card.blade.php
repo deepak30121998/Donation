@@ -2,12 +2,6 @@
     'cause',
 ])
 
-@php
-    $goal   = $cause->goal_amount  ?? 0;
-    $raised = $cause->raised_amount ?? 0;
-    $percent = $goal > 0 ? min(100, round(($raised / $goal) * 100)) : 0;
-@endphp
-
 <!-- Causes Item Start -->
 <div class="causes-item wow fadeInUp">
     <div class="causes-image">

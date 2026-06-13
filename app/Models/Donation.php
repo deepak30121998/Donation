@@ -17,7 +17,7 @@ class Donation extends Model
         'cause_id', 'donor_first_name', 'donor_last_name', 'donor_email',
         'donor_phone', 'donor_pan', 'donor_address',
         'amount', 'payment_method', 'status',
-        'transaction_id', 'message', 'donated_at',
+        'transaction_id', 'razorpay_order_id', 'message', 'donated_at',
     ];
 
     protected function casts(): array

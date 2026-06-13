@@ -1,32 +1,6 @@
 <x-layouts.app title="Home">
 
     {{-- Hero Slider Section --}}
-    @php
-        $heroSection  = $sections->get('home.hero');
-        $heroFeatures = $sections->get('home.hero_features');
-        $heroVideoUrl = $siteSettings?->hero_video_url ?: 'https://www.youtube.com/watch?v=Y-x0efG1seA';
-
-        $heroSlides = [
-            [
-                'image'    => $heroSection?->getFirstMediaUrl('image') ?: asset('images/hero-bg.jpg'),
-                'subtitle' => $heroSection?->subtitle ?? 'Welcome to Ujjawal Unnati Foundation',
-                'title'    => $heroSection?->title   ?? 'Every life is important — <span>we care</span> for you',
-                'body'     => $heroSection?->body     ?? 'Join us in empowering communities across India through women empowerment, cow protection, child welfare, education, and hunger-free drives.',
-            ],
-            [
-                'image'    => asset('images/uuf-hero-2.jpg'),
-                'subtitle' => 'Hunger-Free India',
-                'title'    => 'No child should sleep <span>hungry</span> tonight',
-                'body'     => 'We run regular ration distribution drives, cooked meal camps, and food distribution events across Noida, Ghaziabad, and UP to ensure no family goes without food.',
-            ],
-            [
-                'image'    => asset('images/hero-bg-2.jpg'),
-                'subtitle' => 'Education for Everyone',
-                'title'    => 'Every child deserves a <span>bright future</span>',
-                'body'     => 'Our free coaching centres, notebook distribution drives, and school enrollment campaigns are bringing quality education to underprivileged children across 50+ villages.',
-            ],
-        ];
-    @endphp
 
     <div class="hero hero-slider-layout">
         <div class="swiper">
@@ -99,14 +73,6 @@
     {{-- Hero Slider Section End --}}
 
     {{-- About Us Section --}}
-    @php
-        $aboutSection  = $sections->get('home.about');
-        $aboutFeature  = $sections->get('home.about_feature');
-        $aboutImg1     = $aboutSection?->getFirstMediaUrl('image') ?: asset('images/about-img-1.jpg');
-        $aboutImg2     = $aboutSection?->getFirstMediaUrl('image_2') ?: asset('images/about-img-2.jpg');
-        $cowsCounter  = $counters->firstWhere('key', 'cows_served');
-        $womenCounter = $counters->firstWhere('key', 'women_entrepreneurs');
-    @endphp
     <div class="about-us">
         <div class="container">
             <div class="row align-items-center">
@@ -217,16 +183,6 @@
     {{-- Our Services Section End --}}
 
     {{-- What We Do Section --}}
-    @php
-        $whatWeDo   = $sections->get('home.what_we_do');
-        $whatWeDo1  = $sections->get('home.what_we_do_1');
-        $whatWeDo2  = $sections->get('home.what_we_do_2');
-        $whatWeDo3  = $sections->get('home.what_we_do_3');
-        $whatWeDoImgs = [
-            $whatWeDo?->getFirstMediaUrl('image') ?: asset('images/what-we-do-image-1.jpg'),
-            $whatWeDo?->getFirstMediaUrl('image_2') ?: asset('images/what-we-do-image-2.jpg'),
-        ];
-    @endphp
     <div class="what-we-do">
         <div class="container">
             <div class="row align-items-center">
@@ -318,14 +274,6 @@
     {{-- Our Causes Section End --}}
 
     {{-- Why Choose Us Section --}}
-    @php
-        $whyChoose     = $sections->get('home.why_choose_us');
-        $whyChooseImg1 = $whyChoose?->getFirstMediaUrl('image') ?: asset('images/why-choose-img-1.jpg');
-        $whyChooseImg2 = $whyChoose?->getFirstMediaUrl('image_2') ?: asset('images/why-choose-img-2.jpg');
-        $whyChooseItems = $whyChoose?->body
-            ? array_values(array_filter(array_map('trim', explode("\n", strip_tags($whyChoose->body)))))
-            : ['community-centered approach', 'transparency and accountability', 'empowerment through partnership', 'volunteer and donor engagement'];
-    @endphp
     <div class="why-choose-us">
         <div class="container">
             <div class="row align-items-center">
@@ -397,7 +345,6 @@
                     </div>
                 @endforeach
 
-                @php $programsFooter = $sections->get('home.programs_footer'); @endphp
                 <div class="col-lg-12">
                     <div class="section-footer-text wow fadeInUp" data-wow-delay="0.6s">
                         @if($programsFooter?->body)
@@ -413,14 +360,6 @@
     {{-- Our Programs Section End --}}
 
     {{-- Scrolling Ticker --}}
-    @php
-        $tickerSection = $sections->get('home.ticker');
-        $tickerItems = $tickerSection?->body
-            ? array_values(array_filter(array_map('trim', explode("\n", strip_tags($tickerSection->body)))))
-            : ['Health Support', 'Education Support', 'Food Support'];
-        // Duplicate to fill the ticker (need at least 6 items for smooth scroll)
-        while (count($tickerItems) < 6) { $tickerItems = array_merge($tickerItems, $tickerItems); }
-    @endphp
     <div class="scrolling-ticker">
         <div class="scrolling-ticker-box">
             <div class="scrolling-content">
@@ -452,37 +391,6 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    @php
-                        $womenCtr      = $counters->firstWhere('key', 'women_entrepreneurs');
-                        $cowsCtr       = $counters->firstWhere('key', 'cows_served');
-                        $livesCtr      = $counters->firstWhere('key', 'lives_transformed');
-                        $featItems = [
-                            [
-                                'img'   => asset('images/our-features-img-1.jpg'),
-                                'icon'  => asset('images/icon-our-features-1.svg'),
-                                'value' => $womenCtr?->value ?? 115000,
-                                'suffix'=> $womenCtr?->suffix ?? '+',
-                                'label' => 'Women Entrepreneurs',
-                                'desc'  => 'Trained through skill development, self-help groups, and microfinance support across UP & Delhi NCR.',
-                            ],
-                            [
-                                'img'   => asset('images/our-features-img-2.jpg'),
-                                'icon'  => asset('images/icon-our-features-2.svg'),
-                                'value' => $cowsCtr?->value ?? 22500,
-                                'suffix'=> $cowsCtr?->suffix ?? '+',
-                                'label' => 'Mother Cows Served',
-                                'desc'  => 'Cared for through our Gaushala, daily fodder drives, and free veterinary medical camps.',
-                            ],
-                            [
-                                'img'   => asset('images/our-features-img-3.jpg'),
-                                'icon'  => asset('images/icon-our-features-3.svg'),
-                                'value' => $livesCtr?->value ?? 12000,
-                                'suffix'=> $livesCtr?->suffix ?? '+',
-                                'label' => 'Lives Transformed',
-                                'desc'  => 'Through ration distribution, cooked meal camps, education drives, and child rehabilitation programs.',
-                            ],
-                        ];
-                    @endphp
                     <div class="our-features-list">
                         @foreach ($featItems as $feat)
                         <div class="our-features-item">
@@ -547,7 +455,6 @@
     {{-- Donate Now Section End --}}
 
     {{-- How It Works Section --}}
-    @php $howItWorks = $sections->get('home.how_it_works'); @endphp
     <div class="how-it-work">
         <div class="container">
             <div class="row section-row">
@@ -633,11 +540,10 @@
                     </div>
                 </div>
 
-                @php $howItWorksFooter = $sections->get('home.how_it_works'); @endphp
                 <div class="col-lg-12">
                     <div class="section-footer-text how-work-footer-text wow fadeInUp" data-wow-delay="0.8s">
-                        @if($howItWorksFooter?->button_text)
-                            <p>{{ $howItWorksFooter->button_text }}. <a href="{{ $howItWorksFooter->button_url ?: route('donation.index') }}">Donate now</a></p>
+                        @if($howItWorks?->button_text)
+                            <p>{{ $howItWorks->button_text }}. <a href="{{ $howItWorks->button_url ?: route('donation.index') }}">Donate now</a></p>
                         @else
                             <p>Your donation helps us reach more families, rescue more cows, and educate more children across Noida and UP. <a href="{{ route('donation.index') }}">Donate now</a></p>
                         @endif
@@ -664,7 +570,6 @@
                                 <img src="{{ asset('images/healthcare-support-circle.svg') }}" alt="">
                             </a>
                         </div>
-                        @php $livesCounter = $counters->firstWhere('key', 'lives_transformed'); @endphp
                         <div class="client-review-box">
                             <h2><span class="counter">{{ $livesCounter ? number_format($livesCounter->value / 1000, 0) : '12' }}</span>k+</h2>
                             <p>lives transformed</p>

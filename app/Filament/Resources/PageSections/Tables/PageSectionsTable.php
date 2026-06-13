@@ -61,6 +61,7 @@ class PageSectionsTable
                         'donation'     => 'Donation',
                         'contact'      => 'Contact',
                         'faqs'         => 'FAQs',
+                        'global'       => 'Global (Shared)',
                     ]),
             ])
             ->recordActions([
@@ -71,6 +72,8 @@ class PageSectionsTable
                     DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('page');
+            ->defaultSort('page')
+            ->defaultPaginationPageOption(25)
+            ->paginationPageOptions([25, 50, 100]);
     }
 }

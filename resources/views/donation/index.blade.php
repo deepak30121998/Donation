@@ -19,7 +19,13 @@
                         @if (session('success'))
                             <div class="alert alert-success mb-4 wow fadeInUp" style="border-radius:12px;border:none;background:#e8f7ee;">
                                 <strong style="color:#1a7a3f;">{{ session('success') }}</strong>
-                                <p class="mb-0 mt-1" style="font-size:0.9rem;color:#2d6a4f;">For 80G certificate, share your PAN at <a href="mailto:info@ujjawalunnati.com">info@ujjawalunnati.com</a>.</p>
+                                <p class="mb-0 mt-1" style="font-size:0.9rem;color:#2d6a4f;">For 80G certificate, share your PAN at <a href="mailto:{{ $siteSettings?->email ?? 'info@ujjawalunnati.com' }}">{{ $siteSettings?->email ?? 'info@ujjawalunnati.com' }}</a>.</p>
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-danger mb-4" style="border-radius:12px;border:none;">
+                                <strong>{{ session('error') }}</strong>
                             </div>
                         @endif
 
@@ -39,7 +45,12 @@
                             <p class="wow fadeInUp" data-wow-delay="0.2s">{!! $sections->get('donation.intro')?->body ?? 'Your generous support enables us to care for abandoned cows, empower women, educate children, and feed families in need.' !!}</p>
                         </div>
 
-                        <x-donation-form :causes="$causes" />
+                        <x-donation-form
+                            :causes="$causes"
+                            :donationAmounts="$donationAmounts"
+                            :defaultAmount="$defaultAmount"
+                            :razorpayKeyId="$razorpayKeyId"
+                        />
 
                     </div>
                 </div>
@@ -85,14 +96,13 @@
                                 <h3>Our Active Causes</h3>
                                 <div style="padding:25px 30px;">
                                     @foreach ($causes as $cause)
-                                        @php $pct = $cause->goal_amount > 0 ? min(100, round(($cause->raised_amount / $cause->goal_amount) * 100)) : 0; @endphp
                                         <div class="skills-progress-bar" style="{{ !$loop->last ? 'margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--divider-color);' : '' }}">
                                             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                                                 <span style="font-weight:600;font-size:0.9rem;">{{ $cause->title }}</span>
-                                                <span style="background:var(--accent-color);color:#fff;font-size:0.78rem;font-weight:700;padding:2px 9px;border-radius:20px;">{{ $pct }}%</span>
+                                                <span style="background:var(--accent-color);color:#fff;font-size:0.78rem;font-weight:700;padding:2px 9px;border-radius:20px;">{{ $cause->progress_percent }}%</span>
                                             </div>
                                             <div class="skill-progress" style="height:7px;">
-                                                <div class="count-bar" style="width:{{ $pct }}%;"></div>
+                                                <div class="count-bar" style="width:{{ $cause->progress_percent }}%;"></div>
                                             </div>
                                             <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#888;margin-top:6px;">
                                                 <span>Raised: ₹{{ number_format($cause->raised_amount) }}</span>
@@ -133,7 +143,7 @@
                                     </div>
                                 </li>
                                 <li style="border-bottom:none;margin-bottom:0;padding-bottom:0;">
-                                    <p style="font-size:0.82rem;color:#aaa;margin:0;line-height:1.6;">Share transaction + PAN at <a href="mailto:info@ujjawalunnati.com" style="color:var(--accent-color);">info@ujjawalunnati.com</a> for receipt.</p>
+                                    <p style="font-size:0.82rem;color:#aaa;margin:0;line-height:1.6;">Share transaction + PAN at <a href="mailto:{{ $siteSettings?->email ?? 'info@ujjawalunnati.com' }}" style="color:var(--accent-color);">{{ $siteSettings?->email ?? 'info@ujjawalunnati.com' }}</a> for receipt.</p>
                                 </li>
                             </ul>
                         </div>

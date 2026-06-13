@@ -18,10 +18,10 @@ class StatsOverviewWidget extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Total Donations', '$' . number_format(Donation::sum('amount'), 2))
+            Stat::make('Total Donations', '₹' . number_format(Donation::where('status', 'completed')->sum('amount'), 2))
                 ->description('All time donations')
                 ->color('success')
-                ->icon('heroicon-o-currency-dollar'),
+                ->icon('heroicon-o-banknotes'),
 
             Stat::make('Unread Contacts', ContactSubmission::where('is_read', false)->count())
                 ->description('Needs attention')

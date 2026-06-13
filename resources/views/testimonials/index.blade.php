@@ -37,7 +37,6 @@
     {{-- Testimonials Grid End --}}
 
     {{-- FAQs Section --}}
-    @php $faqsSect = $sections->get('testimonials.faqs') ?? $sections->get('about.faqs'); @endphp
     @if ($faqCategories->isNotEmpty())
     <div class="page-faqs">
         <div class="container">
