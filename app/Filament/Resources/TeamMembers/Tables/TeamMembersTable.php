@@ -6,7 +6,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -16,9 +16,10 @@ class TeamMembersTable
     {
         return $table
             ->columns([
-                ImageColumn::make('photo')
+                SpatieMediaLibraryImageColumn::make('photo')
                     ->label('Photo')
-                    ->disk('public')
+                    ->collection('photo')
+                    ->conversion('thumb')
                     ->circular()
                     ->width(50)
                     ->height(50),
