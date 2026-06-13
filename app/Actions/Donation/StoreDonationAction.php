@@ -17,6 +17,8 @@ class StoreDonationAction
             'donor_last_name'  => $data->donorLastName,
             'donor_email'      => $data->donorEmail,
             'donor_phone'      => $data->donorPhone,
+            'donor_pan'        => $data->donorPan,
+            'donor_address'    => $data->donorAddress,
             'amount'           => $data->amount,
             'payment_method'   => $data->paymentMethod,
             'message'          => $data->message,

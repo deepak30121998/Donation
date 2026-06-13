@@ -1,4 +1,4 @@
-<x-layouts.app :title="$post->title">
+<x-layouts.app :title="$post->meta_title ?: $post->title">
 
     <x-page-header
         :title="$post->title"
@@ -9,45 +9,36 @@
         ]"
     />
 
-    {{-- Single Post --}}
+    {{-- Page Single Post --}}
     <div class="page-single-post">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
+
                     {{-- Post Featured Image --}}
-                    @if ($post->getFirstMediaUrl('featured'))
+                    @if ($post->getFirstMediaUrl('featured', 'hero') ?: $post->getFirstMediaUrl('featured'))
                         <div class="post-image">
                             <figure class="image-anime reveal">
-                                <img src="{{ $post->getFirstMediaUrl('featured') }}" alt="{{ $post->title }}">
+                                <img src="{{ $post->getFirstMediaUrl('featured', 'hero') ?: $post->getFirstMediaUrl('featured') }}"
+                                     alt="{{ $post->title }}">
                             </figure>
                         </div>
                     @endif
 
                     {{-- Post Content --}}
                     <div class="post-content">
-                        <div class="post-item-meta mb-3">
-                            <ul class="list-unstyled d-flex gap-3">
-                                <li>
-                                    <i class="fa-regular fa-calendar"></i>
-                                    {{ $post->published_at ? $post->published_at->format('d M, Y') : $post->created_at->format('d M, Y') }}
-                                </li>
-                                @if ($post->category)
-                                    <li>
-                                        <i class="fa-regular fa-folder"></i>
-                                        {{ $post->category->name }}
-                                    </li>
-                                @endif
-                            </ul>
-                        </div>
 
+                        {{-- Post Body --}}
                         <div class="post-entry">
                             {!! $post->body !!}
                         </div>
 
-                        {{-- Tags & Sharing --}}
+                        {{-- Tags & Social Sharing --}}
                         <div class="post-tag-links">
                             <div class="row align-items-center">
+
                                 <div class="col-lg-8">
+                                    {{-- Tags --}}
                                     @if ($post->tags && $post->tags->isNotEmpty())
                                         <div class="post-tags wow fadeInUp" data-wow-delay="0.5s">
                                             <span class="tag-links">
@@ -57,10 +48,22 @@
                                                 @endforeach
                                             </span>
                                         </div>
+                                    @else
+                                        <div class="post-tags wow fadeInUp" data-wow-delay="0.5s">
+                                            <span class="tag-links">
+                                                Tags:
+                                                @if ($post->category)
+                                                    <a href="#">{{ $post->category->name }}</a>
+                                                @endif
+                                                <a href="#">ujjawal unnati</a>
+                                                <a href="#">community</a>
+                                            </span>
+                                        </div>
                                     @endif
                                 </div>
 
                                 <div class="col-lg-4">
+                                    {{-- Social Sharing --}}
                                     <div class="post-social-sharing wow fadeInUp" data-wow-delay="0.5s">
                                         <ul>
                                             <li>
@@ -76,6 +79,12 @@
                                                 </a>
                                             </li>
                                             <li>
+                                                <a href="https://www.instagram.com/"
+                                                   target="_blank" rel="noopener noreferrer">
+                                                    <i class="fa-brands fa-instagram"></i>
+                                                </a>
+                                            </li>
+                                            <li>
                                                 <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}&text={{ urlencode($post->title) }}"
                                                    target="_blank" rel="noopener noreferrer">
                                                     <i class="fa-brands fa-x-twitter"></i>
@@ -84,39 +93,18 @@
                                         </ul>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
-                    </div>
-                </div>
+                        {{-- Tags & Social Sharing End --}}
 
-                {{-- Sidebar --}}
-                <div class="col-lg-4">
-                    <div class="page-single-sidebar">
-                        {{-- Recent Posts --}}
-                        @if ($recentPosts->isNotEmpty())
-                            <div class="sidebar-recent-posts wow fadeInUp mb-4">
-                                <h3 class="sidebar-title">Recent Posts</h3>
-                                <ul class="list-unstyled">
-                                    @foreach ($recentPosts as $recent)
-                                        <li class="mb-3">
-                                            <a href="{{ route('blog.show', $recent->slug) }}">
-                                                {{ $recent->title }}
-                                            </a>
-                                            <small class="d-block text-muted">
-                                                {{ $recent->published_at ? $recent->published_at->format('d M, Y') : $recent->created_at->format('d M, Y') }}
-                                            </small>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        <x-sidebar-cta />
                     </div>
+                    {{-- Post Content End --}}
+
                 </div>
             </div>
         </div>
     </div>
-    {{-- Single Post End --}}
+    {{-- Page Single Post End --}}
 
 </x-layouts.app>

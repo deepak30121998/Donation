@@ -1,75 +1,64 @@
-<x-layouts.app title="Our Blog">
+<x-layouts.app title="{{ $sections->get('blog.hero')?->title ?? 'Our Blog' }}">
 
     <x-page-header
-        title="Our <span>Blog</span>"
+        title="<span>Our</span> Blog"
         :breadcrumbs="[
             ['label' => 'Home', 'url' => route('home')],
-            ['label' => 'Our Blog', 'url' => ''],
+            ['label' => 'Blog', 'url' => ''],
         ]"
     />
 
-    {{-- Blog Grid --}}
-    <div class="our-blog page-blog">
+    {{-- Page Blog --}}
+    <div class="page-blog">
         <div class="container">
-            <div class="row section-row">
-                <div class="col-lg-8">
-                    <div class="section-title">
-                        <h3 class="wow fadeInUp">{{ $sections->get('blog.hero')?->subtitle ?? 'Latest Posts' }}</h3>
-                        <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('blog.hero')?->title ?? 'Stories of Impact and Hope' }}</h2>
-                        <p class="wow fadeInUp" data-wow-delay="0.2s">{!! $sections->get('blog.hero')?->body ?? "Explore inspiring stories about our Gau Sewa drives, women empowerment programs, education camps, and hunger-free initiatives." !!}</p>
-                    </div>
-                </div>
-            </div>
-
             <div class="row">
+
                 @forelse ($posts as $post)
                     <div class="col-lg-4 col-md-6">
-                        <x-post-card :post="$post" />
+                        <x-post-card
+                            :post="$post"
+                            :delay="$loop->index > 0 ? ($loop->index * 0.2) . 's' : null"
+                        />
                     </div>
                 @empty
                     <div class="col-lg-12 text-center py-5">
-                        <h3>No posts yet</h3>
-                        <p>Check back soon for stories from our community.</p>
-                        <a href="{{ route('home') }}" class="btn-default mt-3">Back to Home</a>
+                        <p>No posts yet — check back soon.</p>
                     </div>
                 @endforelse
-            </div>
 
-            {{-- Pagination --}}
-            @if ($posts->hasPages())
-                <div class="row mt-5">
-                    <div class="col-lg-12 d-flex justify-content-center">
-                        {{ $posts->links() }}
-                    </div>
-                </div>
-            @endif
-        </div>
-    </div>
-    {{-- Blog Grid End --}}
+                {{-- Pagination --}}
+                @if ($posts->hasPages())
+                    <div class="col-lg-12">
+                        <div class="page-pagination wow fadeInUp" data-wow-delay="1.2s">
+                            <ul class="pagination">
+                                {{-- Previous --}}
+                                @if ($posts->onFirstPage())
+                                    <li class="disabled"><span><i class="fa-solid fa-angle-left"></i></span></li>
+                                @else
+                                    <li><a href="{{ $posts->previousPageUrl() }}"><i class="fa-solid fa-angle-left"></i></a></li>
+                                @endif
 
-    {{-- Newsletter CTA --}}
-    <div class="donate-now" style="background:#f8f4ef; padding:60px 0;">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-7">
-                    <div class="section-title">
-                        <h3 class="wow fadeInUp">{{ $sections->get('home.newsletter')?->subtitle ?? 'Stay Connected' }}</h3>
-                        <h2 class="text-anime-style-2" data-cursor="-opaque">{{ $sections->get('home.newsletter')?->title ?? 'Get Our Stories in Your Inbox' }}</h2>
-                        <p class="wow fadeInUp">{!! $sections->get('home.newsletter')?->body ?? 'Subscribe to receive updates on our programs, events, and impact stories.' !!}</p>
-                    </div>
-                </div>
-                <div class="col-lg-5 wow fadeInUp">
-                    <form id="blogNewsletterForm" action="{{ route('newsletter.store') }}" method="POST">
-                        @csrf
-                        <div class="input-group">
-                            <input type="email" name="email" class="form-control" placeholder="Enter your email address" required>
-                            <button type="submit" class="btn-default" style="border-radius:0 6px 6px 0;">Subscribe</button>
+                                {{-- Page numbers --}}
+                                @foreach ($posts->getUrlRange(1, $posts->lastPage()) as $page => $url)
+                                    <li class="{{ $page == $posts->currentPage() ? 'active' : '' }}">
+                                        <a href="{{ $url }}">{{ $page }}</a>
+                                    </li>
+                                @endforeach
+
+                                {{-- Next --}}
+                                @if ($posts->hasMorePages())
+                                    <li><a href="{{ $posts->nextPageUrl() }}"><i class="fa-solid fa-angle-right"></i></a></li>
+                                @else
+                                    <li class="disabled"><span><i class="fa-solid fa-angle-right"></i></span></li>
+                                @endif
+                            </ul>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                @endif
+
             </div>
         </div>
     </div>
-    {{-- Newsletter CTA End --}}
+    {{-- Page Blog End --}}
 
 </x-layouts.app>

@@ -1,17 +1,16 @@
 @props([
     'member',
+    'delay' => null,
 ])
 
 <!-- Team Item Start -->
-<div class="team-item wow fadeInUp">
+<div class="team-item wow fadeInUp" @if($delay) data-wow-delay="{{ $delay }}" @endif>
     <!-- Team Image Start -->
     <div class="team-image">
-        <a href="{{ route('team') }}" data-cursor-text="View">
-            <figure class="image-anime">
-                <img src="{{ $member->getFirstMediaUrl('photo') ?: asset('images/placeholder.jpg') }}"
-                     alt="{{ $member->name }}">
-            </figure>
-        </a>
+        <figure class="image-anime">
+            <img src="{{ $member->getFirstMediaUrl('card') ?: ($member->getFirstMediaUrl('photo') ?: asset('images/placeholder.jpg')) }}"
+                 alt="{{ $member->name }}">
+        </figure>
     </div>
     <!-- Team Image End -->
 
@@ -25,17 +24,14 @@
     <!-- Team Social Icon Start -->
     <div class="team-social-icon">
         <ul>
-            @if (!empty($member->social_twitter))
-                <li><a href="{{ $member->social_twitter }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a></li>
+            @if (!empty($member->twitter_url))
+                <li><a href="{{ $member->twitter_url }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a></li>
             @endif
-            @if (!empty($member->social_facebook))
-                <li><a href="{{ $member->social_facebook }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a></li>
+            @if (!empty($member->facebook_url))
+                <li><a href="{{ $member->facebook_url }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a></li>
             @endif
-            @if (!empty($member->social_instagram))
-                <li><a href="{{ $member->social_instagram }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a></li>
-            @endif
-            @if (!empty($member->social_linkedin))
-                <li><a href="{{ $member->social_linkedin }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i></a></li>
+            @if (!empty($member->instagram_url))
+                <li><a href="{{ $member->instagram_url }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a></li>
             @endif
         </ul>
     </div>

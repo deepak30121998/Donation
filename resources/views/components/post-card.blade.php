@@ -1,15 +1,16 @@
 @props([
     'post',
+    'delay' => null,
 ])
 
 <!-- Post Item Start -->
-<div class="post-item wow fadeInUp">
+<div class="post-item wow fadeInUp" @if($delay) data-wow-delay="{{ $delay }}" @endif>
     <!-- Post Item Header Start -->
     <div class="post-item-header">
         <!-- Post Item Meta Start -->
         <div class="post-item-meta">
             <ul>
-                <li>{{ $post->published_at ? $post->published_at->format('d M, Y') : $post->created_at->format('d M, Y') }}</li>
+                <li>{{ ($post->published_at ?? $post->created_at)->format('d M, Y') }}</li>
             </ul>
         </div>
         <!-- Post Item Meta End -->
@@ -28,7 +29,7 @@
     <div class="post-featured-image">
         <a href="{{ route('blog.show', $post->slug) }}" data-cursor-text="View">
             <figure class="image-anime">
-                <img src="{{ $post->getFirstMediaUrl('featured') ?: asset('images/placeholder.jpg') }}"
+                <img src="{{ $post->getFirstMediaUrl('featured', 'thumb') ?: ($post->getFirstMediaUrl('featured') ?: asset('images/placeholder.jpg')) }}"
                      alt="{{ $post->title }}">
             </figure>
         </a>
