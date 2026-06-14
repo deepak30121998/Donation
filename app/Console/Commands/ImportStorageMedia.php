@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\GalleryItem;
+use App\Models\PageSection;
 use App\Models\Program;
 use App\Models\TeamMember;
 use Illuminate\Console\Command;
@@ -140,6 +141,40 @@ class ImportStorageMedia extends Command
                 $this->info("  ✓ GalleryItem#{$item->id} ({$item->title}) ← " . basename($filePath));
             } catch (\Exception $e) {
                 $this->error("  ✗ GalleryItem#{$item->id}: {$e->getMessage()}");
+            }
+        }
+
+        // --- PageSections ---
+        $this->info('Importing page section images...');
+
+        $storage2 = storage_path('app/public');
+        $pageSectionMap = [
+            // [page, section_key, collection, file]
+            ['home', 'about', 'image',   "$storage2/60/uuf-hero-1.jpg"],
+            ['home', 'about', 'image_2', "$storage2/61/uuf-hero-2.jpg"],
+        ];
+
+        foreach ($pageSectionMap as [$page, $key, $collection, $filePath]) {
+            if (! file_exists($filePath)) {
+                $this->warn("  File not found: $filePath");
+                continue;
+            }
+            $section = PageSection::where('page', $page)->where('section_key', $key)->first();
+            if (! $section) {
+                $this->warn("  PageSection not found: $page.$key");
+                continue;
+            }
+            if ($section->getMedia($collection)->isNotEmpty()) {
+                $this->line("  Skip PageSection $page.$key/$collection — already has image");
+                continue;
+            }
+            try {
+                $section->addMedia($filePath)
+                    ->preservingOriginal()
+                    ->toMediaCollection($collection);
+                $this->info("  ✓ PageSection $page.$key/$collection ← " . basename($filePath));
+            } catch (\Exception $e) {
+                $this->error("  ✗ PageSection $page.$key/$collection: {$e->getMessage()}");
             }
         }
 
