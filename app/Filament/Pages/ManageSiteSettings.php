@@ -30,6 +30,7 @@ class ManageSiteSettings extends Page
             'site_name'          => $s->site_name,
             'site_tagline'       => $s->site_tagline,
             'logo_path'          => $s->logo_path ? [$s->logo_path] : [],
+            'favicon_path'       => $s->favicon_path ? [$s->favicon_path] : [],
             'page_header_bg'     => $s->page_header_bg ? [$s->page_header_bg] : [],
             'address'            => $s->address,
             'phone'              => $s->phone,
@@ -84,6 +85,15 @@ class ManageSiteSettings extends Page
                                     ->imagePreviewHeight('80')
                                     ->helperText('PNG/SVG/JPG — recommended 200×60px')
                                     ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp']),
+
+                                FileUpload::make('favicon_path')
+                                    ->label('Favicon')
+                                    ->disk('public')
+                                    ->directory('logos')
+                                    ->visibility('public')
+                                    ->imagePreviewHeight('48')
+                                    ->helperText('Browser tab icon. Square image — PNG/ICO/SVG, recommended 64×64px.')
+                                    ->acceptedFileTypes(['image/png', 'image/x-icon', 'image/vnd.microsoft.icon', 'image/svg+xml', 'image/webp']),
 
                                 FileUpload::make('page_header_bg')
                                     ->label('Inner Pages Banner Background')
@@ -255,6 +265,10 @@ class ManageSiteSettings extends Page
 
         if (!empty($data['logo_path'])) {
             $s->logo_path = is_array($data['logo_path']) ? reset($data['logo_path']) : $data['logo_path'];
+        }
+
+        if (!empty($data['favicon_path'])) {
+            $s->favicon_path = is_array($data['favicon_path']) ? reset($data['favicon_path']) : $data['favicon_path'];
         }
 
         if (!empty($data['page_header_bg'])) {

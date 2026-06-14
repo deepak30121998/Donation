@@ -27,7 +27,7 @@
     <meta name="twitter:image" content="{{ $siteSettings?->logo_path ? asset('storage/'.$siteSettings->logo_path) : asset('images/logo.png') }}">
 
     <!-- Favicon Icon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ !empty($siteSettings?->favicon_path) ? asset('storage/' . $siteSettings->favicon_path) : asset('images/favicon.png') }}">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

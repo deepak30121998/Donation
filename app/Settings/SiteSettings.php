@@ -9,6 +9,7 @@ class SiteSettings extends Settings
     public string $site_name = 'Ujjawal Unnati Foundation';
     public string $site_tagline = 'Empowering Communities, Protecting Rights!';
     public ?string $logo_path = null;
+    public ?string $favicon_path = null;
     public ?string $page_header_bg = null;
 
     // Contact
