@@ -20,6 +20,12 @@ class Testimonial extends Model implements HasMedia
         return ['is_active' => 'boolean', 'order' => 'integer', 'rating' => 'integer'];
     }
 
+    public function registerMediaCollections(): void
+    {
+        // Always store on the public disk so admin uploads are web-accessible.
+        $this->addMediaCollection('photo')->useDisk('public');
+    }
+
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')->width(100)->height(100)->nonQueued();
