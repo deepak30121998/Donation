@@ -120,7 +120,7 @@ class HomeController extends Controller
             'totalGoal'      => $vm->totalGoal(),
             'heroSection'    => $heroSection,
             'heroFeatures'   => $heroFeatures,
-            'heroVideoUrl'   => config('app.hero_video_url', 'https://www.youtube.com/watch?v=Y-x0efG1seA'),
+            'heroVideoUrl'   => app(\App\Settings\SiteSettings::class)->hero_video_url ?: 'https://www.youtube.com/watch?v=Y-x0efG1seA',
             'heroSlides'     => $heroSlides,
             'aboutSection'   => $aboutSection,
             'aboutFeature'   => $aboutFeature,
