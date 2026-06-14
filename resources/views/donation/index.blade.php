@@ -121,25 +121,25 @@
                                 <li>
                                     <div style="display:flex;justify-content:space-between;align-items:center;">
                                         <span style="color:#888;font-size:0.88rem;">Bank</span>
-                                        <span style="font-weight:600;font-size:0.9rem;">HDFC Bank</span>
+                                        <span style="font-weight:600;font-size:0.9rem;">{{ $siteSettings?->bank_name ?? 'HDFC Bank' }}</span>
                                     </div>
                                 </li>
                                 <li>
                                     <div style="display:flex;justify-content:space-between;align-items:center;">
                                         <span style="color:#888;font-size:0.88rem;">Account No.</span>
-                                        <span style="font-weight:600;font-size:0.9rem;letter-spacing:0.5px;">50100321876635</span>
+                                        <span style="font-weight:600;font-size:0.9rem;letter-spacing:0.5px;">{{ $siteSettings?->bank_account_no ?? '50100321876635' }}</span>
                                     </div>
                                 </li>
                                 <li>
                                     <div style="display:flex;justify-content:space-between;align-items:center;">
                                         <span style="color:#888;font-size:0.88rem;">IFSC Code</span>
-                                        <span style="font-weight:600;font-size:0.9rem;">HDFC0001897</span>
+                                        <span style="font-weight:600;font-size:0.9rem;">{{ $siteSettings?->bank_ifsc ?? 'HDFC0001897' }}</span>
                                     </div>
                                 </li>
                                 <li>
                                     <div style="display:flex;justify-content:space-between;align-items:center;">
                                         <span style="color:#888;font-size:0.88rem;">Name</span>
-                                        <span style="font-weight:600;font-size:0.88rem;text-align:right;max-width:60%;">Ujjawal Unnati Foundation</span>
+                                        <span style="font-weight:600;font-size:0.88rem;text-align:right;max-width:60%;">{{ $siteSettings?->bank_account_name ?? 'Ujjawal Unnati Foundation' }}</span>
                                     </div>
                                 </li>
                                 <li style="border-bottom:none;margin-bottom:0;padding-bottom:0;">

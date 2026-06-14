@@ -42,6 +42,12 @@ class SiteSettings extends Settings
     public string $donate_button_text = 'Donate Now';
     public string $donate_button_url = '/donation';
 
+    // Bank Transfer Details
+    public string $bank_name = 'HDFC Bank';
+    public string $bank_account_no = '50100321876635';
+    public string $bank_ifsc = 'HDFC0001897';
+    public string $bank_account_name = 'Ujjawal Unnati Foundation';
+
     public static function group(): string
     {
         return 'site';

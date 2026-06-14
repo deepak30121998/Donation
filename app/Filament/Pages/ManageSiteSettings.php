@@ -49,6 +49,10 @@ class ManageSiteSettings extends Page
             'footer_copyright'   => $s->footer_copyright,
             'donate_button_text' => $s->donate_button_text,
             'donate_button_url'  => $s->donate_button_url,
+            'bank_name'          => $s->bank_name,
+            'bank_account_no'    => $s->bank_account_no,
+            'bank_ifsc'          => $s->bank_ifsc,
+            'bank_account_name'  => $s->bank_account_name,
         ]);
     }
 
@@ -189,6 +193,30 @@ class ManageSiteSettings extends Page
                                     ->placeholder('/donation'),
                             ]),
 
+                        Tabs\Tab::make('Bank Transfer')
+                            ->icon('heroicon-o-banknotes')
+                            ->schema([
+                                TextInput::make('bank_name')
+                                    ->label('Bank Name')
+                                    ->placeholder('HDFC Bank')
+                                    ->maxLength(100),
+
+                                TextInput::make('bank_account_name')
+                                    ->label('Account Holder Name')
+                                    ->placeholder('Ujjawal Unnati Foundation')
+                                    ->maxLength(255),
+
+                                TextInput::make('bank_account_no')
+                                    ->label('Account Number')
+                                    ->placeholder('50100321876635')
+                                    ->maxLength(50),
+
+                                TextInput::make('bank_ifsc')
+                                    ->label('IFSC Code')
+                                    ->placeholder('HDFC0001897')
+                                    ->maxLength(20),
+                            ]),
+
                     ])
                     ->columnSpanFull(),
             ])
@@ -220,6 +248,10 @@ class ManageSiteSettings extends Page
         $s->footer_copyright   = $data['footer_copyright']   ?? '';
         $s->donate_button_text = $data['donate_button_text'] ?? '';
         $s->donate_button_url  = $data['donate_button_url']  ?? '';
+        $s->bank_name         = $data['bank_name']         ?? '';
+        $s->bank_account_no   = $data['bank_account_no']   ?? '';
+        $s->bank_ifsc         = $data['bank_ifsc']         ?? '';
+        $s->bank_account_name = $data['bank_account_name'] ?? '';
 
         if (!empty($data['logo_path'])) {
             $s->logo_path = is_array($data['logo_path']) ? reset($data['logo_path']) : $data['logo_path'];
