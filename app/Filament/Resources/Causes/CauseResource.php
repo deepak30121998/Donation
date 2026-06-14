@@ -7,6 +7,7 @@ use App\Filament\Resources\Causes\Pages\EditCause;
 use App\Filament\Resources\Causes\Pages\ListCauses;
 use App\Filament\Resources\Causes\Schemas\CauseForm;
 use App\Filament\Resources\Causes\Tables\CausesTable;
+use App\Filament\Concerns\HasResourcePermissions;
 use App\Models\Cause;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -18,7 +19,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CauseResource extends Resource
 {
+    use HasResourcePermissions;
+
     protected static ?string $model = Cause::class;
+    protected static string $permissionPrefix = 'causes';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedHeart;
 

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\NewsletterSubscribers;
 use App\Filament\Resources\NewsletterSubscribers\Pages\ListNewsletterSubscribers;
 use App\Filament\Resources\NewsletterSubscribers\Schemas\NewsletterSubscriberForm;
 use App\Filament\Resources\NewsletterSubscribers\Tables\NewsletterSubscribersTable;
+use App\Filament\Concerns\HasResourcePermissions;
 use App\Models\NewsletterSubscriber;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -14,7 +15,10 @@ use Filament\Tables\Table;
 
 class NewsletterSubscriberResource extends Resource
 {
+    use HasResourcePermissions;
+
     protected static ?string $model = NewsletterSubscriber::class;
+    protected static string $permissionPrefix = 'newsletter-subscribers';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNewspaper;
 

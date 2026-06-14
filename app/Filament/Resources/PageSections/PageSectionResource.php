@@ -7,6 +7,7 @@ use App\Filament\Resources\PageSections\Pages\EditPageSection;
 use App\Filament\Resources\PageSections\Pages\ListPageSections;
 use App\Filament\Resources\PageSections\Schemas\PageSectionForm;
 use App\Filament\Resources\PageSections\Tables\PageSectionsTable;
+use App\Filament\Concerns\HasResourcePermissions;
 use App\Models\PageSection;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -16,7 +17,10 @@ use Filament\Tables\Table;
 
 class PageSectionResource extends Resource
 {
+    use HasResourcePermissions;
+
     protected static ?string $model = PageSection::class;
+    protected static string $permissionPrefix = 'page-sections';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 

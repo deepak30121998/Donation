@@ -7,6 +7,7 @@ use App\Filament\Resources\GalleryItems\Pages\EditGalleryItem;
 use App\Filament\Resources\GalleryItems\Pages\ListGalleryItems;
 use App\Filament\Resources\GalleryItems\Schemas\GalleryItemForm;
 use App\Filament\Resources\GalleryItems\Tables\GalleryItemsTable;
+use App\Filament\Concerns\HasResourcePermissions;
 use App\Models\GalleryItem;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -16,7 +17,10 @@ use Filament\Tables\Table;
 
 class GalleryItemResource extends Resource
 {
+    use HasResourcePermissions;
+
     protected static ?string $model = GalleryItem::class;
+    protected static string $permissionPrefix = 'gallery';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPhoto;
 

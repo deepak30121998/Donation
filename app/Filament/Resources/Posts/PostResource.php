@@ -7,6 +7,7 @@ use App\Filament\Resources\Posts\Pages\EditPost;
 use App\Filament\Resources\Posts\Pages\ListPosts;
 use App\Filament\Resources\Posts\Schemas\PostForm;
 use App\Filament\Resources\Posts\Tables\PostsTable;
+use App\Filament\Concerns\HasResourcePermissions;
 use App\Models\Post;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -18,7 +19,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PostResource extends Resource
 {
+    use HasResourcePermissions;
+
     protected static ?string $model = Post::class;
+    protected static string $permissionPrefix = 'posts';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 

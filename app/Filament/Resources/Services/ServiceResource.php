@@ -7,6 +7,7 @@ use App\Filament\Resources\Services\Pages\EditService;
 use App\Filament\Resources\Services\Pages\ListServices;
 use App\Filament\Resources\Services\Schemas\ServiceForm;
 use App\Filament\Resources\Services\Tables\ServicesTable;
+use App\Filament\Concerns\HasResourcePermissions;
 use App\Models\Service;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -18,7 +19,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ServiceResource extends Resource
 {
+    use HasResourcePermissions;
+
     protected static ?string $model = Service::class;
+    protected static string $permissionPrefix = 'services';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBriefcase;
 

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Donations;
 use App\Filament\Resources\Donations\Pages\ListDonations;
 use App\Filament\Resources\Donations\Schemas\DonationForm;
 use App\Filament\Resources\Donations\Tables\DonationsTable;
+use App\Filament\Concerns\HasResourcePermissions;
 use App\Models\Donation;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -14,7 +15,10 @@ use Filament\Tables\Table;
 
 class DonationResource extends Resource
 {
+    use HasResourcePermissions;
+
     protected static ?string $model = Donation::class;
+    protected static string $permissionPrefix = 'donations';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCurrencyDollar;
 

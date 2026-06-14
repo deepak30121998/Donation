@@ -7,6 +7,7 @@ use App\Filament\Resources\NavigationItems\Pages\EditNavigationItem;
 use App\Filament\Resources\NavigationItems\Pages\ListNavigationItems;
 use App\Filament\Resources\NavigationItems\Schemas\NavigationItemForm;
 use App\Filament\Resources\NavigationItems\Tables\NavigationItemsTable;
+use App\Filament\Concerns\HasResourcePermissions;
 use App\Models\NavigationItem;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -16,7 +17,11 @@ use Filament\Tables\Table;
 
 class NavigationItemResource extends Resource
 {
+    use HasResourcePermissions;
+
     protected static ?string $model = NavigationItem::class;
+    protected static string $permissionPrefix = 'settings';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBars3;
     protected static ?string $navigationLabel = 'Navigation Menu';
     protected static string|\UnitEnum|null $navigationGroup = 'Settings';

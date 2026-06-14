@@ -7,6 +7,7 @@ use App\Filament\Resources\Programs\Pages\EditProgram;
 use App\Filament\Resources\Programs\Pages\ListPrograms;
 use App\Filament\Resources\Programs\Schemas\ProgramForm;
 use App\Filament\Resources\Programs\Tables\ProgramsTable;
+use App\Filament\Concerns\HasResourcePermissions;
 use App\Models\Program;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -18,7 +19,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProgramResource extends Resource
 {
+    use HasResourcePermissions;
+
     protected static ?string $model = Program::class;
+    protected static string $permissionPrefix = 'programs';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedAcademicCap;
 

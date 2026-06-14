@@ -7,6 +7,7 @@ use App\Filament\Resources\Faqs\Pages\EditFaq;
 use App\Filament\Resources\Faqs\Pages\ListFaqs;
 use App\Filament\Resources\Faqs\Schemas\FaqForm;
 use App\Filament\Resources\Faqs\Tables\FaqsTable;
+use App\Filament\Concerns\HasResourcePermissions;
 use App\Models\Faq;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -16,7 +17,10 @@ use Filament\Tables\Table;
 
 class FaqResource extends Resource
 {
+    use HasResourcePermissions;
+
     protected static ?string $model = Faq::class;
+    protected static string $permissionPrefix = 'faqs';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedQuestionMarkCircle;
 
