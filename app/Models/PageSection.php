@@ -29,8 +29,9 @@ class PageSection extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('image')->singleFile();
-        $this->addMediaCollection('image_2')->singleFile();
+        // Pin to the public disk so admin uploads (hero banner, etc.) are web-accessible.
+        $this->addMediaCollection('image')->singleFile()->useDisk('public');
+        $this->addMediaCollection('image_2')->singleFile()->useDisk('public');
     }
 
     public static function forPage(string $page, string $key): ?self
