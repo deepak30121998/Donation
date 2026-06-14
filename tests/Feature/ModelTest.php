@@ -2,8 +2,8 @@
 
 use App\Enums\DonationPaymentMethod;
 use App\Enums\DonationStatus;
-use App\Enums\GalleryCategory;
 use App\Models\Cause;
+use App\Models\GalleryCategory;
 use App\Models\ContactSubmission;
 use App\Models\Donation;
 use App\Models\GalleryItem;
@@ -174,16 +174,25 @@ it('donation payment_method casts to DonationPaymentMethod enum', function () {
 
 // ─── GalleryItem Category Cast ───────────────────────────────────────────────
 
-it('gallery_item category casts to GalleryCategory enum', function () {
+it('gallery_item belongs to a GalleryCategory', function () {
+    $cat = GalleryCategory::firstOrCreate(
+        ['slug' => 'test-cat'],
+        ['name' => 'Test Cat', 'order' => 99, 'is_active' => true]
+    );
+
     $item = GalleryItem::create([
-        'title'     => 'Health Gallery Item',
-        'category'  => 'health',
-        'is_active' => true,
+        'title'               => 'Test Gallery Item',
+        'gallery_category_id' => $cat->id,
+        'is_active'           => true,
     ]);
 
     $item->refresh();
-    expect($item->category)->toBeInstanceOf(GalleryCategory::class);
-    expect($item->category)->toBe(GalleryCategory::Health);
+    expect($item->galleryCategory)->toBeInstanceOf(GalleryCategory::class);
+    expect($item->galleryCategory->slug)->toBe('test-cat');
+    expect($item->categoryClass)->toBe('test-cat');
+
+    $item->delete();
+    $cat->delete();
 });
 
 // ─── Soft Deletes ────────────────────────────────────────────────────────────

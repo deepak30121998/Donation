@@ -619,10 +619,10 @@
                 <div class="col-lg-12">
                     <div class="our-gallery-nav wow fadeInUp" data-wow-delay="0.2s">
                         <ul>
-                            <li><a href="#" class="active-btn" data-filter="*">{{ \App\Enums\GalleryCategory::All->label() }}</a></li>
-                            <li><a href="#" data-filter=".{{ \App\Enums\GalleryCategory::Health->value }}">{{ \App\Enums\GalleryCategory::Health->label() }}</a></li>
-                            <li><a href="#" data-filter=".{{ \App\Enums\GalleryCategory::Education->value }}">{{ \App\Enums\GalleryCategory::Education->label() }}</a></li>
-                            <li><a href="#" data-filter=".{{ \App\Enums\GalleryCategory::Food->value }}">{{ \App\Enums\GalleryCategory::Food->label() }}</a></li>
+                            <li><a href="#" class="active-btn" data-filter="*">All</a></li>
+                            @foreach ($galleryCategories as $category)
+                                <li><a href="#" data-filter=".{{ $category->slug }}">{{ $category->name }}</a></li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -630,7 +630,7 @@
                 <div class="col-lg-12">
                     <div class="gallery-item-boxes">
                         @foreach ($galleryItems as $item)
-                            <div class="gallery-item-box {{ $item->category->value }}">
+                            <div class="gallery-item-box {{ $item->categoryClass }}">
                                 <figure class="image-anime">
                                     <img src="{{ $item->getFirstMediaUrl('gallery') ?: asset('images/placeholder.jpg') }}"
                                          alt="{{ $item->title ?? 'Gallery Image' }}">

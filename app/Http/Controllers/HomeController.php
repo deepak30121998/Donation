@@ -8,6 +8,7 @@ use App\Contracts\Repositories\PostRepositoryInterface;
 use App\Contracts\Repositories\ProgramRepositoryInterface;
 use App\Contracts\Repositories\ServiceRepositoryInterface;
 use App\Contracts\Repositories\TestimonialRepositoryInterface;
+use App\Models\GalleryCategory;
 use App\Models\PageSection;
 use App\Models\SiteCounter;
 use App\ViewModels\HomeViewModel;
@@ -143,7 +144,8 @@ class HomeController extends Controller
             'tickerItems'    => $tickerItems,
             'howItWorks'     => $howItWorks,
             'featItems'      => $featItems,
-            'livesCounter'   => $livesCtr,
+            'livesCounter'      => $livesCtr,
+            'galleryCategories' => GalleryCategory::active()->ordered()->get(),
         ]));
     }
 }

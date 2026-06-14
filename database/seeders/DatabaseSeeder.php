@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             CauseSeeder::class,
             TeamMemberSeeder::class,
             TestimonialSeeder::class,
+            GalleryCategorySeeder::class,
             GalleryItemSeeder::class,
             PostSeeder::class,
         ]);

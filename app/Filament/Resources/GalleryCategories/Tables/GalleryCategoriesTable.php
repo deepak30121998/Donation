@@ -1,31 +1,32 @@
 <?php
 
-namespace App\Filament\Resources\GalleryItems\Tables;
+namespace App\Filament\Resources\GalleryCategories\Tables;
 
-use App\Models\GalleryCategory;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
-class GalleryItemsTable
+class GalleryCategoriesTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('title')
+                TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('galleryCategory.name')
-                    ->label('Category')
+                TextColumn::make('slug')
                     ->badge()
-                    ->color('info')
-                    ->default('—'),
+                    ->color('gray'),
+
+                TextColumn::make('items_count')
+                    ->label('Items')
+                    ->counts('items')
+                    ->sortable(),
 
                 TextColumn::make('order')
                     ->numeric()
@@ -36,23 +37,9 @@ class GalleryItemsTable
                     ->boolean()
                     ->trueColor('success')
                     ->falseColor('danger'),
-
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('order')
             ->reorderable('order')
-            ->filters([
-                SelectFilter::make('gallery_category_id')
-                    ->label('Category')
-                    ->options(
-                        GalleryCategory::where('is_active', true)
-                            ->orderBy('order')
-                            ->pluck('name', 'id')
-                    ),
-            ])
             ->recordActions([
                 EditAction::make(),
             ])

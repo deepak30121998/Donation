@@ -12,21 +12,25 @@
     <div class="page-gallery">
         <div class="container">
 
-            {{-- Filter Tabs --}}
+            {{-- Filter Tabs — dynamic from gallery_categories --}}
             <div class="row section-row">
                 <div class="col-lg-12">
                     <div class="our-gallery-nav wow fadeInUp" data-wow-delay="0.2s">
                         <ul>
                             <li><a href="#" class="active-btn" data-filter="*">All</a></li>
-                            <li><a href="#" data-filter=".health">Gau Sewa</a></li>
-                            <li><a href="#" data-filter=".education">Education</a></li>
-                            <li><a href="#" data-filter=".food">Ration & Food</a></li>
+                            @foreach ($categories as $category)
+                                <li>
+                                    <a href="#" data-filter=".{{ $category->slug }}">
+                                        {{ $category->name }}
+                                    </a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
             </div>
 
-            {{-- Gallery Items — class names match JS: gallery-item-boxes + gallery-items (popup) --}}
+            {{-- Gallery Items --}}
             <div class="gallery-item-boxes gallery-items">
                 @forelse ($items as $item)
                     <div class="gallery-item-box {{ $item->categoryClass }}">

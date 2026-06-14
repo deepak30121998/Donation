@@ -8,5 +8,5 @@ interface GalleryRepositoryInterface extends BaseRepositoryInterface
 {
     public function activeOrdered(): Collection;
 
-    public function byCategory(string $category): Collection;
+    public function byCategory(int $categoryId): Collection;
 }

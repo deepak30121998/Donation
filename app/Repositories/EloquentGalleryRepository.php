@@ -18,11 +18,11 @@ class EloquentGalleryRepository extends EloquentBaseRepository implements Galler
         return $this->model->newQuery()->scopes(['active', 'ordered'])->get();
     }
 
-    public function byCategory(string $category): Collection
+    public function byCategory(int $categoryId): Collection
     {
         return $this->model->newQuery()
             ->scopes(['active'])
-            ->where('category', $category)
+            ->where('gallery_category_id', $categoryId)
             ->orderBy('order')
             ->get();
     }
