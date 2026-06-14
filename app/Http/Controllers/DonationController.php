@@ -150,8 +150,33 @@ class DonationController extends Controller
             $this->donationService->sendReceipt($donation->fresh());
         }
 
-        return redirect()->route('donation.index')
-            ->with('success', 'Thank you! Your donation of ₹' . number_format($donation->amount) . ' was successful. Payment ID: ' . $request->razorpay_payment_id);
+        return redirect()->route('donation.thankYou')
+            ->with('donation_completed', $donation->id);
+    }
+
+    /**
+     * Show the thank-you page after a successful/recorded donation.
+     * Reads the donation id from the session (not the URL) so donors
+     * cannot view other people's donation details.
+     */
+    public function thankYou(): View|RedirectResponse
+    {
+        $donationId = session('donation_completed');
+
+        if (! $donationId) {
+            return redirect()->route('donation.index');
+        }
+
+        $donation = Donation::with('cause')->find($donationId);
+
+        if (! $donation) {
+            return redirect()->route('donation.index');
+        }
+
+        // Keep it available if the page is re-rendered within the same request cycle.
+        session()->keep('donation_completed');
+
+        return view('donation.thank-you', ['donation' => $donation]);
     }
 
     /**
@@ -169,7 +194,7 @@ class DonationController extends Controller
         $data     = DonationData::fromRequest($validated);
         $donation = $this->storeDonationAction->handle($data, 'pending');
 
-        return redirect()->route('donation.index')
-            ->with('success', 'Thank you! Your donation request has been recorded. Please complete the bank transfer using the details on this page. Once we receive the payment, we will confirm your donation and send a receipt.');
+        return redirect()->route('donation.thankYou')
+            ->with('donation_completed', $donation->id);
     }
 }

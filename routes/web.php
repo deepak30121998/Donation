@@ -41,6 +41,7 @@ Route::get('/donation', [DonationController::class, 'index'])->name('donation.in
 Route::post('/donation', [DonationController::class, 'store'])->name('donation.store');
 Route::post('/donation/create-order', [DonationController::class, 'createOrder'])->name('donation.createOrder');
 Route::post('/donation/verify', [DonationController::class, 'verify'])->name('donation.verify');
+Route::get('/donation/thank-you', [DonationController::class, 'thankYou'])->name('donation.thankYou');
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
