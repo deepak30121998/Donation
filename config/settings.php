@@ -7,7 +7,7 @@ return [
      * put them (manually) here.
      */
     'settings' => [
-
+        App\Settings\SiteSettings::class,
     ],
 
     /*
@@ -88,9 +88,7 @@ return [
      * The package will look for settings in these paths and automatically
      * register them.
      */
-    'auto_discover_settings' => [
-        app_path('Settings'),
-    ],
+    'auto_discover_settings' => [],
 
     /*
      * Automatically discovered settings classes can be cached, so they don't
