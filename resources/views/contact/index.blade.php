@@ -64,7 +64,7 @@
                 <div class="col-lg-6 order-lg-1 order-2">
                     <div class="google-map-iframe">
                         <iframe
-                            src="{{ $siteSettings?->maps_embed_url ?? 'https://maps.google.com/maps?q=Sector+12,+Noida,+Gautam+Budh+Nagar+201301,+Uttar+Pradesh,+India&t=&z=15&ie=UTF8&iwloc=&output=embed' }}"
+                            src="{{ $siteSettings?->maps_embed_url ?: 'https://maps.google.com/maps?q=Sector+12,+Noida,+Gautam+Budh+Nagar+201301,+Uttar+Pradesh,+India&t=&z=15&ie=UTF8&iwloc=&output=embed' }}"
                             allowfullscreen=""
                             loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade">
