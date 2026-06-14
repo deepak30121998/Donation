@@ -85,19 +85,15 @@ class ManageRolePermissions extends Page
 
             foreach (self::groups() as $group => $perms) {
                 $key = $roleName . '__' . $this->groupKey($group);
-                $options = array_combine($perms, array_map(fn ($p) => ucfirst(str_replace($this->groupKey($group) . '-', '', explode(' ', $p)[0])), $perms));
-
-                // Nicer labels: "view posts" → "View", "create posts" → "Create" etc.
                 $options = array_combine($perms, array_map(fn ($p) => ucwords(explode(' ', $p)[0]), $perms));
 
                 $sections[] = Section::make($group)
-                    ->columns(count($perms))
                     ->compact()
                     ->schema([
                         CheckboxList::make($key)
                             ->hiddenLabel()
                             ->options($options)
-                            ->columns(count($perms))
+                            ->columns(min(count($perms), 5))
                             ->gridDirection('row'),
                     ]);
             }
