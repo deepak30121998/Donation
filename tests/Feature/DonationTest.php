@@ -7,6 +7,8 @@ use App\Enums\DonationStatus;
 
 /**
  * Valid donation payload helper.
+ * Defaults to 'offline' — store() only handles offline/test.
+ * Online payments go through Razorpay createOrder + verify (separate flow).
  */
 function validDonation(array $overrides = []): array
 {
@@ -16,7 +18,7 @@ function validDonation(array $overrides = []): array
         'donor_email'      => 'jane.doe@example.com',
         'donor_phone'      => '555-0100',
         'amount'           => 50,
-        'payment_method'   => 'online',
+        'payment_method'   => 'offline',
         'cause_id'         => null,
         'message'          => 'Keep up the great work!',
     ], $overrides);
@@ -97,14 +99,14 @@ it('creates donation record in database with correct values', function () {
         'donor_last_name'  => 'Smith',
         'donor_email'      => 'alice.smith@example.com',
         'amount'           => 75.00,
-        'payment_method'   => 'online',
+        'payment_method'   => 'offline',
     ]));
 
     $this->assertDatabaseHas('donations', [
         'donor_first_name' => 'Alice',
         'donor_last_name'  => 'Smith',
         'donor_email'      => 'alice.smith@example.com',
-        'payment_method'   => 'online',
+        'payment_method'   => 'offline',
     ]);
 });
 
@@ -118,8 +120,9 @@ it('sets donated_at timestamp on creation', function () {
     expect($donation->donated_at)->not->toBeNull();
 });
 
-it('accepts all valid payment methods: online, offline, test', function () {
-    foreach (['online', 'offline', 'test'] as $method) {
+it('accepts offline and test payment methods via store()', function () {
+    // 'online' goes through Razorpay createOrder+verify, not store()
+    foreach (['offline', 'test'] as $method) {
         $email = "payment_{$method}@example.com";
         $this->post('/donation', validDonation([
             'payment_method' => $method,
@@ -133,12 +136,18 @@ it('accepts all valid payment methods: online, offline, test', function () {
     }
 });
 
+it('rejects online payment via store() — must use Razorpay flow', function () {
+    $this->post('/donation', validDonation(['payment_method' => 'online']))
+        ->assertRedirect(route('donation.index'))
+        ->assertSessionHas('error');
+});
+
 it('rejects invalid payment method', function () {
     $this->post('/donation', validDonation(['payment_method' => 'crypto']))
         ->assertSessionHasErrors(['payment_method']);
 });
 
-it('increments cause raised_amount after successful donation', function () {
+it('increments cause raised_amount when donation is marked completed', function () {
     $cause = Cause::create([
         'title'          => 'Increment Cause',
         'goal_amount'    => 10000,
@@ -150,9 +159,16 @@ it('increments cause raised_amount after successful donation', function () {
     $this->post('/donation', validDonation([
         'cause_id'    => $cause->id,
         'amount'      => 100,
+        'payment_method' => 'offline',
         'donor_email' => 'increment@example.com',
     ]));
 
-    $cause->refresh();
-    expect((float) $cause->raised_amount)->toBe(300.0);
+    // Offline donations start as 'pending'; raised_amount increments on markCompleted
+    $donation = Donation::where('donor_email', 'increment@example.com')->first();
+    expect($donation)->not->toBeNull();
+    expect((float) $cause->fresh()->raised_amount)->toBe(200.0); // still 200 while pending
+
+    app(\App\Actions\Donation\StoreDonationAction::class)->markCompleted($donation, 'BANK-TXN-TEST');
+
+    expect((float) $cause->fresh()->raised_amount)->toBe(300.0);
 });
