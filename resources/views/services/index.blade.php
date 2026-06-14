@@ -1,4 +1,6 @@
-<x-layouts.app title="Our Services">
+<x-layouts.app
+    title="Our Services"
+    description="Explore Ujjawal Unnati Foundation's services — advocacy for women's rights, cow protection (Gau Sewa), child labour eradication, women empowerment, education for all, and the fight for a hunger-free India.">
 
     <x-page-header
         title="Our <span>Services</span>"

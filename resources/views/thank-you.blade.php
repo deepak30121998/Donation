@@ -1,4 +1,4 @@
-<x-layouts.app title="Thank You">
+<x-layouts.app title="Thank You" robots="noindex, follow">
 
     <x-page-header
         title="Thank <span>You</span>"

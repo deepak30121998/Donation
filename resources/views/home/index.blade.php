@@ -1,4 +1,5 @@
-<x-layouts.app title="Home">
+<x-layouts.app
+    description="Ujjawal Unnati Foundation is a Noida-based NGO working for women empowerment, cow protection (Gau Sewa), child education, ending child labour, and a hunger-free India. Donate or volunteer to transform lives across India.">
 
     {{-- Hero Slider Section --}}
 
@@ -124,7 +125,7 @@
                             <div class="helped-fund-item">
                                 <div class="helped-fund-img">
                                     <figure class="image-anime">
-                                        <img src="{{ asset('images/helped-fund-img.jpg') }}" alt="">
+                                        <img src="{{ asset('images/helped-fund-img.jpg') }}" alt="Ujjawal Unnati Foundation helping families in need">
                                     </figure>
                                 </div>
                                 <div class="helped-fund-content">
@@ -231,12 +232,12 @@
                     <div class="what-we-do-images">
                         <div class="what-we-do-img-1">
                             <figure class="image-anime reveal">
-                                <img src="{{ $whatWeDoImgs[0] }}" alt="">
+                                <img src="{{ $whatWeDoImgs[0] }}" alt="Ujjawal Unnati Foundation community work">
                             </figure>
                         </div>
                         <div class="what-we-do-img-2">
                             <figure class="image-anime">
-                                <img src="{{ $whatWeDoImgs[1] }}" alt="">
+                                <img src="{{ $whatWeDoImgs[1] }}" alt="Ujjawal Unnati Foundation field initiatives">
                             </figure>
                         </div>
                         <div class="donate-now-box">

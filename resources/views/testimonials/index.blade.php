@@ -1,4 +1,6 @@
-<x-layouts.app title="Testimonials">
+<x-layouts.app
+    title="Testimonials"
+    description="Read what volunteers, partners, and community members say about Ujjawal Unnati Foundation's work and impact in women empowerment, cow protection, and education.">
 
     <x-page-header
         title="<span>Testimonials</span>"

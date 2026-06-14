@@ -1,4 +1,12 @@
-@props(['title' => null, 'description' => '', 'keywords' => ''])
+@props([
+    'title' => null,
+    'description' => '',
+    'keywords' => '',
+    'ogImage' => null,
+    'ogType' => 'website',
+    'robots' => 'index, follow',
+    'canonical' => null,
+])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -6,25 +14,67 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <meta name="description" content="{{ $description ?: ($siteSettings?->footer_about_text ?: ($siteSettings?->site_tagline ?? '')) }}">
-    <meta name="keywords" content="{{ $keywords }}">
+
+    <!-- Page Title & SEO -->
+    <title>{{ $title ? $title . ' — ' . ($siteSettings?->site_name ?? config('app.name', 'Ujjawal Unnati Foundation')) : (($siteSettings?->site_name ?? config('app.name', 'Ujjawal Unnati Foundation')) . ' — ' . ($siteSettings?->site_tagline ?: 'Charity & Donation NGO')) }}</title>
+    <meta name="description" content="{{ \Illuminate\Support\Str::limit(trim(strip_tags($description ?: ($siteSettings?->footer_about_text ?: ($siteSettings?->site_tagline ?? '')))), 160, '') }}">
+    <meta name="keywords" content="{{ $keywords ?: 'Ujjawal Unnati Foundation, NGO India, women empowerment, gau sewa, cow protection, child education, child labour, hunger relief, donate, charity Noida' }}">
+    <meta name="robots" content="{{ $robots }}">
+    <meta name="author" content="{{ $siteSettings?->site_name ?? config('app.name', 'Ujjawal Unnati Foundation') }}">
+    <link rel="canonical" href="{{ $canonical ?? url()->current() }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Page Title -->
-    <title>{{ $title ? $title . ' — ' . config('app.name', 'Ujjawal Unnati Foundation') : config('app.name', 'Ujjawal Unnati Foundation') . ' - Charity & Donation' }}</title>
-
-    <!-- Canonical & Social Meta -->
-    <link rel="canonical" href="{{ url()->current() }}">
-    <meta property="og:type" content="website">
+    <!-- Open Graph -->
+    <meta property="og:type" content="{{ $ogType }}">
     <meta property="og:site_name" content="{{ $siteSettings?->site_name ?? config('app.name') }}">
     <meta property="og:title" content="{{ $title ? $title . ' — ' . ($siteSettings?->site_name ?? config('app.name')) : ($siteSettings?->site_name ?? config('app.name')) }}">
-    <meta property="og:description" content="{{ $description ?: ($siteSettings?->footer_about_text ?: ($siteSettings?->site_tagline ?? '')) }}">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:image" content="{{ $siteSettings?->logo_path ? asset('storage/'.$siteSettings->logo_path) : asset('images/logo.png') }}">
+    <meta property="og:description" content="{{ \Illuminate\Support\Str::limit(trim(strip_tags($description ?: ($siteSettings?->footer_about_text ?: ($siteSettings?->site_tagline ?? '')))), 200, '') }}">
+    <meta property="og:url" content="{{ $canonical ?? url()->current() }}">
+    <meta property="og:image" content="{{ $ogImage ?: ($siteSettings?->logo_path ? asset('storage/'.$siteSettings->logo_path) : asset('images/logo.png')) }}">
+    <meta property="og:locale" content="en_IN">
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $title ?? ($siteSettings?->site_name ?? config('app.name')) }}">
-    <meta name="twitter:description" content="{{ $description ?: ($siteSettings?->footer_about_text ?: ($siteSettings?->site_tagline ?? '')) }}">
-    <meta name="twitter:image" content="{{ $siteSettings?->logo_path ? asset('storage/'.$siteSettings->logo_path) : asset('images/logo.png') }}">
+    <meta name="twitter:description" content="{{ \Illuminate\Support\Str::limit(trim(strip_tags($description ?: ($siteSettings?->footer_about_text ?: ($siteSettings?->site_tagline ?? '')))), 200, '') }}">
+    <meta name="twitter:image" content="{{ $ogImage ?: ($siteSettings?->logo_path ? asset('storage/'.$siteSettings->logo_path) : asset('images/logo.png')) }}">
+
+    <!-- Structured Data: Organization + WebSite -->
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'NGO',
+        'name' => $siteSettings?->site_name ?? 'Ujjawal Unnati Foundation',
+        'alternateName' => 'UUF',
+        'url' => url('/'),
+        'logo' => $siteSettings?->logo_path ? asset('storage/'.$siteSettings->logo_path) : asset('images/logo.png'),
+        'description' => strip_tags($siteSettings?->footer_about_text ?? ''),
+        'email' => $siteSettings?->email ?: null,
+        'telephone' => $siteSettings?->phone ?: null,
+        'address' => [
+            '@type' => 'PostalAddress',
+            'streetAddress' => $siteSettings?->address ?? '',
+            'addressLocality' => 'Noida',
+            'addressRegion' => 'Uttar Pradesh',
+            'postalCode' => '201301',
+            'addressCountry' => 'IN',
+        ],
+        'sameAs' => array_values(array_filter([
+            $siteSettings?->facebook_url, $siteSettings?->youtube_url,
+            $siteSettings?->instagram_url, $siteSettings?->twitter_url, $siteSettings?->pinterest_url,
+        ])),
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'WebSite',
+        'name' => $siteSettings?->site_name ?? 'Ujjawal Unnati Foundation',
+        'url' => url('/'),
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
+
+    @stack('jsonld')
 
     <!-- Favicon Icon -->
     <link rel="shortcut icon" href="{{ !empty($siteSettings?->favicon_path) ? asset('storage/' . $siteSettings->favicon_path) : asset('images/favicon.png') }}">

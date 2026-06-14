@@ -1,4 +1,4 @@
-<x-layouts.app title="Page Not Found">
+<x-layouts.app title="Page Not Found" robots="noindex, follow">
 
     <x-page-header
         title="<span>Page</span> Not Found"

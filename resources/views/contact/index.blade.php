@@ -1,4 +1,6 @@
-<x-layouts.app title="Contact Us">
+<x-layouts.app
+    title="Contact Us"
+    description="Contact Ujjawal Unnati Foundation in Noida for volunteering, donations, partnerships, or queries. Call +91-8130789837 or email info@ujjawalunnati.com.">
 
     <x-page-header
         title="{{ $sections->get('contact.hero')?->title ?? 'Contact' }} <span>Us</span>"

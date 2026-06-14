@@ -1,4 +1,20 @@
-<x-layouts.app title="FAQs">
+<x-layouts.app
+    title="FAQs"
+    description="Frequently asked questions about Ujjawal Unnati Foundation — donations, volunteering, 80G tax exemption, our programs, and how we work across India.">
+
+    @push('jsonld')
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'FAQPage',
+        'mainEntity' => collect($categories)->flatMap(fn ($c) => $c->faqs)->map(fn ($f) => [
+            '@type' => 'Question',
+            'name' => strip_tags($f->question),
+            'acceptedAnswer' => ['@type' => 'Answer', 'text' => \Illuminate\Support\Str::limit(strip_tags($f->answer), 500, '')],
+        ])->values()->all(),
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
+    @endpush
 
     <x-page-header
         title="<span>Frequently</span> Asked Questions"

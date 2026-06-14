@@ -1,4 +1,6 @@
-<x-layouts.app title="Image Gallery">
+<x-layouts.app
+    title="Gallery"
+    description="Photo gallery of Ujjawal Unnati Foundation's on-ground work — Gau Sewa, education drives, ration and clothes distribution, food camps, and women empowerment activities.">
 
     <x-page-header
         title="Our <span>Gallery</span>"

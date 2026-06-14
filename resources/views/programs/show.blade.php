@@ -1,4 +1,21 @@
-<x-layouts.app :title="$program->title">
+<x-layouts.app
+    :title="$program->meta_title ?: $program->title"
+    :description="$program->meta_description ?: \Illuminate\Support\Str::limit(strip_tags($program->short_description ?: $program->body), 160, '')"
+    :ogImage="$program->getFirstMediaUrl('banner') ?: ($program->getFirstMediaUrl('thumb') ?: null)">
+
+    @push('jsonld')
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'BreadcrumbList',
+        'itemListElement' => [
+            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => route('home')],
+            ['@type' => 'ListItem', 'position' => 2, 'name' => 'Programs', 'item' => route('programs.index')],
+            ['@type' => 'ListItem', 'position' => 3, 'name' => $program->title, 'item' => url()->current()],
+        ],
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
+    @endpush
 
     <x-page-header
         :title="$program->title"

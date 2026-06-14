@@ -1,4 +1,32 @@
-<x-layouts.app :title="$service->title">
+<x-layouts.app
+    :title="$service->meta_title ?: $service->title"
+    :description="$service->meta_description ?: \Illuminate\Support\Str::limit(strip_tags($service->short_description ?: $service->body), 160, '')"
+    :ogImage="$bannerUrl ?? null">
+
+    @push('jsonld')
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'Service',
+        'name' => $service->title,
+        'description' => $service->meta_description ?: \Illuminate\Support\Str::limit(strip_tags($service->short_description ?: $service->body), 200, ''),
+        'url' => url()->current(),
+        'provider' => ['@type' => 'NGO', 'name' => $siteSettings?->site_name ?? 'Ujjawal Unnati Foundation'],
+        'areaServed' => ['@type' => 'Country', 'name' => 'India'],
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'BreadcrumbList',
+        'itemListElement' => [
+            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => route('home')],
+            ['@type' => 'ListItem', 'position' => 2, 'name' => 'Services', 'item' => route('services.index')],
+            ['@type' => 'ListItem', 'position' => 3, 'name' => $service->title, 'item' => url()->current()],
+        ],
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
+    @endpush
 
     <x-page-header
         :title="$service->title"

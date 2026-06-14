@@ -1,4 +1,6 @@
-<x-layouts.app title="Our Programs">
+<x-layouts.app
+    title="Our Programs"
+    description="Discover Ujjawal Unnati Foundation's programs — Gau Sewa, Women Entrepreneur training, Child Education, and Ration Distribution — creating sustainable change across Uttar Pradesh and Delhi NCR.">
 
     <x-page-header
         title="Our <span>Programs</span>"

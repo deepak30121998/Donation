@@ -1,4 +1,6 @@
-<x-layouts.app title="{{ $sections->get('donation.hero')?->title ?? 'Make a Donation' }}">
+<x-layouts.app
+    :title="$sections->get('donation.hero')?->title ?? 'Make a Donation'"
+    description="Donate to Ujjawal Unnati Foundation and support women empowerment, cow protection, child education, and hunger relief. 80G tax-exempt — every rupee reaches those who need it most.">
 
     <x-page-header
         title="Make a <span>Donation</span>"

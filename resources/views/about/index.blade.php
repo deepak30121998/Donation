@@ -1,4 +1,6 @@
-<x-layouts.app title="{{ $sections->get('about.hero')?->title ?? 'About Us' }}">
+<x-layouts.app
+    :title="$sections->get('about.hero')?->title ?? 'About Us'"
+    description="Learn about Ujjawal Unnati Foundation — a registered NGO in Noida dedicated to women empowerment, Gau Sewa (cow protection), child welfare, education, and hunger relief across UP and Delhi NCR.">
 
     <x-page-header
         title="{{ $sections->get('about.hero')?->title ?? '<span>About</span> Us' }}"

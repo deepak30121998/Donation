@@ -1,4 +1,40 @@
-<x-layouts.app :title="$post->meta_title ?: $post->title">
+<x-layouts.app
+    :title="$post->meta_title ?: $post->title"
+    :description="$post->meta_description ?: \Illuminate\Support\Str::limit(strip_tags($post->excerpt ?: $post->body), 160, '')"
+    ogType="article"
+    :ogImage="$post->getFirstMediaUrl('featured', 'hero') ?: ($post->getFirstMediaUrl('featured') ?: null)">
+
+    @push('jsonld')
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'Article',
+        'headline' => $post->title,
+        'description' => $post->meta_description ?: \Illuminate\Support\Str::limit(strip_tags($post->excerpt ?: $post->body), 200, ''),
+        'image' => $post->getFirstMediaUrl('featured', 'hero') ?: ($post->getFirstMediaUrl('featured') ?: asset('images/logo.png')),
+        'datePublished' => optional($post->published_at)->toAtomString(),
+        'dateModified' => optional($post->updated_at)->toAtomString(),
+        'author' => ['@type' => 'Organization', 'name' => $siteSettings?->site_name ?? 'Ujjawal Unnati Foundation'],
+        'publisher' => [
+            '@type' => 'Organization',
+            'name' => $siteSettings?->site_name ?? 'Ujjawal Unnati Foundation',
+            'logo' => ['@type' => 'ImageObject', 'url' => $siteSettings?->logo_path ? asset('storage/'.$siteSettings->logo_path) : asset('images/logo.png')],
+        ],
+        'mainEntityOfPage' => url()->current(),
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'BreadcrumbList',
+        'itemListElement' => [
+            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => route('home')],
+            ['@type' => 'ListItem', 'position' => 2, 'name' => 'Blog', 'item' => route('blog.index')],
+            ['@type' => 'ListItem', 'position' => 3, 'name' => $post->title, 'item' => url()->current()],
+        ],
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
+    @endpush
 
     <x-page-header
         :title="$post->title"

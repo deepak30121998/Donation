@@ -1,4 +1,6 @@
-<x-layouts.app title="{{ $sections->get('team.hero')?->title ?? 'Our Team' }}">
+<x-layouts.app
+    :title="$sections->get('team.hero')?->title ?? 'Our Team'"
+    description="Meet the dedicated team behind Ujjawal Unnati Foundation working for community empowerment, cow protection, child welfare, and education across India.">
 
     <x-page-header
         title="<span>Our</span> Team"
