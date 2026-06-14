@@ -16,6 +16,10 @@ class NewsletterController extends Controller
     {
         $this->action->handle($request->validated('email'));
 
-        return back()->with('newsletter_success', 'You have been subscribed!');
+        return redirect()->route('thank-you')->with('thank_you', [
+            'icon'    => 'fa-bell',
+            'title'   => 'Thank You for <span>Subscribing!</span>',
+            'message' => "You're now on our list. We'll keep you updated on our work, stories of impact, and ways you can help.",
+        ]);
     }
 }

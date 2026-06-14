@@ -25,10 +25,18 @@ class ContactController extends Controller
         $data = ContactData::fromRequest($request->validated());
         $this->contactService->store($data);
 
+        $context = [
+            'icon'    => 'fa-paper-plane',
+            'title'   => 'Thank You for <span>Reaching Out!</span>',
+            'message' => 'We have received your message and our team will get back to you as soon as possible.',
+        ];
+
         if ($request->ajax()) {
-            return response()->json(['message' => 'Your message has been sent. We will get back to you soon!']);
+            session()->flash('thank_you', $context);
+
+            return response()->json(['redirect' => route('thank-you')]);
         }
 
-        return back()->with('success', 'Your message has been sent. We will get back to you soon!');
+        return redirect()->route('thank-you')->with('thank_you', $context);
     }
 }

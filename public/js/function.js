@@ -311,7 +311,11 @@
 			type: "POST",
 			url: formAction,
 			data: $contactform.serialize(),
-			success: function(){
+			success: function(response){
+				if (response && response.redirect) {
+					window.location.href = response.redirect;
+					return;
+				}
 				formSuccess();
 			},
 			error: function(xhr){

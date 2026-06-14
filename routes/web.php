@@ -12,6 +12,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\ThankYouController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -47,3 +48,5 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact.index
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::post('/newsletter', [NewsletterController::class, 'store'])->name('newsletter.store');
+
+Route::get('/thank-you', [ThankYouController::class, 'show'])->name('thank-you');
