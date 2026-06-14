@@ -36,6 +36,14 @@ class Service extends Model implements HasMedia
         return LogOptions::defaults()->logFillable()->logOnlyDirty();
     }
 
+    public function registerMediaCollections(): void
+    {
+        // Pin to the public disk so admin uploads are always web-accessible,
+        // regardless of the runtime media-library default disk.
+        $this->addMediaCollection('thumb')->useDisk('public');
+        $this->addMediaCollection('banner')->useDisk('public');
+    }
+
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')->width(400)->height(280)->nonQueued();
