@@ -70,7 +70,7 @@
             @endif
             <div class="field">
                 <span class="label">Payment Method</span>
-                <span class="value">{{ ucfirst($donation->payment_method) }}</span>
+                <span class="value">{{ $donation->payment_method?->label() ?? '' }}</span>
             </div>
             @if($donation->transaction_id)
             <div class="field">
@@ -84,7 +84,7 @@
             </div>
             <div class="field">
                 <span class="label">Status</span>
-                <span class="value" style="color:#1a7a4a;">{{ ucfirst($donation->status) }}</span>
+                <span class="value" style="color:#1a7a4a;">{{ $donation->status?->label() ?? '' }}</span>
             </div>
         </div>
 

@@ -6,12 +6,25 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <meta name="description" content="{{ $description }}">
+    <meta name="description" content="{{ $description ?: ($siteSettings?->footer_about_text ?: ($siteSettings?->site_tagline ?? '')) }}">
     <meta name="keywords" content="{{ $keywords }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Page Title -->
     <title>{{ $title ? $title . ' — ' . config('app.name', 'Ujjawal Unnati Foundation') : config('app.name', 'Ujjawal Unnati Foundation') . ' - Charity & Donation' }}</title>
+
+    <!-- Canonical & Social Meta -->
+    <link rel="canonical" href="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ $siteSettings?->site_name ?? config('app.name') }}">
+    <meta property="og:title" content="{{ $title ? $title . ' — ' . ($siteSettings?->site_name ?? config('app.name')) : ($siteSettings?->site_name ?? config('app.name')) }}">
+    <meta property="og:description" content="{{ $description ?: ($siteSettings?->footer_about_text ?: ($siteSettings?->site_tagline ?? '')) }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ $siteSettings?->logo_path ? asset('storage/'.$siteSettings->logo_path) : asset('images/logo.png') }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $title ?? ($siteSettings?->site_name ?? config('app.name')) }}">
+    <meta name="twitter:description" content="{{ $description ?: ($siteSettings?->footer_about_text ?: ($siteSettings?->site_tagline ?? '')) }}">
+    <meta name="twitter:image" content="{{ $siteSettings?->logo_path ? asset('storage/'.$siteSettings->logo_path) : asset('images/logo.png') }}">
 
     <!-- Favicon Icon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.png') }}">

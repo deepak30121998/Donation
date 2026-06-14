@@ -120,7 +120,7 @@ class HomeController extends Controller
             'totalGoal'      => $vm->totalGoal(),
             'heroSection'    => $heroSection,
             'heroFeatures'   => $heroFeatures,
-            'heroVideoUrl'   => app(\App\Settings\SiteSettings::class)->hero_video_url ?: 'https://www.youtube.com/watch?v=Y-x0efG1seA',
+            'heroVideoUrl'   => $this->normalizeVideoUrl(app(\App\Settings\SiteSettings::class)->hero_video_url ?: 'https://www.youtube.com/watch?v=Y-x0efG1seA'),
             'heroSlides'     => $heroSlides,
             'aboutSection'   => $aboutSection,
             'aboutFeature'   => $aboutFeature,
@@ -147,5 +147,14 @@ class HomeController extends Controller
             'livesCounter'      => $livesCtr,
             'galleryCategories' => GalleryCategory::active()->ordered()->get(),
         ]));
+    }
+
+    private function normalizeVideoUrl(string $url): string
+    {
+        if (preg_match('~(?:youtube\.com/(?:watch\?v=|embed/|shorts/)|youtu\.be/)([\w-]{11})~', $url, $m)) {
+            return 'https://www.youtube.com/watch?v=' . $m[1];
+        }
+
+        return $url;
     }
 }
